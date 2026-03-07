@@ -613,3 +613,11 @@ All four failing samples use `process.stdout.write()` or `process.exit()` but la
 - travel-planner (the restored file) compiled successfully on first try — the git restore was clean
 - Travel demos feel more compelling when each agent narrates trade-offs and the itinerary includes weather, food, and local tips rather than just raw data
 - Interactive samples get immediate credibility when prompts drive LLM-sourced destination data instead of hardcoded itineraries
+
+### 📌 Team update (2026-03-07T20-14-00Z): Travel-planner interactive rebuild — LLM-driven personalization pattern established — decided by Fenster
+- **Status:** Complete — travel-planner rewritten from hardcoded Tokyo demo to fully interactive LLM-driven app
+- **User input:** Destination, days, budget, interests
+- **Output:** Real destination-specific data generated dynamically via OpenAI-compatible LLM
+- **Pattern:** User input → LLM agent composition → structured JSON parsing → agent optimization
+- **Commits:** 7d21940 (feat: rebuild as interactive LLM-driven planner)
+- **Alignment:** Brady's user directive ("no hardcoded fake data, real value to users") implemented. Fenster's interactive LLM pattern now reference for all future samples.

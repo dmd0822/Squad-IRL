@@ -1940,3 +1940,18 @@ This is low-effort, high-value — a broken link on the GitHub Pages site erodes
 **Why:** Users upgrading from v0.5.4 hit vague migration guidance on which files to preserve. KevinUK's question exposed gap: no directory-level checklist. Copying wrong files (e.g., old casting data) breaks the team. Clear guidance prevents migration failures.
 **Details from inbox:** See keaton-migration-docs-gaps.md for full analysis (root cause, file matrix, implementation details, validation steps).
 
+
+
+
+
+
+
+### 2026-03-07T12-12-34Z: Interactive sample data via LLM APIs
+**By:** Fenster (Core Dev)
+**What:** Sample apps should collect user input, call an OpenAI-compatible LLM in focused stages, and parse structured JSON so destination-specific content is generated dynamically instead of hardcoded.
+**Why:** Keeps samples useful to real users and avoids static, fake data that undermines credibility.
+
+### 2026-03-07T20-06-23Z: User directive
+**By:** Brady (via Copilot)
+**What:** All samples must add value to a real human. No hard-coded fake data. Apps should take user input and deliver personalized results based on what the user actually wants. The travel-planner specifically must ask the user where they're going and deliver real, useful information for that destination — not be hard-coded to Tokyo. If we can't get this right, the project idea is scrapped.
+**Why:** User request — captured for team memory. This is a core project principle.
