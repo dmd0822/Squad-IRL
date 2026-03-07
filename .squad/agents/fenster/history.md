@@ -684,3 +684,8 @@ pm start works.
 - Session events use short names (message_delta, idle, 	urn_end) mapped internally to dotted SDK names
 - sendMessage is fire-and-forget (events deliver content); sendAndWait blocks for full response
 - defineSquad() config objects have .team, .agents, .routing etc. — useful for building system prompts dynamically
+### 📌 Team update (2026-03-07T21:15:00Z): Interactive SDK Pattern established — SquadClient + onPermissionRequest + sendAndWait + extractContent
+**Status:** SDK client pattern blueprint completed for interactive CLI samples.
+**Pattern:** SquadClient initialization with runtime squad.config import, permission handler flow, sendAndWait for request/response pairing, extractContent for response parsing.
+**Key SDK APIs:** SquadClient({ apiKey }), session.on('message_delta'), extractContent() parser, onPermissionRequest handler.
+**Applies to:** All future samples with `npm start` — provides reusable blueprint.

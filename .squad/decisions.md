@@ -2027,3 +2027,10 @@ Rich inline charters (50-100 lines per agent) with:
 **What:** "All these samples should be ways to use the squad sdk to programmatically make a squad to solve a real human problem. You're trying to show normal people how squad can benefit them, not just developers."
 **Why:** User request — captured for team memory. This supersedes the previous directive about using LLM APIs with fetch(). The correct approach is to use `@bradygaster/squad-sdk` with `defineSquad`, `defineAgent`, etc. Each sample is a `squad.config.ts` that creates a domain-specific squad. No standalone TypeScript apps pretending to be agent systems.
 
+
+### 2026-03-07: Interactive SDK Pattern for Samples
+**By:** Fenster (Core Dev)
+**What:** For samples with `npm start` (interactive CLI), use SquadClient with streaming message_delta events, not raw adapter. Import squad.config.js at runtime. Build system prompt from defineSquad config. Use readline/promises for user input. Implement onPermissionRequest handler. Graceful errors with setup guidance.
+**Key imports:** SquadClient, SquadSession, SquadSessionConfig from @bradygaster/squad-sdk/client; SquadSessionEvent from @bradygaster/squad-sdk/adapter.
+**Why:** Users should get interactive CLI that connects to real squad backend, asks about their problem, and provides real advice. Separates config (squad.config.js) from runtime (index.ts).
+**Applies to:** All future samples needing interactive SDK-powered `npm start`.
