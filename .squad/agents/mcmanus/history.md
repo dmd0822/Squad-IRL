@@ -1068,3 +1068,6 @@ Multi-agent build of Rock-Paper-Scissors game with 10 AI strategies, Docker infr
 3. **Message Amplification:** The 20-sample collection tells a story: "Squad can orchestrate specialized agents across any domain." Each README is part of that story, not a standalone artifact.
 
 4. **Maintenance Pattern:** For future additions (sample #21+), the audit checklist should be enforced: presence, title, description, install, run, agents, output, and algorithm uniqueness. This ensures consistency without template bloat.
+
+📌 Team update (2026-03-07T20:32:00Z): SDK-first sample pattern established — travel-planner README rewritten to explain squad approach to users, not developers. Coordinate with Fenster's squad.config.ts rebuild. Decision merged by Scribe.
+

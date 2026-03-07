@@ -651,3 +651,6 @@ ode_modules/
 - The measure of a good sample: "Can a normal person understand what they get from this squad in 30 seconds?"
 
 **Commit:** [will be made by Brady or McManus]
+
+📌 Team update (2026-03-07T20:32:00Z): SDK-first sample pattern established — travel-planner rebuilt from 900-line standalone app to squad.config.ts demonstrating full @bradygaster/squad-sdk usage. Decision merged by Scribe.
+
