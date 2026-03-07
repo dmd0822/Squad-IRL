@@ -1,0 +1,18 @@
+{
+  "name": "diy-project-sequencer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Break DIY projects into steps with tools, materials, and time estimates",
+  "scripts": {
+    "start": "npx tsx index.ts",
+    "dev": "npx tsx watch index.ts"
+  },
+  "dependencies": {
+    "@bradygaster/squad-sdk": "latest"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.7.0"
+  }
+}

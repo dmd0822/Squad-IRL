@@ -1,17 +1,16 @@
 ---
-updated_at: 2026-03-03T00:00:00Z
-focus_area: Migration to Public Repo + SDK Samples
+updated_at: 2026-03-07T04:30:00Z
+focus_area: 100 Ways to Use Squad — Sample Production
 issues_open: []
-issues_closed_prd: 30
-tests_passing: 2944
-prd_location: .squad/identity/prd-next-waves.md
-current_phase: Migration v0.6.0 + SDK Samples
-process: All work through PRs with squad member review before merge
+current_phase: Wacky Whirlwind Weekend — Full Team Fan-Out
+process: Factory-style parallel sample production
 ---
 
 # What We're Focused On
 
-**Status:** Migration planning complete. Target: public repo v0.6.0 (clean minor bump from v0.5.4). On `migration` branch. Two new SDK samples shipped (knock-knock, rock-paper-scissors). Banana gate still active for git operations.
+**Mission: 100 Ways to Use Squad** — Building 100 real-world samples showing how Squad SDK solves everyday problems for everyone. From meal prep to insurance appeals, bedtime stories to estate planning. No coding problems — just life problems solved by AI agent teams.
+
+**Status:** Full team fan-out. 5 agents building domain-specific content for all 100 samples in parallel. Repo stripped to samples-only. Template infrastructure in place.
 
 ## Public Readiness Assessment (2026-02-24)
 

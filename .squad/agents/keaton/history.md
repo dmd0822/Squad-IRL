@@ -694,3 +694,15 @@ This history accurately documents Keaton's work and decisions. Future spawns can
 
 
 📌 Team update (2026-03-04T17:52:00Z): Migration docs file-safety guidance added — doctor command now live in CLI (fixes #188) — decided by Keaton, implemented by McManus
+
+### 2026-03-05T[NOW]: Created Master List of 100 Real-World Squad SDK Samples
+- **Task:** Brady requested comprehensive list of 100 real-world automation samples demonstrating Squad SDK's value to everyday users (NOT coding problems).
+- **Requirements:** (1) NO coding problems, (2) Diverse audiences (20+ demographics: parents, finance, students, data scientists, homeowners, business owners, artists, fitness enthusiasts, travelers, seniors, environmental advocates, pet owners, social media managers, gamers, foodies, event planners, teachers, healthcare, community organizers, car enthusiasts), (3) Imaginative & practical solutions, (4) Each sample follows Writer → Grader → Updater agent pattern, (5) Prioritized by impact.
+- **Approach:** Brainstormed 100 samples across all audience segments, prioritizing high-impact automations people would actually use. Each entry includes: kebab-case name, audience emoji, problem statement, agent team (3-5 agents with domain-specific names).
+- **Sample highlights:**
+  - **Top 10 by impact:** meal-prep-squad, expense-categorizer, essay-polisher, job-application-tailor, social-media-content-calendar, workout-program-designer, itinerary-optimizer, portfolio-rebalancer, home-maintenance-scheduler, bedtime-story-generator
+  - **Creative examples:** screen-time-negotiator (parents), dating-profile-optimizer (everyone), jet-lag-minimizer (travelers), creative-block-breaker (artists), seating-chart-optimizer (event planners)
+  - **Underserved niches:** medication-reminder-system (seniors), tech-support-simplifier (seniors), iep-goal-writer (special ed teachers), insurance-denial-appeal (healthcare)
+- **Pattern learned:** Squad SDK's killer feature is **collaborative AI teams with quality gates** — not just "AI writes something," but "AI team iterates until it meets standards." This differentiates from single-shot LLM tools. Each sample demonstrates self-improving loops with domain expertise.
+- **File created:** `samples/MASTER-LIST.md` (100 entries, formatted as table with name/audience/problem/agents)
+- **Next step:** Individual sample implementations in `samples/{name}/` with charter.md and README.md
