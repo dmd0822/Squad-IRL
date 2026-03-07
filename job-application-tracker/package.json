@@ -1,0 +1,15 @@
+{
+  "name": "job-application-tracker",
+  "version": "1.0.0",
+  "description": "Squad sample: AI agents manage a job search pipeline with Kanban board, interview prep, salary research, and offer comparison",
+  "type": "module",
+  "scripts": {
+    "start": "tsx index.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0"
+  }
+}

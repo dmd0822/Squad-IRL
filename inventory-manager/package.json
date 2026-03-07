@@ -1,0 +1,15 @@
+{
+  "name": "inventory-manager",
+  "version": "1.0.0",
+  "description": "Squad sample: AI agents manage e-commerce inventory with demand forecasting, EOQ optimization, and supplier ranking",
+  "type": "module",
+  "scripts": {
+    "start": "tsx index.ts",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0"
+  }
+}
