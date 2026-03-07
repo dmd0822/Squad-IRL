@@ -1,7 +1,7 @@
-// ─── Email Inbox Triage — Interactive Squad CLI ─────────────────────────────
-// Connect to your email triage squad and get real, AI-powered inbox advice.
-// Four agents (classifier, summarizer, action advisor, priority ranker)
-// collaborate to triage your emails based on what YOU provide.
+// ─── Email Inbox Triage — Gmail Edition ──────────────────────────────────────
+// Opens your real Gmail in a browser, scrapes your inbox, and feeds it to a
+// four-agent triage squad (classifier, summarizer, action advisor, priority
+// ranker) for actionable advice.
 
 import { createInterface } from 'node:readline/promises';
 import { stdin, stdout } from 'node:process';
@@ -9,6 +9,13 @@ import { SquadClient } from '@bradygaster/squad-sdk/client';
 import type { SquadSession, SquadSessionConfig } from '@bradygaster/squad-sdk/adapter';
 import type { SquadSessionEvent, SquadSessionEventHandler } from '@bradygaster/squad-sdk/adapter';
 import squadConfig from './squad.config.js';
+import {
+  launchBrowser,
+  navigateToGmail,
+  scrapeInbox,
+  formatEmailsForPrompt,
+  closeBrowser,
+} from './gmail-scraper.js';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // ANSI helpers
@@ -28,10 +35,10 @@ const C = {
 
 function banner(): void {
   console.log();
-  console.log(`${C.cyan}${C.bold}  📧  Email Inbox Triage Squad${C.reset}`);
+  console.log(`${C.cyan}${C.bold}  📧  Email Inbox Triage — Gmail Edition${C.reset}`);
   console.log(`${C.dim}  ─────────────────────────────────────────${C.reset}`);
-  console.log(`${C.dim}  Four specialists ready to triage your inbox.${C.reset}`);
-  console.log(`${C.dim}  Paste email subjects, describe your inbox, or ask for help.${C.reset}`);
+  console.log(`${C.dim}  Opens your Gmail, scrapes your inbox, and triages it with AI.${C.reset}`);
+  console.log(`${C.dim}  Four specialists: Classifier · Summarizer · Action Advisor · Priority Ranker${C.reset}`);
   console.log(`${C.dim}  Type "quit" to exit.${C.reset}`);
   console.log();
 }
@@ -113,31 +120,14 @@ When presenting triage results, use a structured format: classification → summ
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// Gather inbox details interactively
+// Gather user context (optional)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-async function gatherInboxDetails(rl: ReturnType<typeof createInterface>): Promise<string> {
-  console.log(`${C.green}${C.bold}  Let's triage your inbox!${C.reset}`);
-  console.log();
-  console.log(`${C.dim}  You can:${C.reset}`);
-  console.log(`${C.dim}    • Paste a list of email subject lines${C.reset}`);
-  console.log(`${C.dim}    • Describe what's in your inbox${C.reset}`);
-  console.log(`${C.dim}    • Copy-paste full email headers or snippets${C.reset}`);
-  console.log();
-
-  const inbox = await rl.question(`${C.cyan}  Describe your inbox or paste email subjects: ${C.reset}`);
-  if (!inbox.trim()) {
-    return '';
-  }
-
-  const context = await rl.question(`${C.cyan}  Any context? ${C.dim}(e.g., "I'm a PM with a meeting in 1 hour", or press Enter) ${C.reset}`);
-
-  let prompt = `Triage these emails for me:\n\n${inbox.trim()}`;
-  if (context.trim()) {
-    prompt += `\n\nContext about me: ${context.trim()}`;
-  }
-
-  return prompt;
+async function askUserContext(rl: ReturnType<typeof createInterface>): Promise<string> {
+  const context = await rl.question(
+    `${C.cyan}  Any context about yourself? ${C.dim}(e.g., "I'm a PM with a meeting in 1 hour", or press Enter)${C.reset} `
+  );
+  return context.trim();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -219,12 +209,56 @@ async function main(): Promise<void> {
 
   const rl = createInterface({ input: stdin, output: stdout });
 
-  const initialPrompt = await gatherInboxDetails(rl);
-  if (!initialPrompt) {
-    console.log(`${C.yellow}  No emails provided. Goodbye!${C.reset}`);
+  // 1. Optional user context
+  const userContext = await askUserContext(rl);
+
+  // 2. Launch Playwright browser and navigate to Gmail
+  console.log();
+  console.log(`${C.magenta}  🌐 Launching browser and opening Gmail...${C.reset}`);
+
+  let page: Awaited<ReturnType<typeof launchBrowser>>['page'];
+  try {
+    const result = await launchBrowser();
+    page = result.page;
+    await navigateToGmail(page);
+  } catch (err: any) {
+    console.error();
+    console.error(`${C.red}${C.bold}  Failed to launch browser.${C.reset}`);
+    console.error(`${C.yellow}  Make sure Playwright is installed:${C.reset}`);
+    console.error(`${C.dim}    npm install${C.reset}`);
+    console.error(`${C.dim}    npx playwright install chromium${C.reset}`);
+    console.error(`${C.dim}  Error: ${err?.message ?? err}${C.reset}`);
+    rl.close();
+    process.exit(1);
+  }
+
+  // 3. Wait for the user to log in and have their inbox visible
+  console.log();
+  console.log(`${C.green}  📧 Gmail is open in your browser.${C.reset}`);
+  console.log(`${C.dim}  Log in if needed, then make sure your inbox is visible.${C.reset}`);
+  await rl.question(`${C.cyan}  Press Enter when your inbox is ready to scrape... ${C.reset}`);
+
+  // 4. Scrape the inbox
+  console.log();
+  console.log(`${C.magenta}  🔍 Scraping visible inbox...${C.reset}`);
+
+  const emails = await scrapeInbox(page);
+  console.log(`${C.green}  ✓ Found ${emails.length} email(s) in your inbox.${C.reset}`);
+
+  if (emails.length === 0) {
+    console.log(`${C.yellow}  No emails could be scraped. The inbox may be empty or the DOM may have changed.${C.reset}`);
+    console.log(`${C.dim}  Closing browser...${C.reset}`);
+    await closeBrowser(page);
     rl.close();
     return;
   }
+
+  // Close the browser — we have what we need
+  console.log(`${C.dim}  Closing browser...${C.reset}`);
+  await closeBrowser(page);
+
+  // 5. Build the triage prompt from scraped emails
+  const initialPrompt = formatEmailsForPrompt(emails, userContext);
 
   // Suppress noisy CLI subprocess warnings (e.g., Node.js experimental SQLite)
   const origStderrWrite = process.stderr.write.bind(process.stderr);
@@ -236,6 +270,7 @@ async function main(): Promise<void> {
     return origStderrWrite(chunk, ...args);
   };
 
+  // 6. Connect to the Squad
   console.log();
   console.log(`${C.magenta}  Connecting to your triage squad...${C.reset}`);
 
@@ -281,16 +316,16 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
-  // Send the initial triage request
+  // 7. Send the scraped inbox to the squad for triage
   try {
     console.log();
-    console.log(`${C.dim}  Sending to the squad for triage...${C.reset}`);
+    console.log(`${C.dim}  Sending ${emails.length} email(s) to the squad for triage...${C.reset}`);
     await sendAndStream(client, session, initialPrompt);
   } catch (err: any) {
     console.error(`${C.red}  Error: ${err?.message ?? err}${C.reset}`);
   }
 
-  // Conversation loop for follow-up questions
+  // 8. Follow-up conversation loop
   while (true) {
     console.log();
     const followUp = await rl.question(`${C.cyan}  Follow-up question ${C.dim}(or "quit")${C.cyan}: ${C.reset}`);

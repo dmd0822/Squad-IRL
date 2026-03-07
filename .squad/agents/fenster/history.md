@@ -715,3 +715,35 @@ pm start works.
 - The SDK rebuild pattern is now fully repeatable: read travel-planner, adapt squad.config.ts agents/routing, adapt index.ts gather function and banner, keep everything else identical
 - Adding a fourth agent (Priority Ranker) separate from Classifier gives cleaner separation of concerns — classification is per-email, ranking is across-all-emails
 - tsconfig bundler moduleResolution + skipLibCheck is the right combo for these SDK samples — avoids NodeNext resolution headaches with the SDK package exports
+
+## Gmail Playwright Integration (email-inbox-triage → Gmail Edition)
+
+**Requested by:** Brady. "i would just make it a gmail demo"
+
+**Task:** Transform email-inbox-triage from a paste-your-emails sample into a real Gmail scraper that launches a Playwright browser, connects to the user's actual Gmail, scrapes visible inbox emails, and feeds them to the triage squad.
+
+**Architecture:**
+- New `gmail-scraper.ts` module: launchBrowser (persistent context via --user-data-dir), navigateToGmail, scrapeInbox, formatEmailsForPrompt, closeBrowser
+- `launchPersistentContext` with `.gmail-session/` dir for session persistence — user logs in once, subsequent runs auto-authenticate
+- Gmail DOM selectors: `tr.zA` rows, `.yW .zF` sender, `.bog`/`.bqe` subject, `.y2` snippet, `.zE` unread class, `.av` labels
+- Fallback: if structured selectors yield zero emails, falls back to raw `innerText` of `tr[role="row"]` elements
+- `playwright` added as a runtime dependency (not playwright-core) — user runs `npx playwright install chromium` for the browser binary
+
+**Flow change in index.ts:**
+1. Banner (updated for Gmail Edition)
+2. Ask optional user context
+3. Launch headful Chromium → navigate to Gmail
+4. Wait for user to press Enter after logging in / confirming inbox is visible
+5. Scrape visible inbox emails → close browser
+6. Connect to Squad (same SquadClient pattern as before)
+7. Format scraped emails into prompt → send to squad
+8. Follow-up conversation loop (unchanged)
+
+**Key decisions:**
+- Close browser after scraping rather than keeping it open — avoids resource drain during the triage conversation
+- Persistent browser profile in `.gmail-session/` (gitignored) — critical UX improvement for repeated use
+- `import.meta.dirname` for resolving .gmail-session path relative to the script, not process.cwd()
+- 2-second waitForTimeout after scrape to let Gmail finish rendering dynamic content
+
+**Files:** email-inbox-triage/gmail-scraper.ts (new), email-inbox-triage/index.ts (rewritten), email-inbox-triage/package.json (playwright dep), email-inbox-triage/tsconfig.json (include gmail-scraper.ts), email-inbox-triage/.gitignore (new), email-inbox-triage/README.md (rewritten)
+**Verified:** npm install clean, tsc --noEmit passes (0 errors)
