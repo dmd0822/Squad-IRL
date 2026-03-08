@@ -1649,7 +1649,7 @@ This pattern preserves both the learning trajectory AND the correct final state.
 3. **Head-100 strategy** — only first 100 lines of key files are read. Keeps token usage reasonable while capturing the important config/docs content.  
 4. **4 agents instead of 5** — collapsed OWASP/GDPR/SOC2 specialists into practical domains (Security, License, Docs, Privacy-via-Reporter). More useful for general projects.  
 5. **No interactivity** — unlike gmail (which needs browser login), compliance scanning is fully automated. Run and get results.  
-**Impact:** Sets the pattern for other "scan and analyse" samples in the 100-ways collection.
+**Impact:** Sets the pattern for other "scan and analyse" samples in the squad-irl collection.
 
 ## Question
 
@@ -2862,7 +2862,7 @@ Better to have 8-9 bulletproof samples that customers trust, than 12 samples wit
 
 ## Summary
 
-Created new CONTRIBUTING.md and completely rewrote README.md to position "100 Ways to Use Squad" as a community hub for life automation samples. Target: non-technical people who bring ideas; Squad/AI provides code.
+Created new CONTRIBUTING.md and completely rewrote README.md to position "Squad IRL" as a community hub for life automation samples. Target: non-technical people bring ideas; Squad/AI provides code.
 
 ## Key Decisions
 

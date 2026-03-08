@@ -1,4 +1,4 @@
-# Contributing to 100 Ways to Use Squad
+# Contributing to Squad IRL
 
 Welcome! This is a community-driven project where anyone — whether you're a coder or not — can contribute real-world examples of life automation using Squad.
 
@@ -32,12 +32,12 @@ flowchart TD
 
 ### 1. Fork and Clone
 
-1. Go to [100-ways-to-use-squad](https://github.com/bradygaster/100-ways-to-use-squad)
+1. Go to [squad-irl](https://github.com/bradygaster/squad-irl)
 2. Click **Fork** in the top right
 3. Clone your fork locally:
    ```bash
-   git clone https://github.com/YOUR-USERNAME/100-ways-to-use-squad.git
-   cd 100-ways-to-use-squad
+   git clone https://github.com/YOUR-USERNAME/squad-irl.git
+   cd squad-irl
    ```
 
 ### 2. Create a Feature Branch
@@ -110,7 +110,7 @@ git push origin squad/YOUR-IDEA-NAME
 
 ### 8. Open a Pull Request
 
-1. Go to the main repo: [100-ways-to-use-squad](https://github.com/bradygaster/100-ways-to-use-squad)
+1. Go to the main repo: [squad-irl](https://github.com/bradygaster/squad-irl)
 2. Click **New Pull Request**
 3. Select your fork and branch
 4. Add a description of what your sample does and why it's useful

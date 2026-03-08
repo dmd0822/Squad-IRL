@@ -1,4 +1,4 @@
-# 100 Ways to Use Squad
+# Squad IRL
 
 > A community-driven collection of real-world automation samples built with Squad agent teams. Non-technical people design them. AI builds them. Anyone can learn from them.
 

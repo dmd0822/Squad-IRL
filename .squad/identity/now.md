@@ -1,6 +1,6 @@
 ---
 updated_at: 2026-03-07T04:30:00Z
-focus_area: 100 Ways to Use Squad — Sample Production
+focus_area: Squad IRL — Sample Production
 issues_open: []
 current_phase: Wacky Whirlwind Weekend — Full Team Fan-Out
 process: Factory-style parallel sample production
@@ -8,7 +8,7 @@ process: Factory-style parallel sample production
 
 # What We're Focused On
 
-**Mission: 100 Ways to Use Squad** — Building 100 real-world samples showing how Squad SDK solves everyday problems for everyone. From meal prep to insurance appeals, bedtime stories to estate planning. No coding problems — just life problems solved by AI agent teams.
+**Mission: Squad IRL** — Building 100 real-world samples showing how Squad SDK solves everyday problems for everyone. From meal prep to insurance appeals, bedtime stories to estate planning. No coding problems — just life problems solved by AI agent teams.
 
 **Status:** Full team fan-out. 5 agents building domain-specific content for all 100 samples in parallel. Repo stripped to samples-only. Template infrastructure in place.
 
