@@ -15,3 +15,20 @@ docs/dist/
 # Sample output directories
 samples/*/output/
 samples/*/package-lock.json
+
+# ─── Sample runtime artifacts ────────────────────────────────────
+# Playwright persistent browser sessions (Chromium profile data)
+.*-session/
+# Sample-generated reports and output files
+compliance-checker/COMPLIANCE_REPORT.md
+contract-reviewer/clause-extraction-report.md
+contract-reviewer/executive-summary.md
+contract-reviewer/negotiation-redlines.md
+contract-reviewer/risk-assessment-report.md
+bug-triage/issue-classification.txt
+bug-triage/summary-dashboard-5-issues.txt
+bug-triage/triage-dashboard.txt
+bug-triage/triage-recommendations.md
+bug-triage/triage-report.csv
+# package-lock.json for each sample (users run npm install locally)
+*/package-lock.json

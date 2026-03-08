@@ -105,7 +105,7 @@ Have an idea? You don't need to be a coder. Tell Squad your idea, and it builds 
 
 1. Fork this repo
 2. Create a branch: `git checkout -b squad/your-idea`
-3. Tell Squad your idea: `copilot squad`
+3. Tell Squad your idea: `copilot --agent squad`
 4. Squad builds the sample and updates the docs
 5. Test it: `npm install && npm start`
 6. Open a PR
