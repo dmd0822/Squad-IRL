@@ -733,3 +733,37 @@ This history accurately documents Keaton's work and decisions. Future spawns can
 - **Squad agents:** Property Evaluator (price/sqft, condition, deal rating), Investment Analyst (mortgage calc, cap rate, cash flow), Neighborhood Scorer (schools, transit, walkability, growth), Summary Reporter (ranked opportunity list).
 - **Verification:** npm install clean, npx tsc --noEmit passes with zero errors.
 - **Pattern learned:** The gmail/ pattern is a solid template for any Playwright-based Squad sample. Key structural elements: persistent browser context for session reuse, scraper module separate from orchestration, buildSystemPrompt() that composes squad config into system message, sendAndStream() with delta handler for streaming, closing inspiration section.
+
+### 2026-03-08T[NOW]: Community Squad Redesign — Architectural Proposal for Non-Technical Contributors
+- **Task:** Brady requested a deep restructure proposal for evolving the Squad team from a developer-serving SDK team to a community-serving samples team. Non-technical contributors should be able to fork, describe an idea, have the Squad build it, and PR it back.
+- **Key architectural insight:** The current 21-agent roster is an SDK team transplanted into a samples repo. Routing references src/ module paths that don't exist. Charters speak in developer jargon. The fundamental mismatch: this team was built for ONE developer (Brady), but the future requires serving MANY non-developers.
+- **Proposed changes:**
+  - **Roster:** Slim from 21 active to 8 active agents. Bench SDK-specific roles (Edie, Kujan, Fortier, Rabin, Saul, Strausz, Kovash, Marquez, Cheritto, Breedan, Nate, Waingro). Keep: Keaton (Lead), McManus (Community Guide), Verbal (Sample Architect), Fenster (Builder), Hockney (Validator), Baer (Safety), Kobayashi (PR Manager), Redfoot (Visual Polish).
+  - **Routing:** Replace module-path routing with sample-lifecycle routing. Default unknown intent → McManus. Remove all src/ module ownership tables.
+  - **McManus repurposed:** From DevRel to Community Guide. Front door for every contributor. "Makes complex things feel simple" is the perfect Guide voice — no new character needed.
+  - **New ceremony:** "Sample Intake" — auto-triggers when contributor describes an idea. Flow: McManus (greet/structure) → Verbal (design spec) → Keaton (approve/reject) → SAMPLE-IDEAS.md entry.
+  - **Charter rewrites:** All 8 active charters get plain-English "For Contributors" sections. Remove SDK jargon, add proactive explanation guidance.
+  - **SAMPLE-IDEAS.md:** Living backlog with status markers (📋 → 🚧 → 🧪 → ✅), contributor attribution, community contribution guide section.
+- **Trade-offs accepted:** Fewer specialists = less depth but more speed and approachability. Benched agents keep charters in git history for future activation. McManus becomes a potential bottleneck but only handles intake/docs.
+- **Pattern learned:** Team composition should mirror the audience, not the technology. An SDK team serves developers. A samples team serves contributors. When the audience changes, the team must change — same characters, different roles. Repurposing > adding.
+- **Output:** Proposal at .squad/decisions/inbox/keaton-community-squad-redesign.md (~18KB). Implementation is documentation-only — no code changes.
+
+---
+
+## 📌 Team Update (2026-03-08T15-09-58Z): Community Squad Redesign Proposal Submitted
+
+**From:** Scribe  
+**Context:** Squad team pivoted to community samples focus.
+
+**What Keaton did:**
+- Authored comprehensive proposal: "Squad Restructure for Non-Technical Community Contributors"
+- Recommended active roster: 21 → 8 agents (bench SDK-specialized roles)
+- Designed new sample lifecycle routing and Sample Intake ceremony
+- Drafted updated charters (plain English, contributor-facing)
+- Proposed SAMPLE-IDEAS.md workflow with status markers and contributor attribution
+
+**Cross-team note:** McManus completed CONTRIBUTING.md and README overhaul. Both work feeds into Keaton's proposal implementation roadmap (if Brady approves).
+
+**Status:** Proposal submitted to decisions.md as "Pending Brady's Review" — not yet accepted as team decision.
+
+**Next:** Await Brady approval. If approved, implementation sequence: team.md → routing.md → active charters → ceremonies.md → SAMPLE-IDEAS.md updates → root README review.

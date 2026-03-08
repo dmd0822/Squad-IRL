@@ -1145,3 +1145,63 @@ px tsc --noEmit pass clean with no errors.
 5. **DevRel sample philosophy:** Show the pattern (text input → Squad orchestration → formatted output), provide working examples (2 briefs), suggest next steps (API integration, analytics, scheduling). Users learn by running, then extending.
 
 **Message for team:** This completes the "Social Media Content Manager" sample from SAMPLE-IDEAS.md (#3). Pattern matches gmail/ and appointment-scheduler for consistency. Ready for demo/docs.
+
+### 2026-03-XX: README and CONTRIBUTING.md overhaul — community hub launch
+
+**Status:** Complete. README.md completely rewritten; CONTRIBUTING.md created.
+
+**What changed:**
+
+1. **README.md** — Complete rewrite:
+   - New hero: "A community-driven collection of real-world automation samples built with Squad agent teams. Non-technical people design them. AI builds them."
+   - Removed outdated directory listings; added accurate descriptions of all 18 samples
+   - Organized samples by **interaction pattern** (Text Input, Web/Browser, File Analysis) with explanations of what each pattern demonstrates
+   - Expanded "Why These Matter" section with substantive examples (statistical confidence, stock optimization, financial modeling)
+   - Enhanced Contributing section with link to CONTRIBUTING.md
+   - Added "Built with Squad" section explaining recursive development
+   - Simplified language — speaks to normal people, not just engineers
+   - Removed "Key Tech" column; kept descriptions concise and outcome-focused
+
+2. **CONTRIBUTING.md** — New file created:
+   - Warm, welcoming tone; emphasizes non-technical people can contribute
+   - Full prerequisites listed with links (GitHub, Copilot CLI, Node.js)
+   - Mermaid diagram showing contribution flow (idea → fork → Squad session → build → test → PR → merge)
+   - 8-step walkthrough with code examples: fork, clone, branch, Squad session, verification, push, PR
+   - **Example Squad conversation** showing realistic expectation-setting (meal-prep-planner)
+   - Clear sample requirements (standalone, uses Squad SDK, solves real problem, runs without API keys, includes demo data, TypeScript strict mode)
+   - "What makes a good idea?" section with 4 good examples and 3 bad examples
+   - Code of conduct emphasizing kindness and collaboration
+   - Troubleshooting section (check other samples, ask Squad, open issue)
+
+**Tone ceiling applied:**
+- No hype ("amazing", "revolutionary") — concrete language only
+- All claims substantiated with examples
+- Prerequisites and limitations stated clearly
+- Examples show real problems (meal prep, budget tracking, job hunting)
+- Language is welcoming but honest: "You don't need to be a coder" but still requires basic git/GitHub literacy
+
+**Why this matters:**
+- Brady's vision: make this repo THE community hub for life automation samples
+- Target audience: normal people (non-technical), who bring ideas and Squad provides code
+- Barrier to contribution was unclear; CONTRIBUTING.md removes that friction
+- README now accurately reflects 18 samples that exist, not outdated examples
+- Organization by interaction pattern helps new contributors understand diversity of use cases
+
+**Decisions recorded:** See decision entry.
+
+
+---
+
+## 📌 Team Update (2026-03-08T15-09-58Z): Community Hub Documentation Complete
+
+**From:** Scribe  
+**Context:** Squad team pivoted to community samples focus.
+
+**What McManus did:**
+- Authored CONTRIBUTING.md (175 lines) for non-technical contributors
+- Completely rewrote README.md: 18-sample table by interaction pattern, welcoming tone
+- Applied tone ceiling consistently (no hype, all claims substantiated)
+
+**Cross-team note:** Keaton (Lead) wrote proposal for Squad restructure — bench 13 SDK-focused agents, keep 8 for samples, position McManus as "Community Guide" (front door for all contributor intake). Proposal pending Brady's review in decisions.md.
+
+**Next:** Monitor CONTRIBUTING.md feedback. Refinement may be needed based on contributor questions.

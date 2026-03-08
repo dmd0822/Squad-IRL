@@ -2850,3 +2850,429 @@ Better to have 8-9 bulletproof samples that customers trust, than 12 samples wit
 **Why:** Meeting transcripts are inherently text. Adding recording/transcription would pull in heavy dependencies (Whisper, ffmpeg) and platform-specific audio APIs. Keeping it text-input means the sample works everywhere, demonstrates the squad pattern cleanly, and stays focused on what the SDK does best — multi-agent coordination.
 **Impact:** Future samples that need text input can follow this same pattern (readline + file path fallback). The appointment-scheduler already uses a similar approach.
 
+
+---
+
+# Decision: README and CONTRIBUTING.md for Community Hub
+
+**Date:** 2026-03-XX  
+**Owner:** McManus (DevRel)  
+**Status:** Implemented  
+**Audience:** Contributors, community
+
+## Summary
+
+Created new CONTRIBUTING.md and completely rewrote README.md to position "100 Ways to Use Squad" as a community hub for life automation samples. Target: non-technical people who bring ideas; Squad/AI provides code.
+
+## Key Decisions
+
+### 1. Organization by Interaction Pattern (not by domain)
+
+Grouped all 18 samples into three categories:
+- **Text & Conversation Input** — Ideas, transcripts, descriptions (7 samples)
+- **Browser Automation & Web Integration** — Web data, listings, user activity (5 samples)
+- **File & Data Analysis** — Documents, receipts, CSVs, data (6 samples)
+
+**Rationale:** Helps contributors understand the diversity of use cases and recognize which pattern their idea fits. More discoverable than domain-based grouping.
+
+### 2. Description Accuracy
+
+Each sample description came from reading actual squad.config.ts files (confirmed via explore agent). No outdated descriptions; no invented claims.
+
+**Examples:**
+- "ab-test-orchestrator — Turns experiment hypotheses into complete A/B test plans with variant designs, sample size calculations, and statistical analysis frameworks"
+- "receipt-scanner — Extracts receipt data, categorizes expenses, detects anomalies, and generates financial summaries with tax deduction flags"
+
+### 3. Tone for CONTRIBUTING.md
+
+Emphasize that **non-technical people can contribute**:
+- "You don't need to write code yourself. You bring an idea, and the Squad writes the code for you."
+- Included realistic example conversation showing expectation-setting
+- Listed clear sample requirements so contributors know what "done" looks like
+
+### 4. Barriers Removed
+
+**Before:** Contributing section was 4 lines; no explanation of workflow; prerequisites not stated.
+
+**After:** 
+- 8-step walkthrough with code examples
+- Mermaid diagram of contribution flow
+- Example Squad conversation showing the AI interaction
+- Clear sample requirements (standalone project, Squad SDK, real problem, no API keys, demo data, TypeScript strict)
+- Good ideas vs. bad ideas with examples
+
+## Implementation
+
+- **README.md:** Complete rewrite. Old file replaced; structure follows: title/tagline → what is this → quick start → 18 samples (organized by pattern) → why these matter → how to contribute → built with Squad → license
+- **CONTRIBUTING.md:** New file. Structure follows: vision → prerequisites → workflow diagram → step-by-step walkthrough → sample requirements → what makes a good idea → code of conduct → questions
+
+## Tone Ceiling Applied
+
+✅ No hype words ("amazing", "revolutionary", "game-changing")  
+✅ All claims substantiated with examples  
+✅ Prerequisites and limitations stated clearly  
+✅ Language welcoming but honest  
+✅ Examples are real, relatable problems  
+
+## Next Steps
+
+- Brady reviews and approves community hub positioning
+- Marketing can link to CONTRIBUTING.md from external materials
+- Community starts submitting ideas
+- Monitor feedback on clarity; refine examples if contributors get stuck
+
+
+---
+
+## 🟡 PROPOSAL — Pending Brady's Review
+
+# Proposal: Squad Restructure for Non-Technical Community Contributors
+
+**Author:** Keaton (Lead)
+**Date:** 2026-03-08
+**Status:** Proposal — awaiting Brady's review
+**Requested by:** Brady
+
+---
+
+## Executive Summary
+
+The current Squad team has 21 active agents built for one developer (Brady) building an SDK. The routing table references `src/` module paths that don't exist in this repo. The charters speak in developer jargon. None of this serves a non-technical community contributor who wants to say "I have an idea for a life hack" and walk away with a working sample.
+
+**This proposal recommends:**
+
+1. **Slim the active roster from 21 to 8 agents** — bench the SDK-specific roles, keep the sample-building pipeline
+2. **Repurpose McManus as the community front door** — first contact for every new contributor
+3. **Replace module-path routing with sample-lifecycle routing** — idea → spec → build → test → PR
+4. **Add a "Sample Intake" ceremony** — auto-triggers when someone describes a sample idea
+5. **Rewrite active charters in plain English** — remove all SDK jargon, add contributor-facing guidance
+6. **Formalize the SAMPLE-IDEAS.md workflow** — status markers, contributor attribution, assignment tracking
+
+The guiding principle: **every decision should make it easier for someone who has never written code to contribute a sample.**
+
+---
+
+## 1. Team Composition — Active Roster (8 agents)
+
+### The Problem
+
+21 agents is overwhelming. A non-technical contributor doesn't know what a "TUI Engineer" or "REPL & Interactive Shell" specialist does. They don't need them. Most current roles exist to build the Squad SDK — not samples.
+
+### Active Core
+
+| Name | Current Role | Proposed Role | Why Active |
+|------|-------------|---------------|------------|
+| Keaton 🏗️ | Lead | **Sample Lead** | Quality gate — ensures each sample is unique, well-architected, and useful |
+| McManus 📣 | DevRel | **Community Guide** | Front door for contributors. First voice they hear. Plain English always. |
+| Verbal 🧠 | Prompt Engineer | **Sample Architect** | Translates "I want to automate X" into a sample spec: agents, algorithms, data flow |
+| Fenster 🔧 | Core Dev | **Builder** | Writes the TypeScript. Turns specs into working code. |
+| Hockney 🧪 | Tester | **Sample Validator** | Runs `npm install && npm start`. Validates the sample actually works. |
+| Baer 🔒 | Security | **Safety Reviewer** | Checks PRs for PII leaks, unsafe patterns, API key exposure |
+| Kobayashi 🚢 | Git & Release | **PR Manager** | Branch creation, PR workflow, merge management |
+| Redfoot 🎨 | Graphic Designer | **Visual Polish** | README formatting, ASCII art, diagrams, sample visual identity |
+
+### Benched (Available on Request)
+
+| Name | Current Role | Bench Reason |
+|------|-------------|--------------|
+| Edie 👩‍💻 | TypeScript Engineer | Fenster handles TS for sample-scale projects |
+| Kujan 🕵️ | SDK Expert | No SDK integration in sample projects |
+| Fortier ⚡ | Node.js Runtime | Runtime perf isn't a concern for demo samples |
+| Rabin 📦 | Distribution | Samples aren't npm-published |
+| Saul 🔭 | Aspire & Observability | No telemetry in samples |
+| Strausz 🔌 | VS Code Extension | No VS Code extension work |
+| Kovash 🖥️ | REPL & Interactive Shell | No REPL work |
+| Marquez 🎨 | CLI UX Designer | No CLI UX design |
+| Cheritto 🖥️ | TUI Engineer | No TUI components |
+| Breedan 🧪 | E2E Test Engineer | Hockney covers sample testing |
+| Nate ♿ | Accessibility Reviewer | Not applicable to sample scripts |
+| Waingro 💥 | Product Dogfooder | Adversarial QA overkill for samples |
+
+**Benched agents keep their charters and can be activated** if a sample requires specialized expertise (e.g., a sample involving VS Code integration would activate Strausz). The bench isn't a firing — it's reducing noise for contributors.
+
+### Universe Note
+
+All names stay in The Usual Suspects + Heat universe per the casting decision (2026-02-21). No new characters needed — McManus's existing personality ("makes complex things feel simple") is the ideal Guide voice. Repurposing > adding.
+
+---
+
+## 2. Routing Rules — Sample Lifecycle
+
+### The Problem
+
+Current routing references `src/adapter/`, `src/agents/`, `src/build/`, etc. — directories that don't exist in this repo. There's no routing for "I have an idea for a sample." A contributor arriving at this repo has zero guidance on who to talk to.
+
+### Proposed Routing Table
+
+Replace the entire "Work Type → Agent" and "Module Ownership" sections with:
+
+```markdown
+## Work Type → Agent
+
+| Work Type | Agent | Examples |
+|-----------|-------|---------|
+| New sample idea | McManus 📣 | "I want to automate my grocery shopping", "Can Squad help me plan meals?" |
+| Sample architecture | Verbal 🧠 | Agent design, algorithm selection, data flow for a sample |
+| Sample building | Fenster 🔧 | TypeScript implementation, package.json, squad.config.ts |
+| Sample testing | Hockney 🧪 | Verify `npm install && npm start` works, edge case validation |
+| Sample README/docs | McManus 📣 | README.md for each sample, SAMPLE-IDEAS.md updates |
+| PR review | Keaton 🏗️ + Baer 🔒 | Architecture quality + security/PII check |
+| Git & PR workflow | Kobayashi 🚢 | Branch creation, PR management, merge |
+| Visual polish | Redfoot 🎨 | ASCII art, diagrams, README formatting |
+| Architecture decisions | Keaton 🏗️ | Sample uniqueness, pattern overlap, trade-offs |
+| Security review | Baer 🔒 | PII in sample data, API key patterns, safe defaults |
+
+## Sample Folder Ownership
+
+| Folder Pattern | Primary | Secondary |
+|----------------|---------|-----------|
+| `{sample-name}/` | Fenster 🔧 | Verbal 🧠 |
+| `{sample-name}/README.md` | McManus 📣 | Fenster 🔧 |
+| `{sample-name}/squad.config.ts` | Verbal 🧠 | Fenster 🔧 |
+| `SAMPLE-IDEAS.md` | McManus 📣 | Keaton 🏗️ |
+| `README.md` (root) | McManus 📣 | Keaton 🏗️ |
+```
+
+### Default Routing for Unknown Intent
+
+Add a new routing principle:
+
+> **6. Unknown intent → McManus first.** If a contributor doesn't specify an agent or use technical language, route to McManus. McManus will greet them, understand their idea, and route internally. The contributor never needs to know agent names.
+
+### Routing Principles (Updated)
+
+```markdown
+## Routing Principles
+
+1. **McManus is the front door** — new contributors always start with McManus unless they ask for someone specific.
+2. **Scribe always runs** after substantial work, always as background. Never blocks.
+3. **Quick facts → coordinator answers directly.** Don't spawn for trivial questions.
+4. **"I have an idea" → Sample Intake ceremony.** Auto-trigger the full pipeline.
+5. **"Team, ..." → fan-out.** Spawn all relevant agents in parallel.
+6. **Plain English always.** No agent should use jargon when talking to contributors. If a contributor doesn't understand, the agent failed.
+```
+
+---
+
+## 3. Charter Updates — Plain English, Contributor-Facing
+
+### The Problem
+
+Current charters describe SDK internals. Verbal talks about "tiered response modes" and "spawn templates." Fenster talks about "casting system: universe selection is deterministic." A non-technical contributor reading these charters would be lost.
+
+### What to Change in Each Active Charter
+
+**All active agents should add a "For Contributors" section:**
+
+```markdown
+## For Contributors
+
+When working with community contributors (non-developers):
+- Explain what you're doing and why, in plain English
+- Never assume they know TypeScript, npm, or git
+- If you need to show code, explain what it does
+- Proactively offer next steps — don't wait for them to ask
+- If something fails, explain what went wrong and what you'll try next
+```
+
+**Specific charter changes:**
+
+| Agent | Remove/Change | Add |
+|-------|--------------|-----|
+| McManus | Remove "i18n patterns", "API documentation" from ownership | Add "Community onboarding", "Contributor handholding", "Sample idea intake" |
+| McManus | Remove "Tone ceiling" as primary concern | Add "First 60 seconds" principle: a new contributor should feel welcomed and understood within 60 seconds |
+| Verbal | Remove "Tiered response modes", "Silent success detection", "Skills follow confidence lifecycle" | Add "Sample spec format: Problem → Agents → Algorithm → Data Flow → Output" |
+| Verbal | Change "Prompts are executable — treat like code" | Change to "Sample designs are blueprints — clear enough that Fenster can build without questions" |
+| Fenster | Remove all casting/CLI/Ralph references | Add "Sample pattern: package.json → squad.config.ts → index.ts → README.md" |
+| Fenster | Remove "Drop-box pattern" and "CLI stays thin" | Add "Every sample must run with `npm install && npm start` — no exceptions" |
+| Hockney | Remove "Multi-agent concurrency tests" and "Casting overflow edge cases" | Add "Sample validation checklist: installs clean, runs without errors, produces meaningful output, no API keys required" |
+| Baer | Remove "Hook lifecycle and security lifecycle" | Add "Community PR safety: check for accidentally committed emails, API keys, personal data in sample data files" |
+| Kobayashi | Keep guardrails (those are good regardless) | Add "Community PR workflow: fork → branch → build → PR → review → merge" |
+
+---
+
+## 4. New Ceremony: "Sample Intake"
+
+### The Problem
+
+There's no defined workflow for "someone has an idea." The current ceremonies (Design Review, Retrospective) are engineering ceremonies. Community contributors need a welcoming, structured intake process.
+
+### Ceremony Definition
+
+```markdown
+## Sample Intake
+
+| Field | Value |
+|-------|-------|
+| **Trigger** | auto |
+| **When** | before |
+| **Condition** | contributor describes a sample idea, mentions "I want to build", "idea for a sample", or similar |
+| **Facilitator** | McManus |
+| **Participants** | McManus → Verbal → Keaton (sequential) |
+| **Time budget** | focused |
+| **Enabled** | ✅ yes |
+
+**Flow:**
+
+1. **McManus greets** — Welcome the contributor. Ask: "What problem does this solve in your life?" and "Who would use this?" Keep it conversational. No jargon.
+
+2. **McManus structures** — Translate the idea into a one-paragraph description: Problem, Who benefits, What the agents would do. Share this back with the contributor: "Here's what I think you're describing — does this sound right?"
+
+3. **Verbal designs** — Take the structured idea and produce a sample spec:
+   - Sample name (kebab-case folder name)
+   - Problem statement (1-2 sentences, plain English)
+   - Agent team (3-5 agents with one-line descriptions)
+   - Key algorithm or technique
+   - Input → Output description
+   - How it's different from existing samples
+
+4. **Keaton reviews** — Check: Is this unique? Does it overlap with an existing sample? Is the scope right (not too big, not trivial)? Is it a problem real people have?
+
+5. **If approved** — Add to SAMPLE-IDEAS.md with 📋 status. McManus tells the contributor: "Your idea is approved! Here's what happens next: Fenster will build it, Hockney will test it, and we'll create a PR when it's ready."
+
+6. **If needs adjustment** — McManus explains what needs to change and works with the contributor to refine. Never reject — reshape.
+```
+
+---
+
+## 5. SAMPLE-IDEAS.md Workflow
+
+### The Problem
+
+SAMPLE-IDEAS.md is currently a static ideas list with ✅ markers for completed samples. There's no tracking for in-progress work, no contributor attribution, and no assignment tracking.
+
+### Proposed Format
+
+Each idea entry should follow this structure:
+
+```markdown
+## {number}. {status} {Sample Name}
+**Problem:** {One sentence, plain English}
+**Contributor:** {GitHub username or "Brady" for originals}
+**Status:** {status marker}
+**Assigned:** {agent names, once in progress}
+
+{Description of how it works — agents, algorithms, user experience}
+```
+
+### Status Markers
+
+| Marker | Meaning | Who Sets It |
+|--------|---------|-------------|
+| 📋 | Not started — idea approved, waiting for build | Keaton (after Sample Intake) |
+| 🚧 | In progress — Fenster is building | Fenster (when starting) |
+| 🧪 | Testing — Hockney is validating | Hockney (when testing) |
+| ✅ | Complete — merged to main | Kobayashi (after merge) |
+
+### Community Contribution Tracking
+
+Add a new section to SAMPLE-IDEAS.md:
+
+```markdown
+## Community Contributions
+
+Want to contribute a sample? You don't need to be a developer!
+
+1. **Fork this repo** and start a Copilot CLI session
+2. **Tell the team your idea** — just describe the problem you want to solve in plain English
+3. **McManus will guide you** through the process — no technical knowledge required
+4. **The Squad builds it** — Verbal designs it, Fenster codes it, Hockney tests it
+5. **You get credit** — your GitHub username appears as the contributor
+6. **Open a PR** — Kobayashi helps you submit it back to the repo
+
+Status key: 📋 Not started · 🚧 In progress · 🧪 Testing · ✅ Complete
+```
+
+---
+
+## 6. team.md Changes
+
+### Project Context Update
+
+The current Project Context section describes "The programmable multi-agent runtime for GitHub Copilot" and references "TypeScript (strict mode, ESM-only), Node.js ≥20, @github/copilot-sdk, Vitest, esbuild." This should change to:
+
+```markdown
+## Project Context
+
+- **Owner:** Brady
+- **Stack:** TypeScript, Node.js ≥20, Squad SDK
+- **Description:** Community-driven collection of real-world life automation samples built with Squad agent teams. Each sample is a standalone project solving a problem real people have.
+- **Audience:** Non-technical contributors who want to build life automations using AI agent teams
+- **Contribution model:** Fork → describe idea → Squad builds → PR back
+- **Created:** 2026-02-21
+```
+
+### Coding Agent Capabilities Update
+
+The current @copilot capabilities reference "Bug fixes with clear reproduction steps", "API endpoint additions", etc. Update for sample context:
+
+```markdown
+### Capabilities
+
+**🟢 Good fit:**
+- Building new samples from approved specs
+- Fixing broken samples (npm install/start failures)
+- Adding README documentation to samples
+- Updating SAMPLE-IDEAS.md status markers
+- Dependency updates across samples
+
+**🟡 Needs review:**
+- New sample architectures without a spec from Verbal
+- Modifying the contribution workflow docs
+- Cross-sample refactoring
+
+**🔴 Not suitable:**
+- Deciding whether a sample idea is worth building (that's Keaton)
+- Designing sample agent teams (that's Verbal)
+- Community interaction (that's McManus)
+```
+
+---
+
+## Trade-offs and Risks
+
+### Risks of This Approach
+
+| Risk | Severity | Mitigation |
+|------|----------|------------|
+| **Benched agents lose context** — if activated later, they may not know the project pivoted | Medium | Add a note to each benched charter: "This project is now a community samples repo. Read README.md before starting." |
+| **McManus bottleneck** — if McManus is the front door for everything, it could become a bottleneck | Low | McManus only handles intake and docs. Building/testing/PRs happen in parallel after intake. |
+| **Oversimplification** — removing SDK roles means we can't handle complex samples that need deep runtime expertise | Low | Bench is not deletion. Any agent can be activated for a specific sample. |
+| **Existing contributors confused** — people used to the current team structure may be disoriented | Medium | McManus writes a "What Changed" section in the root README explaining the community pivot |
+| **Quality drop** — fewer reviewers means less scrutiny per sample | Medium | Keaton + Baer still review every PR. That's architecture + security. Sufficient for samples. |
+
+### Trade-offs Accepted
+
+1. **Fewer specialists = less depth, more speed.** A community contributor shouldn't wait for 5 agents to weigh in on a grocery list automation. 8 agents is enough.
+
+2. **McManus is repurposed, not replaced.** McManus's existing voice ("makes complex things feel simple") is exactly what a Guide needs. Creating a new character adds complexity without adding capability.
+
+3. **Charters get simpler.** We lose the detailed SDK knowledge in charter files. That's fine — this isn't an SDK repo anymore. If Squad SDK work resumes, those charters exist in git history.
+
+4. **Module ownership disappears.** Instead of `src/` paths, we have sample folder ownership. Simpler, matches the actual repo structure.
+
+### What This Enables
+
+- A non-technical person can describe "I spend 2 hours every week planning meals" and walk away with a working `meal-planner/` sample
+- The Squad team feels small and approachable — 8 agents with clear roles, not 21 specialists speaking jargon
+- SAMPLE-IDEAS.md becomes a living backlog with contributor attribution
+- The path from idea to PR is well-defined and ceremony-driven
+- Future samples maintain quality through the Keaton + Baer review gate
+
+---
+
+## Implementation Order (If Approved)
+
+1. **Update team.md** — new roster, bench section, updated project context
+2. **Update routing.md** — sample lifecycle routing, remove module ownership
+3. **Update active charters** (8 agents) — plain English, contributor-facing sections
+4. **Update ceremonies.md** — add Sample Intake ceremony
+5. **Update SAMPLE-IDEAS.md** — add community contribution section, status markers
+6. **Update root README.md** — contribution workflow for non-developers
+
+**Estimated scope:** ~2 sessions of focused work. No code changes — all documentation/configuration.
+
+---
+
+*Proposal by Keaton. Decisions that compound — this restructure makes every future community contribution easier.*
+

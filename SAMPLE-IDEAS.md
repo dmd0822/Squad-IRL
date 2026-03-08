@@ -1,4 +1,4 @@
-# 18 Real-World Squad Use Cases
+# Real-World Squad Use Cases
 
 > Each is technically unique. Each solves a problem people actually have. Each shows multi-agent collaboration visibly.
 
