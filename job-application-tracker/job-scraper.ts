@@ -34,15 +34,36 @@ export async function launchBrowser(): Promise<{ browser: Browser; page: Page }>
 }
 
 /**
- * Navigate to Indeed and auto-search for the given query.
+ * Navigate to Indeed search results for the given query.
+ *
+ * Uses direct URL navigation to bypass Indeed's autocomplete dropdown,
+ * which intercepts Enter keypresses on the search form. Falls back to
+ * the form-fill approach if direct navigation doesn't yield results.
  */
 export async function navigateToJobBoard(page: Page, searchQuery: string): Promise<void> {
+  const resultsSelector = '.jobsearch-ResultsList, .job_seen_beacon, [id="mosaic-jobResults"]';
+  const searchUrl = `https://www.indeed.com/jobs?q=${encodeURIComponent(searchQuery)}`;
+
+  await page.goto(searchUrl, {
+    waitUntil: 'domcontentloaded',
+    timeout: LOAD_TIMEOUT_MS,
+  });
+
+  try {
+    await page.waitForSelector(resultsSelector, { timeout: 8_000 });
+    return;
+  } catch {
+    // Direct URL didn't surface results — fall back to form interaction
+  }
+
   await page.goto('https://www.indeed.com', {
     waitUntil: 'domcontentloaded',
     timeout: LOAD_TIMEOUT_MS,
   });
 
-  const searchInput = page.locator('#text-input-what, input[name="q"], input[id*="what"], input[placeholder*="Job title"]').first();
+  const searchInput = page.locator(
+    '#text-input-what, input[name="q"], input[id*="what"], input[placeholder*="Job title"]',
+  ).first();
   await searchInput.waitFor({ state: 'visible', timeout: 15_000 });
   await searchInput.click();
   await searchInput.fill(searchQuery);
