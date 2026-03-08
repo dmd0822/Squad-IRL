@@ -24,6 +24,11 @@
 ### 📌 Team update (2026-02-22T10:03Z): PR #300 architecture review completed — REQUEST CHANGES verdict with 4 blockers (proposal doc, type safety on castingPolicy, missing sanitization, ambiguous .ai-team/ fallback) — decided by Keaton
 - Zero-dependency scaffolding preserved, strict mode enforced, build clean (tsc 0 errors)
 
+### 📌 Team update (2026-03-08T16:57:31Z): OTel initialization + session timeout increase across all 19 samples — decided by Fenster
+- All samples updated with `initSquadTelemetry()` initialization scaffolding (Batches 1-4, agents agent-45/46/47/48)
+- Session timeout bumped from 300_000ms (5min) to 600_000ms (10min) to accommodate OTel overhead
+- Context: Brady reported content-creation sample timing out at 5 minutes; increased headroom for telemetry + network latency
+
 **Phase 3 Blocking (2026-02-22 onwards):**
 - Ralph start(): EventBus subscription + health checks (14 TODOs)
 - Coordinator initialize()/route(): CopilotClient wiring + agent manager (13 TODOs)
@@ -864,3 +869,21 @@ pm start works.
 📌 Team update (2026-03-08T16:10:04Z): Conversation loop pattern established for samples with persistent artifacts (deck files, reports, documents). Supports iterative user modification. — decided by Fenster
 
 📌 Team update (2026-03-08T16:26:05Z): Arrow functions required inside page.evaluate() contexts. Named functions cause `__name is not defined` errors in ESM/strict mode. Fix applied to mtg-commander-deck-builder/card-scraper.ts. — Fenster
+
+
+### Sample Timeout Increase (2026-03-09)
+
+**Requested by:** Brady. Increase timeout from 5 minutes (300_000ms) to 10 minutes (600_000ms) across all 19 samples.
+
+**Reason:** Multi-agent LLM workflows were timing out, especially content-creation sample with 4-agent pipeline (Researcher → Outliner → Writer → Editor).
+
+**Changed:** All 19 sample index.ts files (ab-test-orchestrator, appointment-scheduler, bug-triage, compliance-checker, content-creation, contract-reviewer, gmail, inventory-manager, job-application-tracker, linkedin-monitor, meeting-recap, mtg-commander-deck-builder, price-monitor, real-estate-analyzer, realtor-sales-package, receipt-scanner, social-media-manager, support-ticket-router, travel-planner).
+
+**Pattern:** Each file has 2 timeout occurrences: `session.sendAndWait({...}, 300_000)` and `setTimeout(resolve, 300_000)` in the fallback path. Both changed to 600_000.
+
+## Learnings
+
+- Multi-agent workflows need generous timeouts. 5 minutes isn't enough for complex pipelines with sequential agent collaboration. 10 minutes is the new baseline for samples.
+- The timeout pattern appears twice in each sample: explicit timeout in sendAndWait() and fallback timeout in the Promise-based event listener pattern.
+- Batch edit tool with parallel invocations (38 edits in one tool call block) is efficient for bulk changes across multiple files.
+
