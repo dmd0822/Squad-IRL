@@ -126,3 +126,5 @@
 - README and privacy note updated to clarify privacy boundary
 - Hotel folio sample created for enhanced demo scenario
 - Demonstrates security-first thinking: privacy preservation without sacrificing functionality
+
+📌 Team update (2026-03-08T16:10:04Z): Conversation loop pattern established for samples with persistent artifacts (deck files, reports, documents). Supports iterative user modification. — decided by Fenster

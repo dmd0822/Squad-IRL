@@ -310,16 +310,34 @@
 
 ---
 
+## 19. 🚧 MTG Commander Deck Builder (Playwright)
+**Problem:** Magic: The Gathering Commander players spend hours researching cards across multiple sites (TCGPlayer, EDHREC) to build 100-card Commander decks. Finding the right synergies, maintaining proper mana curves, and balancing land counts is tedious and error-prone.
+
+**How it works:**
+- Card Scout agent: Uses Playwright to scrape EDHREC and TCGPlayer for card data based on the user's commander or theme choice
+- Deck Architect agent: Builds a balanced 100-card deck structure, selects cards from the scouted data
+- Synergy Analyst agent: Evaluates card interactions, flags synergies and combos, rates deck coherence
+- Budget Advisor agent: Checks card prices, suggests budget alternatives, calculates total deck cost
+- User sees: Complete Commander deck saved as JSON, with synergy notes and price breakdown
+- Follow-up loop: Users can issue modification commands ("swap 5 blue sources for more creatures") and the squad reads the saved deck, makes changes, and saves the updated version
+
+**Tech:** Playwright for EDHREC/TCGPlayer browsing, JSON deck files on disk, Squad SDK with conversational follow-up loop, streaming responses
+
+**Why it's compelling:** Commander is the most popular MTG format. Building decks is the most time-consuming part. This turns hours of card research into minutes of conversation, plus the ability to iterate via natural language commands.
+
+---
+
 ## Summary
 
-**Legend:** ✅ Built & working
+**Legend:** ✅ Built & working | 🚧 In progress
 
-**All 18 use cases are fully built with clean TypeScript builds:**
-- ✅ 18/18 samples complete — zero ideas remaining
+**18 use cases fully built, 1 in progress — all with clean TypeScript builds:**
+- ✅ 18/19 samples complete — 1 in progress
 - ❌ 4 ideas reviewed and dropped by team (Podcast Transcription, Competitive Intelligence Monitor, Medical Appointment & Insurance Verification, E-Commerce Personalization)
-- ✅ 6 with Playwright browser automation (Price Monitor, Travel Planner, Real Estate, Job Tracker, Realtor Sales Package, LinkedIn Monitor)
+- ✅ 7 with Playwright browser automation (Price Monitor, Travel Planner, Real Estate, Job Tracker, Realtor Sales Package, LinkedIn Monitor, MTG Commander Deck Builder)
 - ✅ 5 with file/text-based analysis (Receipt Scanner with OCR, Contract Review, Support Tickets, Compliance Checker, Inventory Manager)
 - ✅ 4 with text input interaction (Appointment Scheduler, Content Creation, Meeting Recap, Social Media Manager)
+- ✅ 1 with conversational deck modification loop (MTG Commander Deck Builder)
 - ✅ 1 with GitHub CLI integration (Bug Triage)
 - ✅ 1 with experiment brief input (A/B Test Orchestrator)
 - ✅ 1 with OCR image scanning (Receipt Scanner — tesseract.js for receipt photos + hotel folio itemization)

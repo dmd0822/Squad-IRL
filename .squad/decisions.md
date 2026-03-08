@@ -3307,3 +3307,30 @@ Reduced the default issue fetch limit from 30 to 5. This keeps the sample fast, 
 - 5 is enough to demonstrate all four agents meaningfully (classification, duplicate detection across pairs, triage actions, summary dashboard)
 - If the sample grows a CLI flag for `--limit`, the default stays at 5
 
+
+---
+
+# Decision: Conversation Loop Pattern for Samples
+
+**Author:** Fenster  
+**Date:** 2026-03-09  
+**Status:** Implemented  
+
+## Context
+
+The MTG Commander Deck Builder sample introduces a **conversation loop** pattern that extends the gmail gold standard. After the initial squad response, users can continue modifying their deck through follow-up commands.
+
+## Decision
+
+Samples that produce a persistent artifact (deck file, report, document) should support a conversation loop:
+
+1. Initial request → squad produces artifact → save to disk
+2. Loop: user provides modification → load artifact from disk → send to squad with context → parse updated artifact → save to disk
+3. User types 'done' to exit
+
+The key implementation detail: `sendAndStream()` returns the full response text (not just void like gmail) so the caller can parse structured output from the streamed response.
+
+## Scope
+
+This pattern applies to samples where the output is a file that evolves through conversation (deck lists, reports, plans). One-shot samples like gmail don't need it.
+

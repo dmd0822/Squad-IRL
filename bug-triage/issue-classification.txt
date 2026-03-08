@@ -1,0 +1,90 @@
+================================================================================
+ISSUE CLASSIFICATION REPORT
+Generated: 2026-03-08
+================================================================================
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ ISSUE #271: feat: rename workstreams → SubSquads (community decision)       │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ Category:    Chore                                                           │
+│ Severity:    MEDIUM — Impacts multiple systems (CLI, SDK, docs, tests) and  │
+│              requires deprecation cycle, but no functional breakage          │
+│ Confidence:  HIGH                                                            │
+│ Key Signals: • Community-driven naming decision                              │
+│              • Wide surface area (8+ components affected)                    │
+│              • Backward compatibility required                               │
+│              • Well-scoped refactoring task                                  │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ ISSUE #266: Recipes & Advanced Scenarios (recipes.html) shows 403 error     │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ Category:    Bug                                                             │
+│ Severity:    MEDIUM — Public documentation broken, but not core functionality│
+│ Confidence:  HIGH                                                            │
+│ Key Signals: • Already labeled as P2 bug                                     │
+│              • In-progress status (squad:mcmanus, squad:cheritto)            │
+│              • Clear reproduction (public URL returns 403)                   │
+│              • Path mismatch between HTML link and markdown source           │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ ISSUE #261: feat: CommunicationAdapter — platform-agnostic agent comms      │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ Category:    Feature Request                                                 │
+│ Severity:    MEDIUM — Architecture improvement; current ad-hoc approach      │
+│              works but lacks consistency and platform flexibility            │
+│ Confidence:  HIGH                                                            │
+│ Key Signals: • Already in review (status:in-review)                          │
+│              • Addresses platform lock-in concerns                           │
+│              • Linked to discussion #242 with stakeholder needs              │
+│              • Formalizes existing communication patterns                    │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ ISSUE #260: Explore: GitHub.com-based Squad experience                      │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ Category:    Feature Request                                                 │
+│ Severity:    LOW — Exploratory research; Squad already functions via CLI     │
+│              and Codespaces; this explores additional deployment models      │
+│ Confidence:  HIGH                                                            │
+│ Key Signals: • Labeled as backlog (not urgent)                               │
+│              • Exploratory/feasibility investigation                         │
+│              • Codespaces already works (most viable path)                   │
+│              • Multiple potential approaches to evaluate                     │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ ISSUE #259: Investigate: VS Code crash during Squad execution               │
+├──────────────────────────────────────────────────────────────────────────────┤
+│ Category:    Bug                                                             │
+│ Severity:    HIGH — IDE crash severely impacts user experience; potential    │
+│              resource exhaustion or instability caused by Squad              │
+│ Confidence:  MEDIUM (needs investigation to confirm causation)               │
+│ Key Signals: • VS Code crashes with no error dialog                          │
+│              • Coincides with Squad task execution                           │
+│              • Nightly build (may be VS Code instability vs Squad issue)     │
+│              • Investigation plan suggests resource-heavy operations         │
+│              • Labeled P2 with needs-research                                │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+SUMMARY
+================================================================================
+
+Bugs:          2 (#266-Medium, #259-High)
+Features:      2 (#261-Medium, #260-Low)
+Chores:        1 (#271-Medium)
+
+High Severity: 1 (VS Code crash investigation)
+Med Severity:  3 (rename refactor, 403 error, CommunicationAdapter)
+Low Severity:  1 (GitHub.com exploration)
+
+SECURITY NOTES: None of these issues appear to have direct security implications.
+
+PRIORITY RECOMMENDATIONS:
+1. #259 (HIGH) - Investigate VS Code crash (user-blocking, stability concern)
+2. #266 (MED)  - Fix 403 error (already in-progress, user-facing docs broken)
+3. #271 (MED)  - Community rename (affects API surface, plan deprecation)
+4. #261 (MED)  - CommunicationAdapter (already in-review, architectural benefit)
+5. #260 (LOW)  - GitHub.com exploration (research task, no urgency)

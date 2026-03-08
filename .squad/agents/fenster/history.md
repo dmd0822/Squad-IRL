@@ -823,3 +823,26 @@ pm start works.
 - PropertyData interface with `source` field enables clean cross-referencing when both Redfin and Zillow return data for overlapping listings
 
 📌 Team update (2026-03-08T15:19:17Z): Bug-triage sample issue fetch limit reduced to 5 per run, preventing oversized prompts and processing failures — decided by Fenster
+
+### MTG Commander Deck Builder Sample (2026-03-09)
+
+**Requested by:** Brady. Build the complete MTG Commander Deck Builder sample following the gmail gold standard pattern.
+
+**What was built:**
+- `card-scraper.ts` — Playwright scraper for EDHREC with 3 fallback DOM strategies (card containers, card links, image alt text). Supports commander pages and theme pages. Auto-scrolling for lazy-loaded content.
+- `deck-manager.ts` — Full deck file I/O: save/load JSON + formatted .txt, parse deck lists from squad responses (handles "1x Card Name" patterns with section header detection), format decks for prompt context.
+- `index.ts` — Main entry point following gmail pattern exactly: banner → Playwright → EDHREC scrape → close browser → Squad SDK connect → stream response → parse deck → save to disk → **conversation loop** for follow-up modifications → closing inspiration block.
+- `package.json`, `tsconfig.json`, `README.md`, `.gitignore` — all matching established patterns.
+- `squad.config.ts` created by Verbal in parallel (not by Fenster).
+
+**Key difference from gmail:** Conversation loop. After initial deck build, user can keep modifying ("change my mana base", "add more card draw") — each iteration loads current deck from disk, sends to squad, parses response, saves updated deck.
+
+**Files:** mtg-commander-deck-builder/index.ts, card-scraper.ts, deck-manager.ts, package.json, tsconfig.json, README.md, .gitignore
+
+## Learnings
+- Conversation loop pattern (while/true with load→modify→save) is a clean extension of the gmail one-shot pattern. The key is that `sendAndStream` returns the full response text so we can parse the deck from it.
+- EDHREC DOM scraping needs aggressive scroll-triggering (lazy-loaded card sections) and multi-strategy fallbacks, similar to gmail but with category inference from section headers.
+- Commander deck response parsing is tricky — squad output varies in format. Using section header detection + "Nx Card Name" regex with fallback to existing deck data for category/metadata preservation.
+- `tsc --noEmit` passes cleanly even when squad.config.ts hasn't been created yet — the tsconfig `include` list doesn't error on missing files, and the `.js` import in index.ts skips resolution when source is absent.
+
+📌 Team update (2026-03-08T16:10:04Z): Conversation loop pattern established for samples with persistent artifacts (deck files, reports, documents). Supports iterative user modification. — decided by Fenster

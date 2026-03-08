@@ -1,0 +1,21 @@
+{
+  "name": "mtg-commander-deck-builder",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Build Magic: The Gathering Commander decks with an AI squad — Card Scout, Deck Architect, Synergy Analyst, and Budget Advisor collaborate to create balanced 100-card decks.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx tsx index.ts",
+    "build": "npx tsc",
+    "postinstall": "npx playwright install chromium"
+  },
+  "dependencies": {
+    "@bradygaster/squad-sdk": "^0.8.0",
+    "playwright": "^1.52.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "tsx": "^4.19.4"
+  }
+}

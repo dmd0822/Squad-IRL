@@ -118,3 +118,17 @@ Created `.squad/skills/history-hygiene/SKILL.md` to codify lesson from Kobayashi
 - 4-agent pattern consistent with gmail, linkedin-monitor, contract-reviewer samples
 - Aspirational spec (6 agents) remains in SAMPLE-IDEAS.md; implementation uses practical 4-agent design
 - Future extension: Publisher and Fact-Checker agents can be added
+
+### MTG Commander Deck Builder Sample — Squad Config Design
+- Created `mtg-commander-deck-builder/squad.config.ts` with 4 agents: Card Scout, Deck Architect, Synergy Analyst, Budget Advisor
+- Followed gmail/squad.config.ts pattern exactly: same imports, section structure, defineSquad export shape
+- **Domain depth showcase**: Every charter embeds real Commander format knowledge — commander tax, color identity edge cases (hybrid mana, Phyrexian mana, color indicators), mana curve distribution benchmarks (10-12 one-drops, 14-16 two-drops), ramp/draw/interaction ratio targets (8-12/8-10/8-12)
+- Deck Architect charter distinguishes NEW deck builds vs. MODIFY flows — modification requires surgical swaps maintaining exactly 100 cards
+- Synergy Analyst charter covers full combo taxonomy: 2-card combos, multi-card chains, value engines, infinite combos (with playgroup disclaimer), and anti-synergies/nombos
+- Budget Advisor uses tiered upgrade path (Tier 1/2/3) and honest trade-off language ("you lose X, you save Y") — no shame, every price point valid
+- Routing: 6 rules — 4 direct routes for individual agents, 1 full-tier for new deck builds, 1 dual-agent route for modifications (Deck Architect + Synergy Analyst)
+- Dual-agent modification route is new pattern: changes need both structural validation AND synergy re-check
+- Model: claude-sonnet-4.5 preferred, claude-haiku-4.5 fallback — consistent with all samples
+- On-demand ceremony: "deck-review" — all 4 agents evaluate card selection, balance, synergies, and budget
+
+📌 Team update (2026-03-08T16:10:04Z): Conversation loop pattern established for samples with persistent artifacts (deck files, reports, documents). Supports iterative user modification. — decided by Fenster

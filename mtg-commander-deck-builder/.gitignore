@@ -1,0 +1,6 @@
+node_modules
+.edhrec-session
+decks/
+*.js
+*.js.map
+*.d.ts
