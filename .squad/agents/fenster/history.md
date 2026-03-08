@@ -894,3 +894,10 @@ pm start works.
 - **esbuild `__name` bug in Playwright `page.evaluate()`:** esbuild injects `__name()` decorators on `function` declarations. Inside `page.evaluate()` callbacks, those decorators reference a Node.js-context variable that doesn't exist in the browser. Fix: convert all `function` declarations inside evaluate blocks to arrow functions (`const fn = (...) => ...`).
 - **Playwright auto-search pattern for Redfin/Zillow:** Use `page.locator()` with multiple CSS selectors (comma-separated) + `.first()`, then `fill()` + `keyboard.press('Enter')` with brief waits for autocomplete debounce. Keep a user confirmation pause after auto-navigation so they can adjust filters.
 - **Key file paths:** `realtor-sales-package/realtor-scraper.ts` (Playwright scraping + navigation), `realtor-sales-package/index.ts` (CLI orchestrator).
+
+### 📌 Team update (2026-03-08T18:38:00Z): Full sample audit completed — 16 samples verified, 3 fixed — decided by Fenster
+- All 16 samples audited (13 passed, 3 fixed)
+- Playwright samples (realtor-sales-package, price-monitor, linkedin-monitor): Fixed \__name\ bug (esbuild function declaration wrapping) + auto-navigation sequences
+- Non-Playwright samples: All 13 passed dep install, tsc, timeout config, OTel wiring, startup checks
+- Commit: 6d087c0
+- Context: Full quality assurance sweep of 100-ways-to-use-squad samples completed
