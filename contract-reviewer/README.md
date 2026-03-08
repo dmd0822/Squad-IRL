@@ -1,61 +1,83 @@
-# Contract Reviewer — Squad Multi-Agent Demo
+# Contract Reviewer — Squad Edition
 
-A standalone TypeScript simulation demonstrating how a **Squad** of five specialized AI agents collaborates to review a 15-clause SaaS contract. No external AI APIs are called — all analysis logic is deterministic and hardcoded to showcase the multi-agent orchestration pattern.
+A **real** Squad-powered contract review tool. Point it at a contract file and a team of four AI legal specialists will extract clauses, score risk, suggest negotiation alternatives, and deliver an executive summary — all with 🔴🟡🟢 traffic-light flags.
 
 ## What It Does
 
-The demo feeds a realistic (and intentionally vendor-favorable) SaaS contract through a pipeline of five agents, each with a distinct role:
+You provide a contract (`.txt` or `.md` file, or paste text). The squad reads it and delivers:
 
 | Agent | Role |
 |---|---|
-| 📄 **Parser** | Extracts clause type, key terms, numeric values, and obligated party from each clause |
-| 🔍 **Risk Analyzer** | Scores every clause 1–10 by comparing extracted values against company-policy thresholds |
-| 📊 **Comparator** | Benchmarks each clause against industry-standard terms and calculates deviation percentages |
-| 💡 **Negotiation Advisor** | Drafts alternative language and prioritizes changes for high-risk clauses (score ≥ 7) |
-| 📋 **Summary Writer** | Produces an executive dashboard with traffic-light grid, top concerns, and a sign/negotiate/walk recommendation |
+| 📄 **Clause Extractor** | Identifies and structures every material clause — payment, termination, liability, IP, non-compete, etc. |
+| 🔴 **Risk Assessor** | Scores each clause 1-10 against industry benchmarks. Flags one-sided provisions and missing protections. |
+| 💡 **Negotiation Advisor** | Drafts specific alternative language for risky clauses with leverage analysis and fallback positions. |
+| 📋 **Summary Reporter** | Executive briefing: risk heatmap, top concerns, action items, and a sign/negotiate/walk recommendation. |
 
-## Risk Scoring Algorithm
-
-Each clause is evaluated against a set of predefined thresholds:
-
-- **Payment terms** — Net 30 is standard; anything beyond 45 days elevates risk
-- **Auto-renewal duration** — Acceptable up to 1 year; 2-year locks score high
-- **Liability cap** — Must cover at least 12 months of fees; shorter caps are penalized
-- **SLA uptime** — 99.9 % is the industry floor; 99.5 % or below is a red flag
-- **Price escalation** — Increases above 5 % per year are flagged as high risk
-- **Termination asymmetry** — Unequal notice periods between customer and vendor raise the score
-
-Risk scores are integers from 1 (benign) to 10 (walk-away). The final contract score is a weighted average that emphasizes liability, data, and IP clauses.
-
-## Benchmark Comparison
-
-For every clause the Comparator agent holds an "industry standard" value (e.g., Net 30 payment, 99.9 % SLA, 12-month liability cap). It computes a deviation percentage:
-
-```
-deviation = ((actual - standard) / standard) * 100
-```
-
-Clauses deviating more than 50 % worse than the benchmark are flagged for negotiation.
-
-## Running
+## Quick Start
 
 ```bash
+# Install dependencies
 npm install
+
+# Review the included sample contract
+npm start -- sample-contract.md
+
+# Review your own contract
+npm start -- /path/to/your-contract.txt
+
+# Paste text interactively (no file needed)
 npm start
 ```
 
-Output is a richly formatted terminal report (ANSI colors, box-drawing characters, traffic-light emojis) designed to run in any modern terminal emulator.
+## Prerequisites
+
+- **Node.js 20+**
+- **GitHub Copilot** installed and authenticated:
+  ```bash
+  npm install -g @github/copilot
+  copilot auth login
+  ```
+
+## How It Works
+
+1. **Reads** the contract from a file path (CLI argument) or pasted stdin text
+2. **Connects** to the Squad SDK via the Copilot CLI
+3. **Sends** the full contract to a four-agent squad with detailed legal-analysis charters
+4. **Streams** the review back to your terminal with ANSI formatting and risk flags
+
+The tool is **read-only** — it never modifies your contract file.
+
+## Supported File Types
+
+- `.txt` — plain text contracts
+- `.md` — markdown-formatted contracts
+
+Files up to 500 KB are supported. No PDF parsing (keep it simple — copy/paste from PDF works).
+
+## Sample Contract
+
+The included `sample-contract.md` is a deliberately vendor-favorable 15-clause SaaS agreement packed with red flags: asymmetric termination rights, a 3-month liability cap, a non-compete clause, perpetual data licenses, and unilateral amendment powers. Perfect for testing the squad's analysis depth.
 
 ## Project Structure
 
 ```
 contract-reviewer/
-├── index.ts        # All agent logic, contract data, and rendering
+├── index.ts              # Main orchestration — reads file, connects to squad, streams review
+├── contract-reader.ts    # File reading module — validates, reads, formats for prompt
+├── squad.config.ts       # Four agents with detailed legal-analysis charters
+├── sample-contract.md    # Vendor-favorable test contract with intentional red flags
 ├── package.json
 ├── tsconfig.json
 └── README.md
 ```
 
+## Extension Ideas
+
+- **Compare against your standard terms template** — load a "golden" contract and diff clause-by-clause
+- **Track clause changes across contract versions** — feed in v1 and v2 for a change analysis
+- **Export the risk report to PDF** — pipe the squad output through a formatter
+- **Build a contract clause library** — save reviewed clauses as reusable templates
+
 ## Why This Matters
 
-Contract review is a high-stakes, multi-perspective task — exactly the kind of work where a squad of focused agents outperforms a single generalist. This demo shows the pattern: parse → analyze → compare → advise → summarize, with each agent adding a distinct layer of insight.
+Contract review is a high-stakes, multi-perspective task — exactly the kind of work where a squad of focused specialists outperforms a single generalist. Each agent adds a distinct analytical layer: extract → assess → advise → summarize.

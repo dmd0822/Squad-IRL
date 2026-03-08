@@ -1,16 +1,17 @@
 {
   "name": "receipt-scanner",
   "version": "1.0.0",
-  "description": "Squad sample: AI agents process receipt OCR data into expense reports",
+  "private": true,
+  "description": "A Squad-powered expense analyzer — reads receipt files from a folder and processes them with a team of AI financial specialists.",
   "type": "module",
   "scripts": {
-    "start": "tsx index.ts",
-    "build": "tsc",
-    "typecheck": "tsc --noEmit"
+    "start": "npx tsx index.ts"
+  },
+  "dependencies": {
+    "@bradygaster/squad-sdk": "^0.8.0"
   },
   "devDependencies": {
-    "@types/node": "^25.3.5",
-    "tsx": "^4.19.0",
-    "typescript": "^5.5.0"
+    "tsx": "^4.19.4",
+    "typescript": "^5.7.0"
   }
 }

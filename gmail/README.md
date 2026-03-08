@@ -13,7 +13,7 @@ A Squad sample that opens your **real Gmail inbox** in a browser, scrapes the vi
    - **Summarizer** — distils each email into key facts
    - **Action Advisor** — recommends what to do (reply, archive, delete, flag)
    - **Priority Ranker** — orders everything into an action plan
-6. Ask follow-up questions: "draft a reply to the budget email", "which should I handle first?"
+6. Get ideas for how to extend this sample further
 
 ## Prerequisites
 
@@ -38,6 +38,7 @@ On first run you'll need to log into Gmail in the browser window that opens. Sub
 ## Notes
 
 - **Read-only** — this demo reads your inbox but never modifies, sends, or deletes anything
+- **Extensible** — add Gmail API tools to let agents take real actions (delete, archive, reply) — see the closing message for ideas
 - **Privacy** — your emails are sent to the AI model for triage but are not stored anywhere
 - **Gmail DOM** — Gmail's interface changes frequently; if scraping fails, the app falls back to extracting raw row text
 - **Session persistence** — browser profile is saved in `.gmail-session/` so you don't re-authenticate every run

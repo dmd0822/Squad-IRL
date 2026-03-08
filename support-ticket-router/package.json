@@ -1,13 +1,17 @@
 {
   "name": "support-ticket-router",
   "version": "1.0.0",
+  "private": true,
+  "description": "A Squad-powered support ticket triage demo — reads ticket files from a folder and routes them through a team of AI specialists.",
   "type": "module",
-  "description": "Multi-agent support ticket classification, deduplication, and response generation",
   "scripts": {
     "start": "npx tsx index.ts"
   },
+  "dependencies": {
+    "@bradygaster/squad-sdk": "^0.8.0"
+  },
   "devDependencies": {
     "tsx": "^4.19.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.7.0"
   }
 }

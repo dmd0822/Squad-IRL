@@ -1,0 +1,26 @@
+SUBSCRIPTION RECEIPT
+====================
+
+From: Notion Labs, Inc.
+To: Acme Corp (team@acme.example.com)
+
+Invoice #: NOT-2025-0115
+Date: 2025-01-15
+Billing Period: Jan 15, 2025 - Feb 14, 2025
+
+Plan: Notion Team Plan
+Seats: 8 users
+Rate: $10.00/user/month
+
+  Subtotal:        $80.00
+  Discount (20%):  -$16.00
+  ─────────────────────────
+  Amount Due:       $64.00
+
+Payment Method: Visa ****4821
+Status: Paid
+Transaction ID: ch_3PqR5tK8mNvX2yZ
+
+Next billing date: February 15, 2025
+
+Manage your subscription: notion.so/billing

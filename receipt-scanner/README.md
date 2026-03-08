@@ -1,26 +1,26 @@
-# 🧾 Receipt Scanner & Expense Processor
+# 🧾 Receipt Scanner & Expense Analyzer
 
-A Squad sample demonstrating a 4-agent data-extraction pipeline that processes
-10 simulated receipt OCR outputs into a complete expense report.
+A Squad-powered sample that reads receipt files from a folder and processes them
+with a team of four AI financial specialists — extracting transaction data,
+categorizing expenses, detecting anomalies, and building a summary report.
 
 ## Agents
 
 | Agent | Role | What It Does |
 |-------|------|-------------|
-| **Scanner** | Data Extractor | Parses messy OCR text with regex heuristics, extracts vendor/amount/date/payment fields with confidence scores |
-| **Matcher** | Duplicate Detector | Compares receipts by vendor + amount + date proximity, flags duplicates and split transactions |
-| **Classifier** | GL Coder | Assigns General Ledger codes (6100–6900) and department based on vendor/line-item analysis |
-| **Approver** | Policy Checker | Enforces company expense policy — meal limits, VP approval thresholds, weekend justification, duplicate resolution |
+| **Receipt Parser** | Data Extractor | Extracts structured data from each receipt: vendor, date, amount, payment method, line items. Handles messy formats. |
+| **Expense Categorizer** | Category Analyst | Assigns categories (Meals, Travel, Office Supplies, Software, etc.) and flags personal vs. business expenses. |
+| **Anomaly Detector** | Fraud & Error Spotter | Spots duplicate charges, unusual amounts, potential fraud indicators, and missing receipts in date sequences. |
+| **Report Builder** | Summary Generator | Creates an expense summary: totals by category, top vendors, monthly trends, and flagged items requiring attention. |
 
-## Pipeline
+## How It Works
 
 ```
-OCR Text → Scanner → Matcher → Classifier → Approver → Expense Report
+Receipt files (*.txt, *.md, *.csv) → Receipt Parser → Expense Categorizer
+    → Anomaly Detector → Report Builder → Expense Summary
 ```
 
-Each receipt flows through all four agents sequentially. The final output is a
-formatted expense report with category totals, approval statuses, and processing
-statistics.
+Point it at a folder of receipt files and the squad analyzes everything.
 
 ## Run
 
@@ -28,4 +28,24 @@ statistics.
 npm install && npm start
 ```
 
-No external APIs required — everything is self-contained with simulated data.
+Uses the included `sample-receipts/` folder by default. Point to your own:
+
+```bash
+npm start -- /path/to/my/receipts
+```
+
+Supported file types: `.txt`, `.md`, `.csv`
+
+## Privacy Note
+
+Receipt data is sent to the AI model for analysis but is **not stored** by this
+application. Receipt files are read-only — never modified. If your receipts
+contain sensitive information (card numbers, personal details), be aware that
+the content is transmitted to the configured AI provider for processing.
+
+## Extension Ideas
+
+- Connect to your bank's CSV export for automatic categorization
+- Auto-generate expense reports for accounting software
+- Track spending trends over time with scheduled runs
+- Add OCR integration to process scanned paper receipts

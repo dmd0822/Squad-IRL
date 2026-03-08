@@ -1,13 +1,17 @@
 {
   "name": "contract-reviewer",
   "version": "1.0.0",
+  "private": true,
+  "description": "A Squad-powered contract review tool — reads a contract file and feeds it to a team of AI legal specialists for clause extraction, risk scoring, negotiation advice, and an executive summary.",
   "type": "module",
-  "description": "Multi-agent SaaS contract review with risk scoring and negotiation advice",
   "scripts": {
     "start": "npx tsx index.ts"
   },
+  "dependencies": {
+    "@bradygaster/squad-sdk": "^0.8.0"
+  },
   "devDependencies": {
     "tsx": "^4.19.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.7.0"
   }
 }

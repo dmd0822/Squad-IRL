@@ -1,0 +1,24 @@
+================================
+    BEAN & BREW COFFEE CO.
+    123 Main Street, Suite 4
+    Portland, OR 97201
+================================
+
+Date: 2025-01-15
+Time: 08:23 AM
+Cashier: Jamie
+
+  Oat Milk Latte (L)      $5.75
+  Blueberry Muffin         $3.50
+  Drip Coffee (M)          $3.25
+  ─────────────────────────────
+  Subtotal                $12.50
+  Tax (8.5%)               $1.06
+  ─────────────────────────────
+  TOTAL                   $13.56
+
+  Payment: Visa ****4821
+  Auth: 783291
+
+  Thank you for your visit!
+================================

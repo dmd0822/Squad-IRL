@@ -1,0 +1,31 @@
+╔══════════════════════════════════════╗
+║     THE GOLDEN FORK BISTRO           ║
+║     42 Riverside Dr, Chicago, IL     ║
+╚══════════════════════════════════════╝
+
+Server: Maria          Table: 7
+Date: January 22, 2025     7:45 PM
+Guests: 3
+
+  Caesar Salad                  $14.00
+  Pan-Seared Salmon             $32.00
+  Filet Mignon                  $45.00
+  Mushroom Risotto              $22.00
+  Glass of Pinot Noir (x2)     $28.00
+  Sparkling Water                $5.00
+
+  ────────────────────────────────
+  Subtotal                     $146.00
+  Tax                           $14.89
+  ────────────────────────────────
+  Subtotal w/ Tax              $160.89
+
+  Tip (20%):                    $29.20
+  ════════════════════════════════
+  TOTAL:                       $190.09
+
+  Mastercard ending 7752
+  Authorization #: 449812
+
+  Client dinner — Project Phoenix Q1 review
+  Attendees: J. Smith, M. Chen, R. Patel

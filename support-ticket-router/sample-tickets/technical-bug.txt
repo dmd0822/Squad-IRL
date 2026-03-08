@@ -1,0 +1,28 @@
+Subject: App crashes when uploading files over 10MB
+
+Hi,
+
+I'm experiencing consistent crashes when uploading files larger than 10MB. Steps to reproduce:
+
+1. Go to Dashboard > Upload
+2. Select any file over 10MB (I tested with 12MB PNG, 15MB PDF, 25MB ZIP)
+3. Upload progress reaches about 40% then the entire app freezes
+4. After ~10 seconds, I get an "Unexpected Error" dialog and the page reloads
+5. The file does not upload
+
+Environment:
+- Browser: Chrome 126.0.6478.63 (Windows 11)
+- Plan: Business
+- Account: tech-solutions-inc
+
+This started after last Tuesday's update. Files under 10MB upload fine.
+
+The error in the browser console shows:
+  RangeError: Maximum call stack size exceeded
+  at ChunkProcessor.process (upload-worker.js:342)
+
+Let me know if you need more info.
+
+Regards,
+David Kim
+Lead Developer, Tech Solutions Inc.

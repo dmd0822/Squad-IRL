@@ -1,28 +1,57 @@
-# Support Ticket Router — Squad Multi-Agent Demo
+# Support Ticket Router
 
-This sample demonstrates how a **Squad** of five specialized AI agents can collaboratively triage, classify, deduplicate, and draft responses for incoming support tickets — all without any external API calls.
+A Squad sample that reads **real support ticket files** from a folder and triages them with a four-agent AI squad — classifying priority, matching known issues, drafting responses, and producing a prioritized action queue.
 
-## What It Does
+## How It Works
 
-Twelve realistic support tickets are fed through a five-stage pipeline. Each stage is handled by a dedicated agent with its own algorithm and domain logic:
+1. Point the app at a folder of ticket files (`.txt` or `.md`, one per ticket)
+2. The ticket reader loads and formats each file
+3. Four AI agents collaborate to triage the batch:
+   - **Ticket Classifier** — categorizes (Billing / Technical / Account / Feature Request / Complaint), assigns priority (P1–P4), detects sentiment
+   - **Knowledge Matcher** — checks for known issues, FAQ matches, standard resolutions, and duplicates
+   - **Response Drafter** — writes empathetic draft responses calibrated to tone and priority
+   - **Queue Manager** — produces a prioritized action queue with summary statistics
+4. Get ideas for how to extend this sample further
 
-| # | Agent | Role | Algorithm |
-|---|-------|------|-----------|
-| 1 | **Classifier** | Assigns priority (P1–P4) and category (Billing / Technical / Account / Feature Request) with confidence scores | Weighted keyword frequency scoring — each category has a curated keyword dictionary; confidence is the normalized match count against total keywords found |
-| 2 | **Duplicate Detector** | Flags tickets that match known issues | **Jaccard similarity** on tokenized word sets (`|A ∩ B| / |A ∪ B|`). Threshold ≥ 0.3 flags a potential duplicate |
-| 3 | **KB Searcher** | Finds relevant knowledge-base articles | **TF-IDF–like scoring** — shared significant words are weighted by inverse document frequency across the KB corpus |
-| 4 | **Response Generator** | Drafts template replies (or escalates P1s) | Template selection based on category + KB match, with dynamic slot filling |
-| 5 | **Quality Checker** | Scores every draft on Tone / Accuracy / Completeness | Deterministic rubric: 0-30 Tone + 0-40 Accuracy + 0-30 Completeness = 0-100 total. Responses below 70 are flagged for human review |
+## Prerequisites
 
-## Running
+- Node.js ≥ 20
+- GitHub Copilot CLI installed and authenticated
+
+## Setup
 
 ```bash
 npm install
-npm start
 ```
 
-Requires Node.js ≥ 18. No external runtime dependencies — only `tsx` and `typescript` as dev tools.
+## Usage
 
-## Why This Matters for Squad
+```bash
+# Triage the included sample tickets
+npm start
 
-This project shows the Squad pattern of **decomposing a complex workflow into small, focused agents** that each own one responsibility. The agents communicate through a shared data pipeline rather than direct calls, making the system easy to extend (add a sixth agent for sentiment analysis, swap the similarity algorithm, etc.).
+# Triage your own ticket files
+npm start -- /path/to/your/tickets
+```
+
+The `sample-tickets/` folder includes five realistic tickets you can test with immediately:
+- `billing-overcharge.txt` — Customer charged twice
+- `login-broken.txt` — Can't access account (time-sensitive)
+- `feature-request.txt` — Wants dark mode
+- `angry-complaint.txt` — Frustrated repeat customer, escalation risk
+- `technical-bug.txt` — App crashing on file upload
+
+## Notes
+
+- **Read-only** — this demo drafts responses but never sends anything
+- **Extensible** — connect to Zendesk/Freshdesk, add auto-send, track trends
+- **File-based** — drop `.txt` or `.md` files in any folder and point the app at it
+- **Streaming** — responses stream in real-time with ANSI-colored output
+
+## Extension Ideas
+
+- Connect to Zendesk or Freshdesk API for live ticket ingestion
+- Auto-send approved responses after human review
+- Track resolution time trends across ticket batches
+- Add SLA monitoring and escalation alerts
+- Build a dashboard showing ticket volume and category breakdown

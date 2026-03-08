@@ -1,0 +1,26 @@
+product,sku,quantity,unit_cost,supplier,last_restock,daily_usage
+Industrial Bearings,IB-001,2400,1.25,Acme Supply,2026-02-20,15
+Copper Wire 14AWG,CW-002,85,4.50,MetalWorks Ltd,2026-03-01,12
+LED Panel 60W,LP-003,6,22.00,BrightSource,2026-01-10,2
+Rubber Gaskets,RG-004,14000,0.18,Acme Supply,2026-02-28,40
+Thermal Paste Tube,TP-005,3,8.75,TechParts Inc,2026-01-05,1
+Stainless Bolts M8,SB-006,9200,0.35,MetalWorks Ltd,2026-03-05,25
+Carbon Filter,CF-007,42,15.00,GreenTech Co,2026-02-10,3
+Nylon Zip Ties,NZ-008,18500,0.05,PackagePro,2026-03-10,60
+Silicone Sealant,SS-009,8,12.50,ChemSupply,2026-02-01,0
+PCB Board v3,PB-010,320,6.80,TechParts Inc,2026-03-02,10
+Aluminium Sheet 2mm,AS-011,55,18.00,MetalWorks Ltd,2026-02-18,4
+Safety Goggles,SG-012,500,3.20,SafetyFirst,2026-01-25,2
+Hydraulic Hose 1in,HH-013,22,28.00,Acme Supply,2026-02-05,1
+Power Supply 12V,PS-014,145,14.50,TechParts Inc,2026-03-01,5
+Epoxy Resin 1L,ER-015,7,24.00,ChemSupply,2026-01-15,1
+Packing Foam Sheets,PF-016,3200,0.45,PackagePro,2026-03-08,20
+Servo Motor SG90,SM-017,18,7.50,TechParts Inc,2026-02-12,2
+Welding Rod 3.2mm,WR-018,4800,0.60,MetalWorks Ltd,2026-03-03,0
+Steel Pipe 25mm,SP-019,30,32.00,MetalWorks Ltd,2026-02-22,2
+Latex Gloves Box,LG-020,240,8.00,SafetyFirst,2026-03-06,6
+Arduino Nano Clone,AN-021,0,4.25,TechParts Inc,2026-01-02,3
+Flux Core Solder,FC-022,65,11.00,ChemSupply,2026-02-25,1
+Bubble Wrap Roll,BW-023,14,35.00,PackagePro,2026-03-04,0
+Cable Ties Velcro,CT-024,950,0.12,PackagePro,2026-02-15,8
+Heat Shrink Tubing,HS-025,1100,0.08,TechParts Inc,2026-03-01,15

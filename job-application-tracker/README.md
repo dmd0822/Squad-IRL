@@ -1,27 +1,45 @@
 # Job Application Tracker
 
-A Squad sample showing 5 AI agents managing a job search pipeline — Kanban board, follow-up coaching, interview prep, salary research, and offer comparison.
+A Squad sample that opens a real browser, scrapes job listings from any job board, and analyzes them with a team of four AI specialists — matching opportunities to your profile, researching companies, preparing application strategies, and creating a prioritized action plan.
+
+## How It Works
+
+1. **Tell the squad what you're looking for** — role type, location, salary range, remote preferences
+2. **A browser opens** — navigate to Indeed, LinkedIn Jobs, Glassdoor, or any job board
+3. **Search for jobs** — use the site's search normally, get results on screen
+4. **Press Enter** — the app scrapes all visible listings from the page
+5. **Four AI specialists analyze everything** — you get a complete action plan
 
 ## Agents
 
 | Agent | Role | What it does |
 |-------|------|--------------|
-| **Pipeline Manager** | Kanban Board | Maintains applications across stages: Applied → Phone Screen → Technical → Onsite → Offer → Accepted/Rejected |
-| **Follow-up Coach** | Communication | Identifies stale applications, drafts follow-up emails with specific talking points |
-| **Interview Prep** | Research | For upcoming interviews, generates 5 likely questions + talking points |
-| **Salary Researcher** | Compensation | Analyzes comp data for each role — base, equity, bonus ranges by level and location |
-| **Decision Advisor** | Strategy | Creates weighted comparison matrix across comp, growth, culture, commute, benefits |
-
-## Data
-
-- **8 job applications** across various companies and stages
-- **Salary ranges** by role, level, and location
-- **Supplier rankings** and interview question databases
+| **Job Matcher** | Fit Scoring | Evaluates each listing against your preferences. Scores 1-10 with justification. |
+| **Company Researcher** | Company Intel | Reads between the lines — what the listing language tells you about company culture, size, and maturity. |
+| **Application Advisor** | Strategy | For top matches: what to emphasize, red flags, interview prep angles, salary negotiation points. |
+| **Action Planner** | Prioritization | Creates a ranked action list: "Apply today (3 hot matches), Research further (2 interesting), Skip (5 poor fit)." |
 
 ## Run
 
 ```bash
-npm install && npm start
+npm install
+npx playwright install chromium
+npm start
 ```
 
-No external APIs required — all data is generated internally.
+## Requirements
+
+- Node.js 20+
+- GitHub Copilot CLI (`npm install -g @github/copilot && copilot auth login`)
+- Chromium (installed automatically by `npx playwright install chromium`)
+
+## Read-Only
+
+This sample **never submits applications** or takes any action on job boards. It only reads what's visible on the page.
+
+## Extend It
+
+- Track applications across sessions with a local database
+- Auto-customize your resume for each listing
+- Set up alerts for new matching jobs on a schedule
+- Compare offers side-by-side with salary research data

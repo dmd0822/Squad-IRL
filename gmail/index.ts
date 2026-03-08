@@ -39,7 +39,6 @@ function banner(): void {
   console.log(`${C.dim}  ─────────────────────────────────────────${C.reset}`);
   console.log(`${C.dim}  Opens your Gmail, scrapes your inbox, and triages it with AI.${C.reset}`);
   console.log(`${C.dim}  Four specialists: Classifier · Summarizer · Action Advisor · Priority Ranker${C.reset}`);
-  console.log(`${C.dim}  Type "quit" to exit.${C.reset}`);
   console.log();
 }
 
@@ -117,17 +116,6 @@ For specific requests ("draft a reply to the budget email"), route to the right 
 Be organised, decisive, and actionable. Use clear sections and visual hierarchy.
 Never make up emails — only work with what the user provides.
 When presenting triage results, use a structured format: classification → summary → action → priority order.`;
-}
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// Gather user context (optional)
-// ═══════════════════════════════════════════════════════════════════════════════
-
-async function askUserContext(rl: ReturnType<typeof createInterface>): Promise<string> {
-  const context = await rl.question(
-    `${C.cyan}  Any context about yourself? ${C.dim}(e.g., "I'm a PM with a meeting in 1 hour", or press Enter)${C.reset} `
-  );
-  return context.trim();
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -209,8 +197,7 @@ async function main(): Promise<void> {
 
   const rl = createInterface({ input: stdin, output: stdout });
 
-  // 1. Optional user context
-  const userContext = await askUserContext(rl);
+  const userContext = '';
 
   // 2. Launch Playwright browser and navigate to Gmail
   console.log();
@@ -325,26 +312,18 @@ async function main(): Promise<void> {
     console.error(`${C.red}  Error: ${err?.message ?? err}${C.reset}`);
   }
 
-  // 8. Follow-up conversation loop
-  while (true) {
-    console.log();
-    const followUp = await rl.question(`${C.cyan}  Follow-up question ${C.dim}(or "quit")${C.cyan}: ${C.reset}`);
-
-    const trimmed = followUp.trim().toLowerCase();
-    if (!trimmed || trimmed === 'quit' || trimmed === 'exit' || trimmed === 'q') {
-      break;
-    }
-
-    try {
-      await sendAndStream(client, session, followUp.trim());
-    } catch (err: any) {
-      console.error(`${C.red}  Error: ${err?.message ?? err}${C.reset}`);
-    }
-  }
-
   // Cleanup
   console.log();
-  console.log(`${C.green}  Inbox triaged! Go get 'em. 📧${C.reset}`);
+  console.log(`${C.green}  ✅ Inbox triaged!${C.reset}`);
+  console.log();
+  console.log(`${C.cyan}  💡 This sample is just the beginning. You could extend it to:${C.reset}`);
+  console.log(`${C.dim}     • Delete or archive emails matching a pattern ("clear all newsletters")${C.reset}`);
+  console.log(`${C.dim}     • Draft and send replies based on the triage results${C.reset}`);
+  console.log(`${C.dim}     • Run on a schedule to triage your inbox every morning${C.reset}`);
+  console.log(`${C.dim}     • Connect to Google Calendar to factor in your day's meetings${C.reset}`);
+  console.log();
+  console.log(`${C.white}  The Squad SDK makes it easy to add tools that take real action.${C.reset}`);
+  console.log(`${C.white}  See the README for ideas, or just start hacking!${C.reset}`);
   console.log();
 
   try {

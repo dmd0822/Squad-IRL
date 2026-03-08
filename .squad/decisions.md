@@ -2238,3 +2238,585 @@ The entire value prop of this sample is "see what needs attention, click the lin
 ## Impact
 Any future LinkedIn-related samples or agents should follow this URL-first pattern. If input data lacks URLs, agents must flag the gap (`⚠️ URL not provided`) rather than silently omitting them.
 
+
+
+# Sample Ideas Review — Final 8 + Realtor Proposal
+
+**By:** Keaton (Lead)
+**Date:** 2026-03-05
+**Context:** Brady requested evaluation of remaining 8 idea-only samples (#3, #9, #11, #14, #15, #17, #18, #20) plus proposed Realtor Home Sales Package Builder replacement.
+
+**Decision Framework:**
+- Does it showcase multi-agent collaboration *visibly*? (Most critical — must show handoffs.)
+- Is it technically feasible as a terminal demo?
+- Does it solve a real problem people have?
+- Does it overlap with existing 13 samples?
+- Can it be built to production quality within the squad workflow?
+
+---
+
+## Final Verdicts
+
+### #3 Social Media Content Manager
+**🔄 REPLACE with Realtor idea** — High concept drift from squad's value prop. While multi-agent (content, platform, timing, monitor agents), this is fundamentally about workflow automation and API orchestration, not decision-making under uncertainty. Content creation is also a weak terminal demo (scheduling output isn't compelling live). We have 3 strong content/writing samples already (Contract Review, Content Creation Workflow if we keep it, potentially Podcast). Social media is too narrow and doesn't showcase agent *reasoning* — just batch content transformation. The Realtor idea is stronger: it has clear decision criteria (ROI, cap rate, risk), shows agents *disagreeing/weighing evidence*, and naturally fits terminal output (ranked deal list with scoring rationale).
+
+### #9 Content Creation Workflow (Multi-Agent)
+**✅ KEEP** — This is genuinely strong. Seven agents with clear handoff chain (Research → Outline → Writer → SEO → Editor → Publisher) creates visible collaboration. Terminal demo shows finished blog post in minutes. Real problem (content creators spend 4 hours per post). Doesn't duplicate existing samples — most similar is Email Triage, but content generation is distinct. The research-to-publish pipeline showcases how squad agents *compound* each other's work. Technically feasible given LLM APIs and web search.
+
+### #11 Podcast Transcription & Content Extraction
+**❌ DROP** — Niche use case. While the agent team is solid (Transcriber, Summarizer, Chapter, Quote, Social, Publisher), the terminal demo is weak (a finished transcript isn't visually compelling). The real value is in the *file outputs* (transcript, chapters, metadata), not in live agent reasoning you see in the CLI. Use case is also narrow (podcasters only; 1–2% of our audience). Overlaps thematically with Content Creation Workflow (#9). If we want to showcase audio processing, Podcast is reasonable, but it doesn't add value beyond our existing samples. The 6-agent pipeline doesn't illuminate anything new about multi-agent reasoning.
+
+### #14 Competitive Intelligence Monitor (Playwright)
+**✅ KEEP** — Solid use case with clear agent reasoning. Monitor + Change + Analyzer + News + Alert agents create intelligence product that's immediately actionable. Terminal demo shows "competitor just launched Feature X, likely response: Y" — that's *visible reasoning* from multiple agents. Real problem (marketing/product teams run manual competitive checks). Fits squad's strength: agents pool knowledge from disparate sources (site monitoring, news, past market moves) to produce signal. Distinct from existing Playwright samples (Price Monitor watches prices for deals; this watches *strategy* for threat signals). Moderate technical complexity (Playwright diffing + news API + change interpretation). Worth shipping.
+
+### #15 Meeting Recap & Action Item Generator
+**✅ KEEP** — This solves a universally painful problem (1 hour of meeting cleanup per 1 hour meeting). Transcriber + Summarizer + Action + Context + Notifier + Tracker creates a workflow that users *immediately validate* ("did the system catch all my action items?"). Terminal demo can show a recap + extracted owners/deadlines live. Real-time value: after every meeting, the team sees their action items routed to the right people. Doesn't duplicate existing samples. The agent team shows subtle reasoning (decision extraction, accountability routing, context linking). Technically feasible with Zoom/Teams APIs + Whisper + project management integrations.
+
+### #17 Medical Appointment & Insurance Verification
+**❌ DROP** — Brady is right to flag this. Healthcare is highly regulated (HIPAA, state-specific rules, insurance policy nuance), and a terminal-only demo can't demonstrate compliance. The real value is in legal defensibility + regulatory correctness, not agent reasoning. This would require legal review + HIPAA controls that fall *outside* squad's domain. It's a vertical-specific use case (healthcare practices only), not a general multi-agent pattern. Overlaps with existing Appointment Scheduling (#5) on calendaring and with Support Tickets (#6) on routing/lookup. The insurance verification piece is genuinely useful but requires third-party integrations (insurance carrier APIs) that are proprietary + fragmented. Not worth the regulatory + business risk.
+
+### #18 A/B Test Orchestrator
+**✅ KEEP** — Strong use case with clear, visible agent reasoning. Design + Implementation + Traffic + Metrics + Alert + Analyzer agents create a *continuous intelligence* product (tests run in background, agents monitor + alert). Terminal demo shows real-time test state ("Sample size: 15K, winner: Variant B at 95% confidence, recommend stopping"). Real problem (experimentation is core to product development; coordination is painful). Doesn't duplicate existing samples — distinct from analytics/monitoring (closest is Price Monitor's change detection, but this is about *statistical significance* not just change). The agent reasoning is visible: agents weigh sample size, early wins/losses, stopping rules. Technically complex (feature flag integration + stats) but doable.
+
+### #20 E-Commerce Personalization Engine
+**🔄 REPLACE with Realtor idea** — Concept is strong (personalization is high-value), but terminal demo is weak. The real value is in *conversion metrics over time*, not visible agent reasoning. A CLI demo can show "System recommends Product X for User Y at $price Z with Discount D%", but that's not compelling — it's just output. The agent team (Visitor, Preference, Recommendation, Social, Pricing, Experience, Analytics) is solid, but the reasoning happens in *data inference*, not in visible agent *handoff*. Most similar to Price Monitor and Inventory Manager in that it's about matching/scoring. The terminal demo doesn't illuminate multi-agent *collaboration* — it just shows a recommendation list. The Realtor idea is stronger: a realtor sees deals ranked by ROI with agent *disagreement* visible (one agent flagged flood zone, another liked the location), creating *visible reasoning chains*.
+
+### Brady's Realtor Idea: Home Sales Package Builder
+**✅ REPLACE #3 or #17 (recommend #17)** — This is a compelling addition. Problem is real and high-stakes (realtors spend 20+ hours per deal researching comparables + market data). Agent team would be: Scraper (Redfin/Zillow), Comp finder, Market analyzer, Risk assessor, Package builder. Visible multi-agent reasoning: *agents disagree* ("this area is gentrifying but crime rate is up; market is hot but no recent comps"). Terminal demo shows a sales package: "House X: Est. value $550K (range $520K–$580K), market temps, 3 top comps, risk factors, recommended offer strategy". This is *practical decision support* — realtor sees agent reasoning + acts on it. Strong overlap with Real Estate Investment Analyzer (#10, already built), BUT that one is investor-focused (cap rate, NPV, rental yield), while Realtor is sales-focused (marketing comps, buyer psychology, offer strategy). Different enough to justify both. Highly feasible: same web sources (Zillow, Redfin) already used in #10.
+
+**Recommendation:** Replace #17 (Medical) with Realtor. #17 has compliance risk + narrow audience. Realtor has broad appeal (real estate is huge market) + visible reasoning + high practical value + re-uses web scraping patterns from #10.
+
+---
+
+## Final Portfolio (14 Built + 7 Remaining)
+
+### Keep (7 Remaining to Build):
+1. #9 — Content Creation Workflow (Multi-Agent)
+2. #14 — Competitive Intelligence Monitor
+3. #15 — Meeting Recap & Action Item Generator
+4. #18 — A/B Test Orchestrator
+5. **REPLACE #17 with: Realtor Home Sales Package Builder** (new)
+
+**Wait, that's only 5 + 1 = 6 remaining. Let me recount the keeps:**
+
+- ✅ #9 Content Creation Workflow
+- ✅ #14 Competitive Intelligence Monitor
+- ✅ #15 Meeting Recap & Action Item Generator
+- ✅ #18 A/B Test Orchestrator
+- ✅ Realtor (replaces #17)
+
+That's 5 new samples to build from the original 8.
+
+### Dropped (3):
+1. #3 — Social Media Content Manager (too narrow, weak terminal demo)
+2. #11 — Podcast Transcription (niche, weak reasoning visibility)
+3. #20 — E-Commerce Personalization (weak terminal demo, reasoning happens in data)
+
+### And #17 is replaced by Realtor.
+
+**Final Count:** 13 built + 5 new remaining = 18 total samples.
+
+---
+
+## Pattern Notes for Team
+
+1. **Terminal demo test:** Does the CLI output show *agent reasoning* or just *results*? Strong samples (Content Creation, Meeting Recap, A/B Test Orchestrator, Realtor) show agent decisions + rationale. Weak samples (Social Media, Podcast, E-Commerce) show only end products.
+
+2. **Reasoning visibility:** Multi-agent samples work best when agents *disagree or add perspective*, not just sequence operations. Realtor (flood risk vs. location appeal) and Competitive Intelligence (threat assessment) score high. Social Media (just reformatting) scores low.
+
+3. **Real Estate pattern opportunity:** Both #10 (Investment Analyzer) and Realtor (Sales Package) use Playwright + Zillow/Redfin. They're complementary: investor buys; realtor sells. Consider sharing scraper module.
+
+---
+
+## Recommended Next Steps
+
+1. **Prioritize for build queue:** #15 (Meeting Recap) is highest impact — universally painful problem, high office utility, touches everyone's workflow.
+2. **Then:** #14 (Competitive Intelligence) — high business value for marketing/product teams.
+3. **Then:** #18 (A/B Test Orchestrator) — highest technical complexity; good for demonstrating squad's capability with feature flag systems + statistical reasoning.
+4. **Then:** #9 (Content Creation Workflow) — strong but requires web search API + multiple LLM calls.
+5. **Then:** Realtor — re-uses #10's patterns, good for portfolio diversity (vertical: real estate, use case: sales vs. investment).
+
+---
+
+## Decision: Approved for Build Queue
+
+No blockers. Proceeding with 5 new samples + updated portfolio.
+
+
+---
+
+# Sample Ranking: 8 Remaining Ideas + Brady's Realtor Idea
+
+**Decision Date:** 2026-03-10  
+**Owner:** McManus (DevRel)  
+**Audience:** Brady, Product Team  
+**Context:** Evaluating which of the 8 remaining unbuilt samples (#3, #9, #11, #14, #15, #17, #18, #20) plus Brady's proposed Realtor idea should be prioritized for build-out. Goal: maximize portfolio impact for developers evaluating Agent frameworks (vs. LangGraph, CrewAI, AutoGen).
+
+---
+
+## Executive Summary
+
+**Top Tier (Build Now):**
+1. **Realtor Home Sales Package Builder** (NEW) — **5/5**
+2. **Social Media Content Manager** (#3) — **5/5**
+
+**Strong Secondary (Build Next):**
+3. **Content Creation Workflow** (#9) — **4/5**
+4. **Podcast Transcription & Content Extraction** (#11) — **4/5**
+
+**Conditional / Lower Priority:**
+- A/B Test Orchestrator (#18), E-Commerce Personalization (#20), Meeting Recap (#15), Competitive Intelligence (#14) — **3/5** each (demo-weak or overlapping)
+- Medical Appointment & Insurance (#17) — **2/5** (cannibalizes existing sample)
+
+---
+
+## Detailed Rankings
+
+### 🟢 TIER 1: Build Immediately (5/5)
+
+#### **Realtor Home Sales Package Builder** (Brady's NEW idea)
+**Score: 5/5**
+
+**Why this is the strongest idea:**
+- **Specificity + Instant Value:** Realtors need to build comp packages for every listing. Showing "scanned 50 listings in 2 minutes → here's your market comp + presentation" is tangible and fast.
+- **Clear Multi-Agent Handoff:** Scraper (Playwright) → Comp Analyzer → Financial Calculator → Presentation Formatter. Each step is visible, orchestrated.
+- **Wow Factor:** Realtors spend 20+ hours analyzing comps per listing. This cuts it to 15 minutes. Live demo: user asks "show me comps for this Zillow link" → terminal shows: market analysis, price history, comparable sold properties, valuation suggestion, formatted PDF ready to email. That's *live*.
+- **Differentiation:** Doesn't cannibalize #10 (Real Estate Investment Analyzer, which focuses on ROI/cap rates for investors). This is *for listing agents building sales presentations*. Different workflow, different user, different pain.
+- **Target Appeal:** Realtors are a hungry market for automation tools. Developers evaluating frameworks will think "oh, I could sell this as a plugin to real estate CRMs."
+
+**Recommendation:** Green light. Build this in the next sprint. High technical value + high commercial appeal.
+
+---
+
+#### **Social Media Content Manager** (#3)
+**Score: 5/5**
+
+**Why this is a portfolio essential:**
+- **Universal Pain:** Every growing personal brand, agency, influencer, founder has this problem. Content planning + multi-platform optimization is a coordination nightmare.
+- **Observable in Terminal:** Show real-time content generation: input topic → [Content Agent] → [Platform Agent] → [Timing Agent] → output 3 variations optimized for Twitter, LinkedIn, Instagram with scheduled times. Users *see* the multi-agent choreography live.
+- **No Browser Complexity:** Unlike Playwright samples, this is pure orchestration—planning, synthesis, format adaptation. Perfect counter-example to the "all my samples use web scraping" pattern.
+- **Strong Differentiator vs. Competitors:** LangGraph shows pipelines, CrewAI shows crews doing work in parallel. Squad shows *intelligent routing*—"this Twitter agent knows how to make threads, this Instagram agent knows hashtag strategies." The value is the coordination, not the scraping.
+
+**Recommendation:** Green light. This is portfolio-essential and the simplest to build of the top tier.
+
+---
+
+### 🟡 TIER 2: Strong Secondary (Build Next Cycle) (4/5)
+
+#### **Content Creation Workflow** (#9)
+**Score: 4/5**
+
+**Why build this:**
+- **Research-to-Publish Pipeline:** Demonstrates web search as a first-class agent concern (not just a tool call). Research Agent → Outline Agent → Writer → SEO → Editor → Publisher. Shows dependency chains + context passing.
+- **Relatability:** Bloggers, tech writers, marketing teams. Not as universal as #3, but the pain is acute.
+- **Demonstrates Web Search Integration:** Where #3 doesn't need external APIs, this one shows "how do I orchestrate agents that fetch real information?" Natural Squad showcase.
+- **Length:** ~200–250 LOC, manageable.
+
+**Why slightly lower than #3:**
+- Content creation is often *interruption-friendly* (write now, edit later, publish whenever). Social media is *time-critical* (post at peak hours or lose engagement). Less urgency = lower stakes demo.
+- Can overlap with #3 if both launch together. Mitigate with clear positioning: #3 is "daily social volume," #9 is "deep long-form."
+
+**Recommendation:** Build after #3 and Realtor. Strong addition, not urgent.
+
+---
+
+#### **Podcast Transcription & Content Extraction** (#11)
+**Score: 4/5**
+
+**Why build this:**
+- **Audio-First:** First sample in the portfolio using Whisper + speaker diarization. Adds technical diversity.
+- **Creator Pain Point:** Podcasters spend 3x longer on post-production than recording. Genuinely pressing problem.
+- **Visible Orchestration:** Transcriber → Summarizer → Chapter Identifier → Quote Extractor → Social Generator → Publisher. Clear handoff chain.
+- **Post-Production Workflow:** Like #9 but audio-native. Appeals to content creators broadly (podcasters, video creators).
+
+**Why slightly lower than #3:**
+- Smaller addressable market than social media managers.
+- Terminal demo is less *immediate*—Whisper takes time to run. Less snappy than #3 (instant text generation).
+- Whisper integration is novel but not as visibly multi-agent as #3.
+
+**Recommendation:** Solid. Build in next cycle, positioned as "audio content equivalent of #9."
+
+---
+
+### 🟠 TIER 3: Conditional / Lower Priority (3/5)
+
+#### **A/B Test Orchestrator** (#18)
+**Score: 3/5**
+
+**Why it's weak:**
+- **Abstraction Problem:** A/B tests are statistical. You can't *show* a decision happening in real-time in a 5-minute demo. "Running experiment..." → "30 days later, p-value = 0.042" doesn't fit a terminal demo.
+- **System Design Talk, Not Live Demo:** This is powerful for a blog post or whitepaper, but doesn't translate to "wow, look what Squad did in my terminal."
+- **Overlaps with Inventory Manager (#16):** Both have monitoring + alerting + auto-decisions logic. Not a direct duplicate, but the pattern is familiar.
+
+**Recommendation:** Deprioritize. Only build if Brady specifically wants a "Product team" sample in the portfolio. Otherwise, #3/#9/#11 give better ROI.
+
+---
+
+#### **E-Commerce Personalization Engine** (#20)
+**Score: 3/5**
+
+**Why it's weak:**
+- **Black-Box Algorithm Problem:** Showing personalization is hard. You're displaying recommendations, not the *reasoning* behind them. "Here are the 5 products for you" lacks the visible multi-agent choreography that makes Squad compelling.
+- **Weak Demo Narrative:** Hard to build a 5-minute terminal demo that shows multi-agent value. More like a system architecture doc.
+- **Better Solved Elsewhere:** Recommendation logic is mature in ML frameworks. Not a unique Squad angle.
+
+**Recommendation:** Deprioritize. Only revisit if you can add a real-time learning angle (e.g., "watch the agent adjust recommendations as user browses"). Otherwise, pass.
+
+---
+
+#### **Meeting Recap & Action Item Generator** (#15)
+**Score: 3/5**
+
+**Why it's middling:**
+- **Familiar Pattern:** Triage + summarize + notify. We already have similar patterns in Support Ticket Router (#6), Appointment Scheduler (#5).
+- **Generic Appeal:** Applies to every company, so no specific wow. "Every company has meetings" doesn't differentiate vs. competitors.
+- **Plumbing-Heavy:** The differentiator would be PM system integration (Jira, Asana, Linear). But that's plumbing, not multi-agent coordination. Without it, this is just transcription + LLM summaries + email.
+
+**Recommendation:** Conditional. Only build if you want a "meetings/coordination" sample and have time. Otherwise, #3/#9/#11 are higher ROI.
+
+---
+
+#### **Competitive Intelligence Monitor** (#14)
+**Score: 3/5**
+
+**Why it's weak:**
+- **Direct Overlap:** We already have LinkedIn Monitor (#21). Both use:
+  - Playwright to monitor sites
+  - Change detection (visual diff or content diff)
+  - Alerting on new signals
+  - Terminal output with links
+- **Same Pattern, Different Site:** Unless you need to show "Playwright works on multiple sites," this feels redundant.
+- **B2B Focus:** Marketing/Product teams, not as broad as #3 (social) or #11 (podcasts).
+
+**Recommendation:** Skip. If you want a second "site monitoring" sample, build something more exotic (e.g., stock price monitoring, hacker news tracking, arxiv paper alerts). Competitive intelligence is valuable, but not with this implementation.
+
+---
+
+### 🔴 TIER 4: Deprioritize (2/5)
+
+#### **Medical Appointment & Insurance Verification** (#17)
+**Score: 2/5**
+
+**Why it's weak:**
+- **Cannibalizes Existing Sample:** #5 (Appointment Scheduler) already solves the core workflow (find availability → propose times → book → confirm). This adds healthcare-specific APIs on top.
+- **Narrows Appeal:** Healthcare is a vertical. Developers interested in "agent frameworks" are thinking about their SaaS, their website, their operations—not healthcare-specific integrations.
+- **Not a Differentiator:** If you build both #5 and #17, it looks like you're doing one thing twice (appointment coordination). Better to do #5 once and spend those cycles on #3, #9, #11.
+
+**Recommendation:** Skip for now. Deprioritize until the portfolio is complete. Could revisit later as a "healthcare vertical variant" if there's demand, but not in the initial rollout.
+
+---
+
+## Summary: Recommended Build Order
+
+### ✅ Immediate (Next Sprint)
+1. **Realtor Home Sales Package Builder** — NEW, 5/5 (high value, high appeal)
+2. **Social Media Content Manager** (#3) — 5/5 (universal appeal, pure orchestration)
+
+### 🟡 Next Cycle
+3. **Content Creation Workflow** (#9) — 4/5 (web search + research orchestration)
+4. **Podcast Transcription & Content Extraction** (#11) — 4/5 (audio + post-production)
+
+### ⏸️ Conditional / Deprioritize
+- #18, #20, #15, #14 — 3/5 each (weak demo, overlaps, or abstract)
+- #17 — 2/5 (cannibalizes #5)
+
+---
+
+## Key Insights
+
+**What Makes a Top-Tier Sample:**
+1. **Tangible User Pain:** Solves a problem people feel daily, with clear time/effort savings measurable in minutes/hours.
+2. **Observable Multi-Agent Choreography:** In a 5-minute terminal demo, users should *see* agents handing off work, making decisions together.
+3. **No Diminishing Returns:** Doesn't repeat the pattern of an existing sample (e.g., don't build two "browser monitoring" samples).
+4. **Broader Addressability:** Appeals to multiple roles/industries, not just specialists (e.g., #3 appeals to everyone with a social account; #17 appeals only to healthcare).
+
+**Realtor Idea Strengths:**
+- Differentiates from #10 (investment analysis → sales presentation is different workflow than ROI analysis).
+- Nails the tangibility/speed ratio (50 listings scanned in 2 minutes vs. manual 20+ hours).
+- Playwright-ready, like existing samples, so no new tech debt.
+
+**Competitive Positioning:**
+- LangGraph: Shows sequential pipelines (A→B→C). Squad shows intelligent routing + context-aware handoff.
+- CrewAI: Shows crews working in parallel. Squad shows crews that *talk to each other* mid-task.
+- Squad differentiation: These samples should highlight real-time routing, priority escalation, dynamic context passing—not just parallelism.
+
+---
+
+## Sign-Off
+
+**Decision:** Build Realtor + Social Media Content Manager immediately. Schedule #9 (#11 for next cycle. Deprioritize others unless Brady has specific strategic reason to include them.
+
+**Owner:** McManus  
+**Approved by:** Brady (pending review)
+
+
+---
+
+# Security Risk Assessment — Sample Ideas for Public Showcase
+**By:** Baer (Security)  
+**Date:** 2026-03-09  
+**Requested by:** Brady  
+**Scope:** Review 9 remaining idea-only samples for privacy, PII, compliance, and reputational risks
+
+---
+
+## Assessment Methodology
+
+Each sample is evaluated for:
+- **PII exposure** — Does demo data or output contain real user information?
+- **Terms of Service compliance** — Does the sample violate platform ToS or scraping policies?
+- **Regulatory risk** — Does the sample touch regulated domains (healthcare, finance, etc.)?
+- **Reputational risk** — Would this sample damage Squad brand if it went wrong?
+- **Demo safety** — Can it be built as read-only, artifact-only, or with safe mock data?
+
+---
+
+## Individual Assessments
+
+### #3 Social Media Content Manager — 🟡 MODERATE RISK
+
+**Summary:** Generatepost ideas across social platforms. No real actions, no user data access.
+
+**Real risks:**
+- Social API ToS violation if platform APIs are used (Twitter, LinkedIn, Instagram API terms prohibit bulk post scheduling into competing tools without explicit partnerships)
+- Platform detection — if sample uses platform APIs without proper SDK registration, platforms may rate-limit or block traffic
+- Demo output contains hypothetical posts — sample must clearly label them as **example only**, not production-ready
+
+**Guardrails:**
+1. Use mock/example data only — never connect to real social accounts in demo
+2. If using platform APIs, use sandbox/testing environments only (Twitter API v2 sandbox, etc.)
+3. Add prominent disclaimer: *"This sample generates post suggestions. Always review and approve before posting to production accounts."*
+4. Do not include API credentials or auth tokens in demo repo
+
+**Verdict:** 🟡 **Safe to build** with demo/mock-only constraint clearly stated.
+
+---
+
+### #9 Content Creation Workflow (Multi-Agent) — 🟢 LOW RISK
+
+**Summary:** Web search research + multi-agent writing pipeline. Text artifact only.
+
+**Real risks:** None material.
+
+**Why low risk:**
+- Output is pure generated text (blog post draft)
+- Research uses public web search — no private data accessed
+- No modification of external systems (publishing is demo output only)
+- No PII in sample data (generic blog topic)
+
+**Guardrails:**
+1. Use public web search only (Perplexity API, public Google search, etc.)
+2. Demo output is draft only — clearly state *"Review before publishing to production blog"*
+3. No credentials or publishing keys in repo
+
+**Verdict:** 🟢 **Safe to build as-is.** No guardrails required.
+
+---
+
+### #11 Podcast Transcription & Content Extraction — 🟡 MODERATE RISK
+
+**Summary:** Transcribe podcast audio (Whisper), extract clips, chapters, show notes. Generate social snippets.
+
+**Real risks:**
+- **Audio copyright:** Demo must use royalty-free or owned podcast audio. If using sample podcasts from other creators, requires explicit permission.
+- **Transcript licensing:** Whisper output is generally safe (OpenAI terms allow transcription), but republishing full transcripts publicly may violate podcast host's ToS.
+- **Speaker diarization accuracy:** If output misattributes quotes to speakers, social media snippets could spread misinformation about who said what.
+
+**Guardrails:**
+1. Use royalty-free sample audio or owner's own podcast
+2. Demo show notes/transcripts marked as **example only** — do not republish real podcast transcripts in repo
+3. Speaker diarization confidence scores required — flag low-confidence attributions
+4. No social media posting automation in demo (output social snippets as text only, do not post)
+
+**Verdict:** 🟡 **Safe to build** if constrained to owned/royalty-free audio and demo-only output.
+
+---
+
+### #14 Competitive Intelligence Monitor (Playwright) — 🔴 HIGH RISK
+
+**Summary:** Playwright scrapes competitor websites, diffs snapshots, alerts on changes.
+
+**Real risks:**
+- **ToS violation:** Scraping competitor websites violates platform ToS (Shopify, Webflow, Squarespace, etc. prohibit automated access). Public demo of this will attract cease-and-desist letters.
+- **Legal exposure:** Website scraping without permission is a gray area legally. Fair use arguments are weak for commercial competitive monitoring.
+- **Reputational damage:** A public Squad sample that teaches web scraping for IP theft creates brand liability. Competitors will cite it as evidence of intent.
+- **Rate limiting & abuse:** Sample will be detected and blocked quickly. Demo will fail publicly.
+
+**Why it's high risk:**
+This is not a read-only research tool — it's active surveillance of competitors' sites with intent to detect strategic moves. That crosses from "public data" into "unauthorized access for competitive advantage."
+
+**Verdict:** 🔴 **Recommend against.** The legal and reputational risk outweighs the demo value. If the goal is market intelligence, pivot to:
+- Use public **APIs** where available (Google Trends, SimilarWeb, Crunchbase for company funding/news)
+- Use **news aggregation APIs** (NewsAPI) for press release monitoring
+- Partner with **competitor intelligence platforms** (G2, Capterra, ZoomInfo) for legit data feeds
+
+---
+
+### #15 Meeting Recap & Action Item Generator — 🟢 LOW RISK
+
+**Summary:** Transcribe meeting recording (Whisper), extract action items, send recaps to attendees.
+
+**Real risks:** None material, if:
+- Sample uses **owned meeting recording** (internal test call, not real customer meeting)
+- No production calendar/email integration in demo
+- Demo output is sample recap only
+
+**Why low risk:**
+- Processing owned/internal meeting data is safe
+- Whisper transcription of internal meetings is standard use case
+- Demo output is text artifacts only, no external system modifications
+- No PII exposure if using internal test data
+
+**Guardrails:**
+1. Use internal test meeting recording only, not customer/partner calls
+2. Output recaps as plain text demo artifacts (do not actually email attendees in demo run)
+3. Mark demo clearly: *"This sample uses example meeting data. In production, connect to your calendar and email system."*
+
+**Verdict:** 🟢 **Safe to build as-is.** Demo-focused, no production integrations required.
+
+---
+
+### #17 Medical Appointment & Insurance Verification — 🔴 HIGH RISK
+
+**Summary:** Provider search, insurance verification, appointment booking, pre-visit check-in.
+
+**Real risks:**
+- **HIPAA exposure:** Even a **demo** that interfaces with healthcare APIs, pre-fills patient forms, or processes insurance data triggers HIPAA compliance requirements. A public GitHub repo demoing HIPAA workflows is non-compliant by definition (no business associate agreement, no audit trails, no encryption at-rest).
+- **Insurance data mishandling:** Insurance verification APIs return sensitive data (coverage status, deductibles, SSNs). Public demo showing this data in logs/output is a breach.
+- **Appointment booking liability:** If demo books actual appointments or sends confirmations, there's legal liability if appointments get cancelled or duplicated.
+- **PII at scale:** Sample would contain patient names, insurance IDs, appointment details — all PII. Committing sample data is risky.
+- **Regulatory scrutiny:** Healthcare regulators (CMS, state insurance boards) scrutinize any tech demoing insurance workflows. A public sample signals compliance practices that don't exist.
+
+**Why Brady flagged it as "weird":** He's right. Healthcare is regulated, and demos don't get regulatory exemptions.
+
+**Verdict:** 🔴 **Recommend against.** Healthcare workflows require:
+- Actual HIPAA compliance (audit logs, encryption, BAAs with providers)
+- Certified healthcare platforms (Epic, Cerner, Zocdoc APIs require vetting)
+- Legal review before any patient data touches code
+- This is not a demo-appropriate domain
+
+**Alternative:** If the goal is to show scheduling + verification workflows, use a **non-regulated domain** like hotel reservations or restaurant bookings (which have similar data flows without compliance overhead).
+
+---
+
+### #18 A/B Test Orchestrator — 🟡 MODERATE RISK
+
+**Summary:** Design variants, deploy to staging, collect metrics, run statistical tests, flag early wins/losses.
+
+**Real risks:**
+- **Feature flag system access:** Demo assumes integration with production feature flag system (Unleash, LaunchDarkly). Credentials in code or config could leak flag system access.
+- **Metrics collection:** Sample assumes connection to metrics backends (Datadog, New Relic). API keys in demo are a credential exposure vector.
+- **Statistical validity:** If sample runs experiments on real traffic (even staging), results are live and affect real users. Demo must be strictly read-only or simulation-only.
+
+**Guardrails:**
+1. Use **simulation/synthetic data only** — do not connect to production feature flags or metrics systems
+2. Demo shows workflows with example metrics, not live experiment running
+3. No credentials in code — all API keys as placeholder examples
+4. Clearly state: *"Connect to your feature flag and metrics systems for production use."*
+5. Statistical analysis is performed on pre-generated example data, not live systems
+
+**Verdict:** 🟡 **Safe to build** as simulation/read-only demo. Guardrails essential.
+
+---
+
+### #20 E-Commerce Personalization Engine — 🟡 MODERATE RISK
+
+**Summary:** Track user behavior, generate personalized recommendations, suggest offers, optimize conversion.
+
+**Real risks:**
+- **Customer tracking data:** Sample assumes access to real customer behavior DB (purchase history, browsing, cart). Committing customer data is a breach.
+- **GDPR/CCPA exposure:** Behavioral tracking + personalization triggers privacy regulation (GDPR right to deletion, CCPA opt-out requirements). Demo must not process real customer data.
+- **Price discrimination liability:** Dynamically suggesting offers per customer can appear discriminatory (charging different prices to different cohorts). Legal teams scrutinize this.
+
+**Guardrails:**
+1. Use **synthetic customer behavior data only** — generated profiles, not real e-commerce data
+2. Recommendation engine runs on mock data, not production customer DB
+3. Clearly state: *"Connect to your analytics DB for production use. Ensure compliance with customer privacy policies (GDPR, CCPA)."*
+4. Do not commit real customer data, transaction history, or browsing logs
+
+**Verdict:** 🟡 **Safe to build** with synthetic data only. Guardrails essential.
+
+---
+
+### (New) Realtor Home Sales Package Builder — 🔴 HIGH RISK
+
+**Summary:** Brady proposes scraping Redfin/Zillow for local listings using Playwright.
+
+**Real risks:**
+- **ToS violation:** Redfin, Zillow, and MLS systems explicitly prohibit automated scraping. Their terms require use of official APIs only.
+- **Legal exposure:** Real estate MLS data is licensed property data. Scraping it without license agreement violates licensing terms and potentially computer fraud laws (CFAA).
+- **Rate limiting & detection:** Redfin/Zillow use sophisticated bot detection. Sample will be blocked immediately.
+- **Reputational damage:** Public demo of MLS scraping is a regulatory red flag. State real estate boards scrutinize unauthorized MLS access.
+
+**Why it's risky:**
+Unlike generic websites, Redfin/Zillow/MLS are **licensed systems** with explicit data access controls. Scraping them is not "fair use" — it's data theft.
+
+**Verdict:** 🔴 **Recommend against.** Alternative:
+- Use **public real estate APIs** (Zillow API, Redfin API, RapidAPI real estate endpoints) where available
+- Partner with MLS organizations for licensed data feeds
+- Use **open real estate datasets** (real estate DBs that allow redistribution)
+- Pivot to a **non-real-estate listing scrape** (e.g., demo scraping public job boards or product listings where ToS permits)
+
+---
+
+## Summary Table
+
+| Sample | Risk | Verdict | Constraint |
+|--------|------|---------|-----------|
+| #3 Social Media Content Manager | Platform ToS, demo clarity | 🟡 Moderate | Mock data only, no real posting |
+| #9 Content Creation Workflow | Copyright on research sources | 🟢 Low | None required |
+| #11 Podcast Transcription | Audio copyright, speaker attribution | 🟡 Moderate | Owned/royalty-free audio only |
+| #14 Competitive Intelligence Monitor | ToS violation, legal scraping risk | 🔴 High | **Recommend against** — use APIs |
+| #15 Meeting Recap & Action Item | PII if real meetings, but demo-safe | 🟢 Low | Use internal test data only |
+| #18 A/B Test Orchestrator | Credential leakage, live experiment risk | 🟡 Moderate | Simulation mode, no prod systems |
+| #20 E-Commerce Personalization | Customer PII, GDPR/CCPA risk | 🟡 Moderate | Synthetic data only |
+| Realtor Home Sales Builder | MLS scraping violation, legal risk | 🔴 High | **Recommend against** — use APIs |
+
+---
+
+## Recommendations for Brady
+
+**Proceed with:**
+- ✅ #9 Content Creation Workflow — genuinely safe
+- ✅ #15 Meeting Recap & Action Item — safe with internal test data
+
+**Proceed with guardrails:**
+- 🟡 #3 Social Media — mock data, no posting
+- 🟡 #11 Podcast Transcription — owned/royalty-free audio
+- 🟡 #18 A/B Test Orchestrator — simulation mode, no live systems
+- 🟡 #20 E-Commerce Personalization — synthetic data only
+
+**Reject:**
+- 🔴 #14 Competitive Intelligence Monitor — pivot to public APIs (Google Trends, NewsAPI, Crunchbase)
+- 🔴 #17 Medical Appointment & Insurance — healthcare is regulated, not demo-appropriate
+- 🔴 Realtor Home Sales Builder — pivot to real estate APIs or open data
+
+**Philosophy:** This is a **public showcase repo**. Every sample is a demonstration of what Squad can do. If a sample requires scraping ToS violations or handling regulated data, it's not a demonstration of Squad's power — it's a demonstration of Squad's liability.
+
+Better to have 8-9 bulletproof samples that customers trust, than 12 samples with 3 legal landmines.
+
+---
+
+## Decision
+
+- **Recommendations locked** — do not build #14, #17, or Realtor scraper as currently proposed
+- **Guardrails locked** — moderate-risk samples require stated constraints in README
+- **API alternatives recommended** — for #14 and Realtor samples, surface public API options
+- **Next step:** Brady confirms which samples to build. Moderate-risk samples should note guardrails in `/samples/{name}/README.md` before shipping
+
+---
+
+**Note:** This assessment reflects pragmatic security (real risks, not hypothetical ones). All rejected samples have legitimate alternatives that deliver the same learning value without legal exposure.
+
+
+---
+
+### 2026-03-08T14:33Z: Sample ideas curation — team review
+**By:** Brady (via Copilot, with Keaton/McManus/Baer review)
+**What:** Curated remaining sample ideas based on team review:
+- KEEP: Social Media (#3), Content Creation (#9), Meeting Recap (#15), A/B Test (#18)
+- DROP: Podcast (#11 — niche), Competitive Intel (#14 — scraping ethics), Medical (#17 — HIPAA/user discomfort), E-Commerce (#20 — weak demo)
+- ADD: Realtor Home Sales Package Builder (Playwright, Redfin/Zillow scraping)
+- Portfolio: 13 built ✅ + 5 ideas 📋 = 18 total (down from 21)
+**Why:** Team consensus on viability, audience appeal, and risk. Baer flagged healthcare (HIPAA) and competitive intel (ethics) as 🔴. McManus ranked Realtor 5/5 for appeal. Keaton confirmed portfolio balance.
+

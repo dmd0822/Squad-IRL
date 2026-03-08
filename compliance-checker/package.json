@@ -1,13 +1,17 @@
 {
   "name": "compliance-checker",
   "version": "1.0.0",
+  "private": true,
   "type": "module",
-  "description": "Multi-agent security compliance auditor across OWASP, GDPR, SOC2 with dependency scanning and scorecard",
+  "description": "A Squad-powered compliance checker — scans a real project folder and evaluates security, licensing, documentation, and privacy compliance with a team of AI specialists.",
   "scripts": {
     "start": "npx tsx index.ts"
   },
+  "dependencies": {
+    "@bradygaster/squad-sdk": "^0.8.0"
+  },
   "devDependencies": {
     "tsx": "^4.19.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.7.0"
   }
 }

@@ -1,13 +1,17 @@
 {
   "name": "bug-triage",
   "version": "1.0.0",
+  "private": true,
   "type": "module",
-  "description": "Multi-agent bug triage system with text similarity scoring and priority algorithms",
+  "description": "A Squad-powered GitHub Issues triage — fetches open issues with the gh CLI and triages them with a team of AI specialists.",
   "scripts": {
     "start": "npx tsx index.ts"
   },
+  "dependencies": {
+    "@bradygaster/squad-sdk": "^0.8.0"
+  },
   "devDependencies": {
     "tsx": "^4.19.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.7.0"
   }
 }

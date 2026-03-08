@@ -1,15 +1,18 @@
 {
   "name": "job-application-tracker",
   "version": "1.0.0",
-  "description": "Squad sample: AI agents manage a job search pipeline with Kanban board, interview prep, salary research, and offer comparison",
+  "private": true,
+  "description": "A Squad-powered job search assistant — opens a real browser, scrapes job listings with Playwright, and analyzes them with a team of AI specialists.",
   "type": "module",
   "scripts": {
-    "start": "tsx index.ts",
-    "build": "tsc",
-    "typecheck": "tsc --noEmit"
+    "start": "npx tsx index.ts"
+  },
+  "dependencies": {
+    "@bradygaster/squad-sdk": "^0.8.0",
+    "playwright": "^1.52.0"
   },
   "devDependencies": {
-    "tsx": "^4.19.0",
-    "typescript": "^5.5.0"
+    "tsx": "^4.19.4",
+    "typescript": "^5.7.0"
   }
 }

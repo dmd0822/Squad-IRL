@@ -1,26 +1,44 @@
 # Price Monitor & Deal Finder
 
-A Squad sample project demonstrating 4 AI agents working together to track prices, analyze trends, and surface the best deals.
+A Squad sample that opens a real browser, scrapes product prices from any shopping page, and feeds them to a four-agent deal analysis squad for actionable buy/wait/skip advice.
+
+## How It Works
+
+1. **Browser opens** — Playwright launches Chromium with a persistent session (no re-login each run)
+2. **You navigate** — Go to any shopping page: Amazon wishlist, Best Buy deals, Walmart, etc.
+3. **Press Enter** — The app scrapes visible product names, prices, and sale indicators
+4. **Scrape more pages** — Navigate to another page and press Enter again, or type "done"
+5. **Squad analyzes** — Four AI specialists evaluate every product and deliver a deal report
 
 ## Agents
 
 | Agent | Role | What it does |
 |-------|------|--------------|
-| **Monitor** | Price Fetcher | Scans 4 stores for current prices, detects out-of-stock, computes daily changes |
-| **Comparator** | Cross-Store Analyzer | Compares prices across stores, computes 30-day stats, trend via linear regression |
-| **Deal Scorer** | Value Calculator | Scores deals 0–100 using discount, historical position, trend, volatility, and stock factors |
-| **Alert Generator** | Recommendation Engine | Issues BUY NOW / WAIT / SKIP / FLASH DEAL alerts with reasoning |
-
-## Data
-
-- **5 products** — Sony WH-1000XM5, iPad Air M2, Samsung 4K Monitor, Logitech MX Master 3S, Keychron Q1 Pro
-- **4 stores** — Amazon, Best Buy, Walmart, B&H Photo
-- **30-day price history** per product×store with realistic patterns (trends, flash dips, stability, out-of-stock)
+| **Price Analyst** | Market Evaluator | Assesses each price against market ranges, seasonal patterns, sale authenticity |
+| **Deal Scorer** | Quality Rater | Scores each item 1-10 on deal quality: discount depth, category, timing, urgency |
+| **Purchase Advisor** | Decision Maker | Recommends Buy Now / Wait / Skip with reasoning and timing advice |
+| **Summary Reporter** | Report Generator | Produces a scannable terminal report: hot deals, worth waiting, skippable |
 
 ## Run
 
 ```bash
-npm install && npm start
+npm install
+npx playwright install chromium
+npm start
 ```
 
-No external APIs required — all data is generated internally with deterministic seeds.
+## Prerequisites
+
+- Node.js >= 20
+- GitHub Copilot CLI installed and authenticated (`copilot auth login`)
+
+## Read-Only
+
+This sample **never** makes purchases or modifies anything on shopping sites. It only reads and analyzes.
+
+## Extending Ideas
+
+- Track prices over time and alert on drops
+- Compare the same product across multiple retailer tabs
+- Set a budget and get the best combination of items within it
+- Run on a schedule to catch flash deals automatically

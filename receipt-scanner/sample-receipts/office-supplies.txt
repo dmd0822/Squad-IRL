@@ -1,0 +1,24 @@
+STAPLES #0472
+1500 Commerce Blvd, Austin, TX 78701
+Order #: STX-2025-88431
+
+Date: 01/18/2025
+
+Item                           Qty   Price
+--------------------------------------------
+HP 65XL Ink Cartridge (Blk)      1   $24.99
+Copy Paper, 10-ream case         2   $54.98
+Pilot G2 Gel Pens, 12-pk        1    $9.49
+3M Post-It Notes, 12-pk         1   $11.29
+USB-C Hub Adapter                1   $34.99
+
+--------------------------------------------
+Subtotal                             $135.74
+Tax                                   $11.21
+--------------------------------------------
+TOTAL                                $146.95
+
+Paid: Amex ****1093
+Rewards Points Earned: 294
+
+Returns accepted within 30 days with receipt.

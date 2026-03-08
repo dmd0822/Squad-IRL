@@ -1,0 +1,15 @@
+Subject: Can't log in — password reset not working
+
+I've been locked out of my account since yesterday morning. I tried resetting my password three times but the reset email never arrives. I checked spam — nothing.
+
+My username is mike.chen and I'm using the email mike.chen@techcorp.io. I need to access my account urgently because I have a presentation tomorrow and all my files are in there.
+
+I tried:
+- Password reset (3 times, no email received)
+- Clearing browser cache
+- Trying a different browser (Chrome + Firefox)
+- Trying from my phone
+
+Nothing works. Please help — this is really time-sensitive.
+
+Mike Chen

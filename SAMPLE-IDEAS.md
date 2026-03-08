@@ -1,10 +1,10 @@
-# 20 Real-World Squad Use Cases
+# 17 Real-World Squad Use Cases
 
 > Each is technically unique. Each solves a problem people actually have. Each shows multi-agent collaboration visibly.
 
 ---
 
-## 1. Email Inbox Triage
+## 1. ✅ Email Inbox Triage
 **Problem:** Marketing emails, receipts, newsletters, and actual work get mixed together. People spend 30 mins/day just sorting.
 
 **How it works:** 
@@ -19,7 +19,7 @@
 
 ---
 
-## 2. Receipt Scanner & Expense Report Builder
+## 2. ✅ Receipt Scanner & Expense Report Builder
 **Problem:** Expense reports require manual entry, and receipts get lost. Finance teams spend hours matching receipts to claims.
 
 **How it works:**
@@ -35,7 +35,7 @@
 
 ---
 
-## 3. Social Media Content Manager
+## 3. 📋 Social Media Content Manager
 **Problem:** Creating, scheduling, and monitoring posts across platforms takes hours daily. Engagement opportunities get missed.
 
 **How it works:**
@@ -51,7 +51,7 @@
 
 ---
 
-## 4. Price Monitor & Deal Finder (Playwright)
+## 4. ✅ Price Monitor & Deal Finder (Playwright)
 **Problem:** Users want notifications when specific products drop below target prices, but checking 20+ sites manually is impossible.
 
 **How it works:**
@@ -67,7 +67,7 @@
 
 ---
 
-## 5. Appointment Scheduling Coordinator
+## 5. ✅ Appointment Scheduling Coordinator
 **Problem:** Scheduling across 3+ people's calendars manually takes 10+ emails. Timezone confusion causes missed meetings.
 
 **How it works:**
@@ -83,7 +83,7 @@
 
 ---
 
-## 6. Customer Support Ticket Router & Responder
+## 6. ✅ Customer Support Ticket Router & Responder
 **Problem:** Support tickets get routed wrong, response times vary wildly, common questions answered manually 100x/day.
 
 **How it works:**
@@ -99,7 +99,7 @@
 
 ---
 
-## 7. Contract Review & Risk Analysis
+## 7. ✅ Contract Review & Risk Analysis
 **Problem:** Reading and extracting key terms from 20-page contracts takes hours. Risky clauses get missed.
 
 **How it works:**
@@ -116,7 +116,7 @@
 
 ---
 
-## 8. Travel Itinerary Planner (Playwright)
+## 8. ✅ Travel Itinerary Planner (Playwright)
 **Problem:** Planning a trip requires checking flights, hotels, attractions, reviews across 10+ sites. Fragmented bookings get confusing.
 
 **How it works:**
@@ -133,7 +133,7 @@
 
 ---
 
-## 9. Content Creation Workflow (Multi-Agent)
+## 9. 📋 Content Creation Workflow (Multi-Agent)
 **Problem:** Writing blog posts, guides, or documentation is slow. Writers need research, outlines, editing, SEO help, publishing.
 
 **How it works:**
@@ -151,7 +151,7 @@
 
 ---
 
-## 10. Real Estate Investment Analyzer (Playwright)
+## 10. ✅ Real Estate Investment Analyzer (Playwright)
 **Problem:** Finding good rental properties requires checking listings, running comps, analyzing neighborhoods, calculating ROI. Takes days per property.
 
 **How it works:**
@@ -169,25 +169,7 @@
 
 ---
 
-## 11. Podcast Transcription & Content Extraction
-**Problem:** After recording a podcast, extracting clips, show notes, chapters, and highlights requires manual work.
-
-**How it works:**
-- Transcriber agent: Converts audio to text (Whisper), formats with speaker detection
-- Summarizer agent: Creates executive summary of episode, extracts key takeaways
-- Chapter agent: Identifies natural chapter breaks, creates timestamps and topic labels
-- Quote agent: Extracts the best quotable moments (interesting, concise, tweet-worthy)
-- Social agent: Generates social media snippets and graphics prompts for each chapter
-- Publisher agent: Uploads to hosting platform, adds metadata, schedules social posts
-- User sees: Complete episode package (transcript, chapters, highlights, social content) published in 30 mins vs. 3 hours
-
-**Tech:** Whisper transcription, speaker diarization, NLP for segment detection, podcast hosting APIs, image generation prompts
-
-**Why it's compelling:** Podcasters spend more time on post-production than recording. This makes distribution frictionless.
-
----
-
-## 12. Bug Triage Automation
+## 11. ✅ Bug Triage Automation
 **Problem:** Bug reports are often vague, duplicated, or missing repro steps. QA teams spend hours sorting before engineers can start.
 
 **How it works:**
@@ -205,7 +187,7 @@
 
 ---
 
-## 13. Job Application Orchestrator (Playwright)
+## 12. ✅ Job Application Orchestrator (Playwright)
 **Problem:** Job hunting requires tracking applications across 20+ sites, customizing resumes, managing interviews, following up. It's a full-time job.
 
 **How it works:**
@@ -223,24 +205,7 @@
 
 ---
 
-## 14. Competitive Intelligence Monitor (Playwright)
-**Problem:** Marketing and product teams need to track competitor moves, pricing, new features, but this requires manual site checks daily.
-
-**How it works:**
-- Monitor agent: Uses Playwright to visit competitor sites, captures snapshots of key pages
-- Change agent: Compares to prior snapshot, flags new features, pricing changes, messaging shifts
-- Analyzer agent: Interprets what changes mean for market positioning, flags strategic moves
-- News agent: Searches for press releases, funding announcements, executive moves at competitors
-- Alert agent: Prioritizes signals by importance, generates brief summaries
-- User sees: Weekly intelligence briefing showing competitor moves, with impact assessment and suggested responses
-
-**Tech:** Playwright for visual/content monitoring, image diffing for change detection, news API, competitor tracking DB
-
-**Why it's compelling:** Knowing what competitors are doing is critical for strategy. This gives teams intelligence automatically.
-
----
-
-## 15. Meeting Recap & Action Item Generator
+## 13. 📋 Meeting Recap & Action Item Generator
 **Problem:** After meetings, someone spends 1 hour creating recap, extracting action items, sending followups. Decisions get lost in chat.
 
 **How it works:**
@@ -258,7 +223,7 @@
 
 ---
 
-## 16. Inventory Management & Reordering System
+## 14. ✅ Inventory Management & Reordering System
 **Problem:** Manual inventory checks waste time. Stockouts happen because reordering is delayed. Overstock wastes capital.
 
 **How it works:**
@@ -276,25 +241,7 @@
 
 ---
 
-## 17. Medical Appointment & Insurance Verification
-**Problem:** Patients struggle with finding doctors, verifying insurance, managing appointments. Manual verification takes 30 mins per visit.
-
-**How it works:**
-- Provider agent: Searches network for in-network doctors, checks availability, captures wait times and patient reviews
-- Insurance agent: Verifies coverage, checks deductibles, co-pays, prior authorization requirements
-- Scheduler agent: Checks doctor availability against patient preferences, books appointments, sends confirmations
-- Verification agent: Pre-visit, confirms insurance coverage is active, alerts if auth needed
-- Reminder agent: Sends appointment reminders, pre-visit questionnaire, prep instructions
-- Check-in agent: Digital check-in with necessary forms pre-filled
-- User sees: One-click appointment booking with verified insurance, no paperwork surprises at visit
-
-**Tech:** Healthcare provider APIs (Zocdoc-like), insurance verification APIs, appointment scheduling, form pre-fill
-
-**Why it's compelling:** Healthcare admin is frustrating. Patients get care faster, providers have verified info at visit time.
-
----
-
-## 18. A/B Test Orchestrator
+## 15. 📋 A/B Test Orchestrator
 **Problem:** Running A/B tests requires coordination: variant creation, traffic splitting, metrics collection, statistical analysis. Takes weeks to get results.
 
 **How it works:**
@@ -312,7 +259,7 @@
 
 ---
 
-## 19. Policy Compliance & Audit Automation
+## 16. ✅ Policy Compliance & Audit Automation
 **Problem:** Compliance audits require manual document review against policies. Takes 2+ weeks and is error-prone.
 
 **How it works:**
@@ -330,31 +277,52 @@
 
 ---
 
-## 20. E-Commerce Personalization Engine
-**Problem:** Generic product recommendations don't convert. Building personalized experiences requires manual rules and constant tuning.
+## 17. 📋 Realtor Home Sales Package Builder (Playwright)
+**Problem:** Real estate agents spend hours manually building comparable sales (comps), market analyses, and listing presentations for each property. Research is scattered across multiple sites (Redfin, Zillow, MLS).
 
 **How it works:**
-- Visitor agent: Tracks user behavior (browse history, cart, purchase history, time on site)
-- Preference agent: Infers customer segment and preferences from behavior patterns
-- Recommendation agent: Generates personalized product recommendations ranked by predicted purchase probability
-- Social agent: Identifies trending products, seasonal trends, what similar customers bought
-- Pricing agent: Dynamically suggests offer (discount %) most likely to convert for this customer
-- Experience agent: Customizes homepage, email, and product feeds based on profile
-- Analytics agent: Tracks conversion rate by recommendation type, optimizes recommendation strategy
-- User sees: Significant lift in conversion rate, customers see products they actually want, feel understood
+- Market Scanner agent: Uses Playwright to scrape Redfin and Zillow for local listings by area, captures recent sales data, pricing trends
+- Comp Analyst agent: Identifies comparable properties sold in last 6 months, calculates price per sqft, adjusts for features, generates comps summary
+- Presentation Builder agent: Assembles polished sales package with key stats, market trends, comparable sales charts, and property details
+- Neighborhood Profiler agent: Researches schools, transit, amenities, walkability, employment centers, adds context to market positioning
+- User sees: Complete market-ready sales package ready for client presentation (rankings, comp analysis, links to each property), assembled in 20 mins vs. 2+ hours
 
-**Tech:** Behavioral analytics DB, recommendation models (collaborative filtering, content-based), real-time personalization APIs, A/B testing pipeline
+**Tech:** Playwright for Redfin/Zillow browsing, real estate data aggregation, PDF generation for presentation, SQLite for market trend storage
 
-**Why it's compelling:** Conversion is revenue. Personalization that actually works increases customer lifetime value and loyalty.
+**Why it's compelling:** Realtors who can prep comps faster close more deals. This is the difference between having a competitive edge and losing to other agents.
+
+---
+
+## 18. ✅ LinkedIn Monitor & Engagement Tracker (Playwright)
+**Problem:** Promoting a product on LinkedIn means checking daily for new comments, mentions, connection requests, and messages. Most days there's nothing actionable, but missing a post about your product costs engagement opportunities.
+
+**How it works:**
+- Scraper: Uses Playwright to open LinkedIn in a real browser, navigates to notifications and messaging
+- Notification Classifier agent: Categorizes each item (connection request, comment, mention, message, post reaction)
+- Relevance Scorer agent: Identifies items related to your product/brand (e.g., mentions of "Squad"), scores importance
+- Action Advisor agent: Recommends what to do — respond, like, connect, ignore — with reasoning
+- Link Generator agent: Outputs direct LinkedIn URLs for each actionable item so you can click straight through
+- User sees: Terminal report with prioritized engagement opportunities, each with a clickable link to take action
+
+**Tech:** Playwright browser automation (persistent LinkedIn session), DOM scraping for notifications/messages/posts, Squad SDK with squad.config.ts, streaming responses
+
+**Why it's compelling:** LinkedIn engagement is time-sensitive — responding within hours matters. This cuts daily LinkedIn checking from 15 minutes of scrolling to 2 minutes of focused action. Perfect for founders and DevRel people promoting products.
 
 ---
 
 ## Summary
 
-**These 20 use cases represent:**
-- ✅ 4 with Playwright browser automation (Price Monitor, Travel Planner, Job Tracker, Competitor Intelligence)
-- ✅ 8+ with real calculations/data processing (Expense Reports, Scheduling, Real Estate, Travel, Inventory, A/B Testing, Compliance, E-Commerce)
-- ✅ 4 with social/communication patterns (Social Media Manager, Support Tickets, Meeting Recaps, Email Triage)
+**Legend:** ✅ Updated & working | 📋 Idea only
+
+**These 17 use cases represent:**
+- ✅ 13 fully upgraded with real-world integrations and clean TypeScript builds
+- 📋 4 ideas ready to be built
+- ❌ 4 ideas reviewed and dropped by team (Podcast Transcription, Competitive Intelligence Monitor, Medical Appointment & Insurance Verification, E-Commerce Personalization)
+- ✅ 6 with Playwright browser automation (Price Monitor, Travel Planner, Real Estate, Job Tracker, Realtor Sales Package, LinkedIn Monitor)
+- ✅ 4 with file-based analysis (Receipt Scanner, Contract Review, Support Tickets, Compliance Checker)
+- ✅ 1 with GitHub CLI integration (Bug Triage)
+- ✅ 1 with CSV data processing (Inventory Manager)
+- ✅ 1 with text input analysis (Appointment Scheduler)
 - ✅ Multiple interaction models (automation, human-in-the-loop, real-time monitoring, scheduled batch)
 - ✅ Real problems that real people face daily, with immediate value proposition
 

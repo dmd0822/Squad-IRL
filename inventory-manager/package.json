@@ -1,15 +1,17 @@
 {
   "name": "inventory-manager",
   "version": "1.0.0",
-  "description": "Squad sample: AI agents manage e-commerce inventory with demand forecasting, EOQ optimization, and supplier ranking",
+  "private": true,
+  "description": "A Squad-powered inventory analysis demo — reads a CSV of product data and dispatches a team of AI specialists to predict stockouts, optimise reorder points, and produce an actionable restock plan.",
   "type": "module",
   "scripts": {
-    "start": "tsx index.ts",
-    "build": "tsc",
-    "typecheck": "tsc --noEmit"
+    "start": "npx tsx index.ts"
+  },
+  "dependencies": {
+    "@bradygaster/squad-sdk": "^0.8.0"
   },
   "devDependencies": {
-    "tsx": "^4.19.0",
-    "typescript": "^5.5.0"
+    "tsx": "^4.19.4",
+    "typescript": "^5.7.0"
   }
 }

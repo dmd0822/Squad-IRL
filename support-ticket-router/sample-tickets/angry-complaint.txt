@@ -1,0 +1,14 @@
+Subject: THIS IS UNACCEPTABLE — third time reporting this issue
+
+I am absolutely FURIOUS. This is the THIRD time I'm writing about the same problem and nobody has done anything about it.
+
+Your export feature has been broken for over TWO WEEKS. Every single time I try to export my data to CSV, the file comes out corrupted. I've lost hours of work because of this. HOURS.
+
+I pay $49/month for your "Premium" plan and I can't even use basic features. If this isn't fixed by end of week, I'm canceling my subscription AND filing a complaint with my credit card company for services not rendered.
+
+Ticket references: #4521, #4587
+
+DO SOMETHING ABOUT THIS.
+
+— Jordan Park
+Enterprise Account: ENT-2024-0312

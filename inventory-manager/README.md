@@ -1,23 +1,15 @@
 # Inventory Manager
 
-A Squad sample showing 6 AI agents managing e-commerce inventory — stock monitoring, demand forecasting, EOQ optimization, supplier ranking, cost analysis, and health reporting.
+A Squad-powered inventory analysis demo. Reads a CSV file of product data and feeds it to a four-agent Squad that predicts stockouts, optimises reorder points, finds cost savings, and produces an actionable restock plan.
 
 ## Agents
 
 | Agent | Role | What it does |
 |-------|------|--------------|
-| **Stock Monitor** | Inventory Tracking | Shows current levels with visual gauge bars, flags items below reorder point |
-| **Demand Forecaster** | Prediction | Predicts next 30 days demand using moving average + seasonal adjustment |
-| **Reorder Calculator** | EOQ Optimization | Uses Economic Order Quantity formula to determine optimal order sizes |
-| **Supplier Ranker** | Vendor Analysis | Ranks 3 suppliers per item on cost, reliability, and lead time |
-| **Cost Optimizer** | Financial Analysis | Calculates carrying cost, ordering cost, finds optimal safety stock levels |
-| **Report Generator** | Dashboard | Creates a dashboard-style inventory health report with KPIs |
-
-## Data
-
-- **25 SKUs** across categories: Electronics, Clothing, Home & Kitchen, Sports, Books
-- **3 suppliers** per item with cost, reliability, and lead time data
-- **90-day sales history** per SKU with seasonal patterns
+| **Stock Analyst** | Inventory Evaluation | Evaluates current levels — overstocked, understocked, dead stock. Calculates days-of-supply remaining. |
+| **Demand Predictor** | Trend Analysis | Spots trending items, seasonal indicators, velocity analysis. Flags items that will run out soon. |
+| **Reorder Optimizer** | Order Calculation | Calculates optimal reorder quantities and timing — MOQs, bulk discounts, storage costs, lead times. |
+| **Action Reporter** | Restock Planning | Creates a restock action plan with priority tiers and estimated spend. |
 
 ## Run
 
@@ -25,4 +17,22 @@ A Squad sample showing 6 AI agents managing e-commerce inventory — stock monit
 npm install && npm start
 ```
 
-No external APIs required — all data is generated internally.
+Uses `sample-inventory.csv` by default. To analyse your own file:
+
+```bash
+npm start -- /path/to/your-inventory.csv
+```
+
+## CSV Format
+
+```csv
+product,sku,quantity,unit_cost,supplier,last_restock,daily_usage
+Widget A,WA-001,150,2.50,Acme Supply,2026-02-15,8
+```
+
+## What Could You Build Next?
+
+- Connect to Shopify or Square inventory APIs for live data
+- Auto-generate purchase orders from the restock plan
+- Track inventory trends over time with periodic snapshots
+- Add supplier lead-time lookups for smarter reorder timing

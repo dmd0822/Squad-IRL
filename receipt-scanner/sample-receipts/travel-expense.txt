@@ -1,0 +1,50 @@
+UBER RECEIPT
+────────────────────────────
+
+Trip Date: January 20, 2025
+Pickup:  O'Hare International Airport (ORD)
+         Terminal 3, Arrivals
+Dropoff: Hyatt Regency Chicago
+         151 E Wacker Dr
+
+Driver: Michael R. ★ 4.92
+Vehicle: Toyota Camry (Black) — IL ABC-1234
+
+  Base Fare              $4.20
+  Distance (18.3 mi)    $22.16
+  Time (42 min)          $9.84
+  Booking Fee            $2.75
+  Airport Surcharge      $5.00
+  ──────────────────────────
+  Subtotal              $43.95
+  Tax                    $2.20
+  ──────────────────────────
+  TOTAL                 $46.15
+
+Payment: Apple Pay (Visa ****4821)
+
+────────────────────────────
+FLIGHT BOOKING CONFIRMATION
+────────────────────────────
+
+Airline: United Airlines
+Confirmation: UA-7X3K9M
+Route: SFO → ORD (Nonstop)
+Date: January 20, 2025
+Departure: 06:15 AM PST
+Arrival: 12:30 PM CST
+
+Passenger: Jordan Smith
+Seat: 14C (Economy Plus)
+
+  Base Fare            $289.00
+  Carrier Surcharge     $42.00
+  TSA Fee                $5.60
+  PFC                    $4.50
+  Segment Fee            $4.60
+  ──────────────────────────
+  TOTAL                $345.70
+
+Payment: Amex ****1093
+Booking Ref: ACME-BIZ-2025-012
+Purpose: Client meeting — Project Phoenix
