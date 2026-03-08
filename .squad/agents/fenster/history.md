@@ -245,6 +245,22 @@
 
 **Verification:** tsc --noEmit clean. vitest run: 3217 passed, 126 failed (all pre-existing).
 
+### 📌 Team update (2026-03-08T16:30:34Z): String-based page.evaluate() pattern established — CRITICAL fix for tsx/esbuild + Playwright
+- **Work:** Fixed all 4 `page.evaluate()` calls in card-scraper.ts from function-based to string-based
+- **Root cause:** esbuild's `--keep-names` flag wraps named const assignments (including arrow functions) in Object.defineProperty, making them non-serializable in Playwright's sandboxed context
+- **Solution:** Use backtick strings for evaluate code instead of function references. String-based evaluation is immune to bundler transforms.
+- **Pattern (SUPERSEDES arrow-function approach):**
+  ```typescript
+  // ❌ Not reliable with esbuild --keep-names
+  page.evaluate(() => document.querySelectorAll(...))
+  
+  // ✅ Reliable with any bundler
+  page.evaluate(`document.querySelectorAll(...)`)
+  ```
+- **Impact:** Unblocks card-scraper Playwright tests. All future Playwright integrations in Squad samples must follow string-based pattern.
+- **Commit:** 2691d37 — TypeScript clean, esbuild verification passed
+- **Decision:** This is the canonical pattern for Playwright in esbuild-bundled code. Document in SDK best practices guide.
+
 ---
 
 ## 2025-07: cli.js shim replacement
