@@ -2094,3 +2094,16 @@ Replaced the paste-your-emails UX in `email-inbox-triage` with a Playwright-base
 **Why:** User request for realistic demo. Samples should show Squad solving real human problems with real data, not toy inputs.
 **Evolution:** 22:25 — generic email connection directive → 22:27 — narrowed to Gmail focus
 **Implementation:** Fenster delivered with persistent Playwright session (one-time login), fallback selectors, read-only scraping
+
+### 2026-03-08: Gmail sample action scope — team assessment (consolidated)
+
+**By:** Keaton, Fenster, Baer  
+**What:** Assessment of adding email actions (archive/delete/mark-read) to email-inbox-triage sample. Currently read-only; Gmail API recommended over Playwright.  
+**Why:** Email sample demonstrates Squad's real-world value. Triage agents should be able to act on recommendations (archive, delete). Safety and maintainability require planning.  
+**Decision:**
+- **Keep read-only for now** — safest path. Document architecture for future actions.
+- **If actions approved:** Use Gmail API with defineTool(), not Playwright DOM hacking. Estimate: 8–12 hours (Fenster).
+- **Required mitigations:** explicit confirmation, trash-only (no permanent delete), batch caps, --enable-actions opt-in flag, prompt injection defense.
+- **Arch pattern:** Extend squad.config.ts tools, use existing SquadClient pattern, integrate OAuth token refresh.
+- **Future consideration:** Separate gmail-actions-demo sample for production-hardened version with all controls.
+**Next:** Awaiting product decision. If approved, implement with all 5 security mitigations.

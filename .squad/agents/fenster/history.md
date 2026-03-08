@@ -757,3 +757,12 @@ pm start works.
 - **Commits:** 927898d (SDK rebuild) + 225dd3c (Gmail scraping)
 - **Dependencies:** Added @bradygaster/squad-sdk and playwright
 - **Impact:** Validates interactive SDK pattern for samples portfolio; 8 remaining samples now prioritized for similar rebuilds
+
+### 2026-03-08T12:39:07Z: Gmail sample action implementation paths — code review
+📌 **Code Review Outcome** — Fenster evaluated two paths for adding email actions
+- **Path A: Playwright (Fragile)** — 4–6 hours. Brittle selectors, Gmail DOM changes frequently. Not recommended.
+- **Path B: Gmail API (Robust, Recommended)** — 8–12 hours. Official, stable, well-documented. Use defineTool() wrapper for archive/delete/mark-read.
+- **Scopes needed:** gmail.readonly (existing) + gmail.modify (new)
+- **Integration pattern:** Extend squad.config.ts tools structure, existing SquadClient pattern proven in email-inbox-triage.
+- **Decision:** Ignore Playwright approach; go Gmail API.
+- **Next:** Awaiting Baer's security review before implementation starts.

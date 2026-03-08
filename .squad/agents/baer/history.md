@@ -76,3 +76,12 @@
   3. Team context: Clarified that final team consensus entry is team-wide, documented in Baer's history for reference
 
 **Status:** Clean — all corrections applied.
+
+### 2026-03-08T12:39:07Z: Gmail sample action security review — risk assessment
+📌 **Security Review Outcome** — Baer assessed risks of adding email actions to Gmail sample
+- **Verdict:** Keep read-only for now. If actions added, enforce strict controls.
+- **Real risks:** Irreversible data loss, prompt injection via email subjects, scope creep (archive → send → forward).
+- **Five mitigations if actions approved:** (1) explicit user confirmation, (2) trash-only deletion, (3) batch operation caps, (4) --enable-actions opt-in flag, (5) prompt injection defense (sanitize subjects).
+- **Recommendation:** Option A (now): Keep read-only, document for future. Option B (if requested): Implement with all 5 mitigations. Consider separate gmail-actions-demo for production-hardened version.
+- **Pattern:** Read-only mode is safe default; actions require explicit opt-in and user approval per operation.
+- **Status:** Awaiting product decision on action scope.

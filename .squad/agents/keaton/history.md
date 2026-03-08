@@ -716,3 +716,11 @@ This history accurately documents Keaton's work and decisions. Future spawns can
 - **Scoring criteria:** Real-world use case, interactive depth, agent collaboration, user value
 - **Impact on Fenster:** Clear prioritization for next batch of sample rebuilds using interactive SDK pattern
 - **Pattern established:** Like email-inbox-triage, samples should use SquadClient + squad.config.ts + four-agent workflows
+
+### 2026-03-08T12:39:07Z: Gmail sample action capability review — architectural assessment
+📌 **Architectural Review Outcome** — Keaton assessed email-inbox-triage action capability
+- **Finding:** Sample is strictly read-only. No actions implemented yet.
+- **Recommendation:** Scoped actions via Gmail API (not Playwright). Archive/delete with confirmation only.
+- **Scope guidance:** Keep tight — no send/reply in a demo.
+- **Pattern:** Use defineTool() integration for Gmail API actions with explicit user confirmation.
+- **Next:** Awaiting Fenster's code review and Baer's security assessment.
