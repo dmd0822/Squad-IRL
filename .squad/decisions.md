@@ -3597,3 +3597,22 @@ Future refactors cannot silently bypass squad role responsibilities. If config r
 - Tests block immediate if config roles drift or are removed
 
 **Status:** Implemented — all tests passing (12/12), typecheck passing
+
+### 2026-03-09T01:40:18Z: User directive
+**By:** Jeremy Sinclair (via Copilot)
+**What:** For esults?search_query=... entries, resolve and use the top YouTube result's canonical watch?v= URL.
+**Why:** User request — captured for team memory
+
+### 2026-03-09: Prefer top ideoRenderer result for YouTube search URL resolution
+**By:** Fenster
+**Status:** Implemented
+**What:**
+- For esults?search_query=... URLs, parse the response HTML and prefer the first ideoRenderer.videoId found in ytInitialData.
+- Only fall back to regex extraction ("videoRenderer" then watch?v=) when ytInitialData is unavailable.
+- Keep launch contracts unchanged: dedupe, max 15 IDs, existing markdown persistence format, deterministic skip reasons.
+
+**Why:**
+Search result pages can contain non-top watch?v= links before the actual ranked results payload. Prior generic matching could pick those links, causing non-deterministic launch targets.
+
+**Impact:**
+Launch payload construction consistently uses the top ranked search result when available, while preserving existing behavior for unresolved and invalid links.

@@ -984,3 +984,11 @@ pm start works.
 - **Fix:** Hardened YouTube ID extraction in `mood-playlist-builder/mood-logic.ts` to support `www/m` host variants, shorts/embed/live path IDs, and richer search HTML patterns (`"videoId"` / `videoRenderer` / `watch?v=`) for follow-up search resolution.
 - **Behavioral impact:** Launch path keeps existing contracts (dedupe + max 15 + markdown format), still preserves fallback links, and continues emitting explicit skip reasons when a link cannot be resolved.
 - **Verification:** `npm run typecheck` and `npm test` both pass in `mood-playlist-builder` (16/16 tests).
+
+### 📌 Team update (2026-03-09T02:35:00Z): Top-result YouTube search resolution hardened for mood-playlist launch payloads — decided by Fenster
+- Updated search-result parsing to prefer the first `videoRenderer.videoId` from `ytInitialData`, then fallback to renderer/watch URL regexes.
+- `results?search_query=...` entries now resolve to canonical `watch?v={id}` IDs before launch payload assembly, preserving the 15-video cap + dedupe behavior.
+- Added regression coverage for noisy HTML where non-top `watch?v=` links appear before `ytInitialData` and verified deterministic skip reasons remain unchanged.
+
+📌 Team update (2026-03-09T01:40:18Z): Top-result YouTube watch URL resolution merged to decisions.md — implemented by Fenster, validated by Hockney
+

@@ -869,3 +869,14 @@ All labeled squad:hockney for routing. Each issue includes: what's missing, why 
 - Added deterministic launch-resolution behavior checks via `resolveLaunchVideoIdsFromLinks`: resolves search links when possible, dedupes IDs, caps launch set at 15, and returns explicit stable skip reasons for unresolved/invalid entries.
 - Hardened runtime launch path in mood-playlist-builder/index.ts to resolve launchable IDs from saved links before opening watch_videos?video_ids= so launch count reflects deduped, actually launchable IDs.
 - Verified with `npm test` (16 pass, 0 fail) and `npm run typecheck` (pass) in mood-playlist-builder.
+
+### Mood playlist top-result regression expansion (2026-03-09)
+- Added 3 targeted tests in `mood-playlist-builder/tests/mood-logic.test.ts` (suite now 19 passing) to lock search-result behavior:
+  1. `findYouTubeLink` converts `results?search_query` responses to canonical `https://www.youtube.com/watch?v={id}` using top-result extraction.
+  2. Launch payload path verifies resolved IDs are included in final `watch_videos?video_ids=` output with dedupe + 15-video cap preserved.
+  3. Unextractable search results keep deterministic `unresolved-search-query` skip reasons across repeated misses.
+- Regression guard confirms persistence and launch-path tests still pass (append-only markdown rows, archive parsing, playlist URL construction).
+- Validation run after updates: `npm test` => 19/19 pass, `npm run typecheck` => pass.
+
+📌 Team update (2026-03-09T01:40:18Z): Top-result YouTube watch URL resolution merged to decisions.md — implemented by Fenster, validated by Hockney
+
