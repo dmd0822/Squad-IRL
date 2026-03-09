@@ -409,7 +409,7 @@ async function main(): Promise<void> {
       }
 
       const linkEntries = scopedEntries.filter((entry) => entry.youtubeLink);
-      const links = linkEntries.slice(0, MAX_PLAYLIST_SONGS).map((entry) => entry.youtubeLink as string);
+      const links = linkEntries.map((entry) => entry.youtubeLink as string);
 
       const unresolvedEntries = scopedEntries.filter((entry) => entry.diagnostics);
       for (const entry of unresolvedEntries) {
@@ -419,10 +419,6 @@ async function main(): Promise<void> {
       const noLinkCount = scopedEntries.filter((entry) => !entry.youtubeLink && !entry.diagnostics).length;
       if (noLinkCount > 0) {
         console.log(`${C.dim}  Ignored ${noLinkCount} rows with no stored YouTube link.${C.reset}`);
-      }
-      const overflowCount = Math.max(0, linkEntries.length - links.length);
-      if (overflowCount > 0) {
-        console.log(`${C.dim}  Ignored ${overflowCount} extra links beyond the ${MAX_PLAYLIST_SONGS}-song launch cap.${C.reset}`);
       }
 
       console.log();

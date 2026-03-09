@@ -483,12 +483,10 @@ export function readMoodArchive(archivePath: string): MoodArchiveEntry[] {
   const lines = readFileSync(archivePath, 'utf-8').split(/\r?\n/);
   const entries: MoodArchiveEntry[] = [];
   for (const line of lines) {
-    if (!line.startsWith('|')) continue;
-    if (line.includes('DateTime') || line.includes('---')) continue;
-    const cells = line
-      .split('|')
-      .map((cell: string) => cell.trim())
-      .filter((cell: string) => cell.length > 0);
+    const cells = parseMarkdownTableCells(line);
+    if (!cells) continue;
+    if (isMarkdownDividerRow(cells)) continue;
+    if (cells[0] && cells[0].includes('DateTime')) continue;
     if (cells.length !== 3) continue;
     const [dateTime, rawMood, moodPhrase] = cells;
     entries.push({ dateTime, rawMood, moodPhrase });
@@ -732,7 +730,7 @@ export function extractYouTubeVideoId(url: string): string | null {
       return /^[a-zA-Z0-9_-]{11}$/.test(shortId) ? shortId : null;
     }
 
-    if (!hostname.includes('youtube.com')) return null;
+    if (hostname !== 'youtube.com' && !hostname.endsWith('.youtube.com')) return null;
     const id = parsed.searchParams.get('v');
     if (id && /^[a-zA-Z0-9_-]{11}$/.test(id)) return id;
 
@@ -785,13 +783,19 @@ export async function resolveLaunchVideoIdsFromLinks(
     }
 
     const host = parsed.hostname.toLowerCase();
-    const isYouTubeHost = host === 'youtu.be' || host.includes('youtube.com');
+    const isYouTubeHost =
+      host === 'youtu.be' ||
+      host === 'youtube.com' ||
+      host.endsWith('.youtube.com');
     if (!isYouTubeHost) {
       skipped.push({ link, reason: 'non-youtube-link' });
       continue;
     }
 
-    const isSearchQuery = host.includes('youtube.com') && parsed.pathname === '/results' && parsed.searchParams.has('search_query');
+    const isSearchQuery =
+      (host === 'youtube.com' || host.endsWith('.youtube.com')) &&
+      parsed.pathname === '/results' &&
+      parsed.searchParams.has('search_query');
     if (!isSearchQuery) {
       skipped.push({ link, reason: 'missing-video-id' });
       continue;
@@ -826,17 +830,22 @@ export async function resolveHistoricalLaunchFromPlaylistMarkdown(
 }
 
 async function resolveYouTubeSearchResultId(searchUrl: string): Promise<string | null> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10_000);
   try {
     const response = await fetch(searchUrl, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
       },
+      signal: controller.signal,
     });
     if (!response.ok) return null;
     const html = await response.text();
     return extractTopYouTubeSearchVideoId(html);
   } catch {
     return null;
+  } finally {
+    clearTimeout(timeout);
   }
 }
 

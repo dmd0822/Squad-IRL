@@ -66,7 +66,10 @@ export function buildMoodPlannerSystemPrompt(config: SquadLike = squadConfig): s
 
 function parseJsonObject(value: unknown): Record<string, unknown> | null {
   if (!value) return null;
-  if (typeof value === 'object') return value as Record<string, unknown>;
+  if (typeof value === 'object') {
+    if (Array.isArray(value)) return null;
+    return value as Record<string, unknown>;
+  }
   if (typeof value !== 'string') return null;
 
   const text = value.trim();
@@ -75,7 +78,7 @@ function parseJsonObject(value: unknown): Record<string, unknown> | null {
   const parse = (payload: string): Record<string, unknown> | null => {
     try {
       const parsed = JSON.parse(payload);
-      return parsed && typeof parsed === 'object' ? (parsed as Record<string, unknown>) : null;
+      return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? (parsed as Record<string, unknown>) : null;
     } catch {
       return null;
     }
