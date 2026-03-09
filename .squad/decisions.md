@@ -3806,3 +3806,62 @@ Daily playlist markdown files can contain multiple contiguous mood sessions plus
 ## Impact
 
 Future changes to playlist parsing, grouping, or launch resolution will fail fast if session selection accidentally broadens launch scope or destabilizes skip diagnostics.
+
+
+---
+
+# Decision: Documentation Structure for Mood Playlist Builder
+
+**Date:** 2026-03-15  
+**Owner:** McManus (DevRel)  
+**Status:** Proposed  
+
+## Problem
+
+1. Root README listed "19 Samples" but mood-playlist-builder was completely absent, making it invisible to new visitors
+2. Mood-playlist-builder's behavior (8-song cap, skip diagnostics, multi-mode launch) was poorly explained
+3. No clear category existed for interactive/preference-learning tools
+
+## Solution
+
+### Root README Changes
+- Updated sample count from 19 → 20
+- Created new category: "🎵 Interactive & Personalization" for tools that learn user preferences
+- Added mood-playlist-builder to this category with one-line description highlighting:
+  - Mood-based playlist creation
+  - Date-based playlist access
+  - Individual session launch capability
+  - 8-song cap enforcement
+  - Skip diagnostic reporting
+
+### Mood Playlist Builder README Changes
+- Restructured "What This Sample Does" into three clear subsections:
+  1. Creating a New Playlist (steps 1–8)
+  2. Opening a Saved Playlist (steps 9–11)
+  3. Launching to YouTube (steps 12–15)
+- Explicitly documented the 8-song cap and named all skip diagnostic reasons:
+  - `unresolved-search-query` (YouTube search that couldn't resolve to video ID)
+  - `invalid-link` (malformed or non-YouTube URL)
+  - `non-youtube-link` (link from another source)
+  - `missing-video-id` (YouTube URL without valid video ID)
+  - `duplicate-video-id` (song already in playlist)
+  - `max-videos-reached` (valid links beyond 8-song cap)
+- Reorganized Usage section to explicitly map the two entry points (1=create, 2=open) to workflows
+
+## Rationale
+
+- **Discoverability:** Mood-playlist-builder was the only sample not visible in the root README
+- **Semantic clarity:** "Interactive & Personalization" is the right category for tools that adapt to user history/mood
+- **User clarity:** Skip diagnostics are no longer mysterious; each one is named and explained
+- **Consistency:** Sample description in root README matches details in sample's own README without duplication
+
+## Implications
+
+- **New category established:** Future samples with user preference learning should use "Interactive & Personalization" category
+- **Documentation standard:** Sample descriptions in root README should highlight launch/output behavior clearly (not just input transformation)
+- **No code changes:** This is docs-only; no behavior changed
+
+## Approval Needed From
+
+- Keaton (Lead) — verify category naming/structure fits team documentation philosophy
+- Verbal (Prompt Engineer) — confirm skip diagnostic names are user-friendly
