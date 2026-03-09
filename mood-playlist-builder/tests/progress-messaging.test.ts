@@ -43,3 +43,18 @@ test('fallback path emits clear progress and warning messaging', () => {
   assert.equal(warningPrintedInMain >= 0, true);
   assert.equal(warningConsoleLog > warningPrintedInMain, true);
 });
+
+test('startup config enables Node warning suppression before Squad subprocess kickoff', () => {
+  assert.match(indexSource, /function configureSubprocessWarningSuppression\(\): \(\) => void \{/);
+  assert.match(indexSource, /process\.env\.NODE_NO_WARNINGS = '1';/);
+  assert.match(indexSource, /--no-warnings/);
+
+  const suppressionConfigIndex = indexSource.indexOf(
+    'const restoreSubprocessWarningEnv = configureSubprocessWarningSuppression();',
+  );
+  const clientConstructIndex = indexSource.indexOf('client = new SquadClient({');
+  const clientConnectIndex = indexSource.indexOf('await client.connect();');
+  assert.equal(suppressionConfigIndex >= 0, true);
+  assert.equal(clientConstructIndex > suppressionConfigIndex, true);
+  assert.equal(clientConnectIndex > suppressionConfigIndex, true);
+});

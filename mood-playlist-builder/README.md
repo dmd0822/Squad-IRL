@@ -93,6 +93,7 @@ When creating a new playlist, after seeing song suggestions, you can:
 ## Dynamic Mode Requirements
 
 Dynamic generation uses the Squad SDK and your local Copilot CLI session.
+During dynamic generation startup, Node warning noise from spawned Squad subprocesses is suppressed so stage progress and fallback status lines stay readable.
 
 1. Install dependencies:
 

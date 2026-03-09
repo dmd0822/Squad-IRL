@@ -915,3 +915,9 @@ All labeled squad:hockney for routing. Each issue includes: what's missing, why 
 - Added merge-equivalence coverage validating malformed final-stage payloads still resolve to equivalent behavior via interpreted mood + curated songs (shape, song list, warnings).
 - Added hard-failure fallback coverage validating deterministic local fallback output + user-facing fallback messaging remain stable.
 - Validation command: `npm test && npm run typecheck` in `mood-playlist-builder` passes.
+
+### Mood startup warning-suppression regression coverage (2026-03-09)
+- Added source-level regression assertions in `mood-playlist-builder/tests/progress-messaging.test.ts` to lock startup warning suppression setup before Squad subprocess kickoff (`NODE_NO_WARNINGS`) and preserve deterministic ordering relative to `new SquadClient()` + `connect()`.
+- Added startup helper in `mood-playlist-builder/index.ts` (`configureSubprocessWarningSuppression`) and invoked it at dynamic playlist startup so child-process warnings are suppressed at kickoff without muting progress output.
+- Existing progress-output regression assertions remain intact (stage start/completion + fallback messages), protecting against accidental output silence while warning suppression is active.
+- Validation: `npm test && npm run typecheck` in `mood-playlist-builder` passed (41/41 tests, typecheck pass).

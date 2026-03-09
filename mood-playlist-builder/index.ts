@@ -115,6 +115,34 @@ function getStageProgressLabel(stageId: string): { activity: string; completion:
   }
 }
 
+function hasNoWarningsFlag(nodeOptions: string | undefined): boolean {
+  return typeof nodeOptions === 'string' && /\b--no-warnings\b/.test(nodeOptions);
+}
+
+function configureSubprocessWarningSuppression(): () => void {
+  const previousNodeNoWarnings = process.env.NODE_NO_WARNINGS;
+  const previousNodeOptions = process.env.NODE_OPTIONS;
+
+  process.env.NODE_NO_WARNINGS = '1';
+  if (!hasNoWarningsFlag(previousNodeOptions)) {
+    process.env.NODE_OPTIONS = previousNodeOptions ? `${previousNodeOptions} --no-warnings` : '--no-warnings';
+  }
+
+  return () => {
+    if (previousNodeNoWarnings === undefined) {
+      delete process.env.NODE_NO_WARNINGS;
+    } else {
+      process.env.NODE_NO_WARNINGS = previousNodeNoWarnings;
+    }
+
+    if (previousNodeOptions === undefined) {
+      delete process.env.NODE_OPTIONS;
+    } else {
+      process.env.NODE_OPTIONS = previousNodeOptions;
+    }
+  };
+}
+
 export async function generateDynamicPlaylist(rawMood: string, archiveEntries: ReturnType<typeof readMoodArchive>): Promise<{
   moodPhrase: string;
   adjacentMoods: string[];
@@ -145,6 +173,7 @@ export async function generateDynamicPlaylist(rawMood: string, archiveEntries: R
   let client: SquadClient | null = null;
   const stageOutputs: Record<string, unknown> = {};
 
+  const restoreSubprocessWarningEnv = configureSubprocessWarningSuppression();
   try {
     console.log();
     console.log(`${C.magenta}${C.bold}  Squad is building your playlist...${C.reset}`);
@@ -217,6 +246,7 @@ export async function generateDynamicPlaylist(rawMood: string, archiveEntries: R
     try {
       await client?.disconnect();
     } catch {}
+    restoreSubprocessWarningEnv();
   }
 
   const modelOutput = mergeMoodPipelineOutputs(stageOutputs);

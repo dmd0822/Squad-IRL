@@ -44,6 +44,12 @@
 - Decision merged: "mood-playlist-builder cap at 8 songs" (2026-03-09)
 - Context: Launch reliability degraded at 15-song ceiling; 8-cap improves resolution/payload margins
 
+### 📌 Team update (2026-03-10T): Mood playlist subprocess warning suppression hardening — decided by Fenster
+- Hardened `mood-playlist-builder/index.ts` warning suppression for Squad startup by setting both `NODE_NO_WARNINGS=1` and `NODE_OPTIONS=--no-warnings` before `SquadClient` connect.
+- Implemented scoped restore logic so previous env values are restored in `finally`, avoiding persistent process-wide mutation after playlist generation completes.
+- Added regression coverage in `tests/subprocess-warning-suppression.test.ts` to lock ordering (suppression before `new SquadClient`) and cleanup behavior (restore after disconnect).
+- Result: removes `[CLI subprocess] ExperimentalWarning: SQLite is an experimental feature...` noise while preserving existing stage progress/fallback status output.
+
 **Phase 3 Blocking (2026-02-22 onwards):**
 - Ralph start(): EventBus subscription + health checks (14 TODOs)
 - Coordinator initialize()/route(): CopilotClient wiring + agent manager (13 TODOs)
