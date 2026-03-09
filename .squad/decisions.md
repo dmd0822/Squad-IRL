@@ -3686,3 +3686,58 @@ Standardize the playlist/launch cap to **8 songs** across runtime flow, model co
 - Improves launch reliability by reducing resolution and payload pressure.
 - Keeps archive/markdown behavior unchanged except each run now records up to 8 songs.
 - Requires tests and docs to enforce and communicate 1-8 constraints.
+
+---
+
+# Decision: Open Previous Mood Playlists Mode
+
+- **Date:** 2026-03-10
+- **Owner:** Fenster (Core Dev)
+- **Scope:** mood-playlist-builder
+
+## Decision
+
+Add a first-class CLI path to open previously saved daily playlists (mood-playlists/playlist-YYYY-MM-DD.md) with numbered selection and launch those saved links through the same YouTube launch-resolution pipeline used by new playlists.
+
+## Why
+
+Users need a direct way to relaunch prior playlists without generating a new mood session. Reusing the existing esolveLaunchVideoIdsFromLinks + watch_videos?video_ids= flow preserves deterministic launch semantics, skip-reason diagnostics, and the current 8-song cap.
+
+## Implementation Notes
+
+- Added playlist file discovery (listSavedPlaylistFiles) and robust markdown table parsing (eadSavedPlaylistEntries) for Mood | Genre | Artist | Song | YouTube Link rows.
+- Parser handles escaped table pipes (\|) and both markdown-formatted links and bare YouTube URLs.
+- CLI now prompts for mode (new vs previous), supports numbered prior-file selection, and surfaces unresolved row diagnostics explicitly before launch.
+
+## Impact
+
+- Existing create-new-playlist flow remains intact.
+- Previous playlists are now operational for relaunch in one CLI run.
+- Diagnostics for unresolved legacy entries are explicit and consistent with existing launch skip reporting.
+
+---
+
+# Decision: Open Previous Playlists Test Strategy
+
+- **Date:** 2026-03-10
+- **Owner:** Hockney (Test Lead)
+- **Scope:** mood-playlist-builder
+
+## Decision
+
+For "open previous playlists", enforce behavior with unit-level tests in mood-playlist-builder/tests/mood-logic.test.ts using markdown fixtures and mocked fetch responses rather than CLI-interaction tests.
+
+## Why
+
+- The critical risk is deterministic parsing + launch assembly correctness (recover links, dedupe IDs, cap at 8, stable skip reasons).
+- These paths are pure/near-pure logic and are faster and more stable to validate in logic-level tests than end-to-end terminal flows.
+- Mocked fetch keeps historical launch behavior reproducible for duplicate/overflow/unresolved branches.
+
+## Coverage Required
+
+1. Recover YouTube links from playlist markdown table rows ([Watch](...) and bare URLs).
+2. Handle edge inputs (no prior files, malformed rows) without throwing or false positives.
+3. Assemble historical launch payload from recovered links with:
+   - dedupe enforcement
+   - max cap of 8
+   - deterministic skip reasons (duplicate-video-id, max-videos-reached, etc.) from launch resolution.

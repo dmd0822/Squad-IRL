@@ -886,3 +886,9 @@ All labeled squad:hockney for routing. Each issue includes: what's missing, why 
 - Confirmed `resolveLaunchVideoIdsFromLinks` resolves results URLs to top watch video IDs and those IDs flow into final `watch_videos?video_ids=` launch payload.
 - Locked mixed-link behavior: watch URLs + results URLs still launch exactly 15 videos (deduped/capped), while unresolved search entries keep deterministic `unresolved-search-query` skip reasons.
 - Validation: `npm test` in `mood-playlist-builder` passed 21/21.
+
+### Open previous playlists test coverage (2026-03-09)
+- Added focused regression tests for recovering YouTube links from saved playlist markdown table rows.
+- Covered edge behavior for empty historical inputs and malformed playlist rows so parsing is resilient and non-throwing.
+- Added historical launch assembly test to verify dedupe, cap at 8, and deterministic skip reasons when recovered links include duplicates/overflow.
+- Validation after updates: `npm run typecheck` (pass) and `npm test` (26/26 pass) in `mood-playlist-builder`.

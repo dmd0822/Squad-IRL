@@ -1013,3 +1013,11 @@ pm start works.
 - Updated squad orchestration/model contracts (squad.config.ts, squad-orchestration.ts, and runtime constraint payloads) to require 1-8 songs.
 - Preserved markdown/archive append behavior exactly; playlists now naturally persist up to 8 rows per run.
 - Updated regression tests and docs to match the 8-song cap; validated with `npm test` and `npm run typecheck` in `mood-playlist-builder`.
+
+### 📌 Team update (2026-03-10): mood-playlist-builder can now open prior saved playlists — decided by Fenster
+- Added startup action selection in `mood-playlist-builder/index.ts`: create new playlist (existing flow) or open a previous daily playlist.
+- Implemented numbered prior-playlist selection from `mood-playlists/playlist-YYYY-MM-DD.md` files, newest-first.
+- Added robust markdown row parsing in `mood-logic.ts` for `Mood | Genre | Artist | Song | YouTube Link`, including escaped pipes and markdown/bare YouTube link extraction.
+- Reused existing launch semantics: resolve saved links to canonical IDs and launch with `watch_videos?video_ids=...`, keeping the 8-song cap.
+- Added explicit diagnostics for unresolved legacy rows and unresolved search-query links before launch.
+- Validation: `npm test` (28 passing) and `npm run typecheck` succeeded in `mood-playlist-builder`.
