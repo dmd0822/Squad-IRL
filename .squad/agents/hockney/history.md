@@ -880,3 +880,9 @@ All labeled squad:hockney for routing. Each issue includes: what's missing, why 
 
 📌 Team update (2026-03-09T01:40:18Z): Top-result YouTube watch URL resolution merged to decisions.md — implemented by Fenster, validated by Hockney
 
+
+### Mood unresolved-search-query apostrophe regression tests (2026-03-09)
+- Added regression test coverage for encoded apostrophes in `search_query` using user examples: `Who%27s Making Love` and `Ridin%27`.
+- Confirmed `resolveLaunchVideoIdsFromLinks` resolves results URLs to top watch video IDs and those IDs flow into final `watch_videos?video_ids=` launch payload.
+- Locked mixed-link behavior: watch URLs + results URLs still launch exactly 15 videos (deduped/capped), while unresolved search entries keep deterministic `unresolved-search-query` skip reasons.
+- Validation: `npm test` in `mood-playlist-builder` passed 21/21.

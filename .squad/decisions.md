@@ -3616,3 +3616,34 @@ Search result pages can contain non-top watch?v= links before the actual ranked 
 
 **Impact:**
 Launch payload construction consistently uses the top ranked search result when available, while preserving existing behavior for unresolved and invalid links.
+
+### 2026-03-09: Harden YouTube search-result resolution in mood-playlist-builder
+**By:** Fenster (Core Dev)
+
+**What**
+- Prefer extracting the first playable `videoRenderer.videoId` from `ytInitialData` search sections when resolving `https://www.youtube.com/results?search_query=...`.
+- Support additional YouTube payload variants: escaped `JSON.parse(...)` assignments, escaped `videoRenderer` JSON fragments, and unicode-escaped watch query forms (for example `watch\u003Fv\u003D...`).
+- Keep fallback behavior deterministic (`unresolved-search-query`) and emit explicit unresolved diagnostics in CLI output.
+
+**Why**
+- Real user logs showed search URLs with apostrophes/special characters were frequently unresolved, reducing launched playlist size.
+- YouTube response payloads are not stable across contexts; robust multi-path extraction avoids overfitting to one HTML pattern.
+
+**Impact**
+- Improves launch consistency without changing existing contracts: max 15 videos, markdown persistence behavior, and launch URL format (`watch_videos?video_ids=...`) remain unchanged.
+
+### 2026-03-09: Cover encoded YouTube search-query regressions in launch-resolution tests
+**By:** Hockney (Tester)  
+**Scope:** `mood-playlist-builder/tests/mood-logic.test.ts`
+
+**What**
+Add explicit regression tests for YouTube `results?search_query=` links containing encoded apostrophes/special characters so launch resolution remains stable for real user data.
+
+**Why**
+Real playlist rows can store results URLs (not watch URLs), including apostrophes in search terms (e.g., `Who%27s Making Love`, `Ridin%27`). Without this guard, unresolved parsing can silently reduce launchable songs.
+
+**Guardrails Added**
+1. Encoded apostrophe queries must resolve to top watch video IDs.
+2. Resolved IDs from results links must be present in final `watch_videos?video_ids=` launch payload.
+3. Mixed direct watch + results links must still cap at 15 launch IDs.
+4. Unresolved search links must emit deterministic `unresolved-search-query` reasons.

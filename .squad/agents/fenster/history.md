@@ -50,6 +50,11 @@
 
 **Findings:**
 
+### 📌 Team update (2026-03-09T): Mood playlist search URL resolution hardening — decided by Fenster
+- Hardened `mood-playlist-builder` YouTube resolver to prioritize top `ytInitialData` search results, including escaped `JSON.parse(...)` payloads and unicode-escaped watch patterns.
+- Added fallback extraction for escaped `videoRenderer.videoId` payloads so apostrophe/special-character queries (for example `Who's Making Love`, `Ridin'`) resolve consistently to launchable watch IDs.
+- Added explicit unresolved-search diagnostics in CLI output to surface failed queries non-silently while preserving existing 15-video cap and `watch_videos?video_ids=` launch contract.
+
 **Timeline:**
 - **2026-02-22 (~c1d5c7c→992763e):** Feature introduced. PR #265 added `squad aspire` command (Issue #265) as the CLI entry point to launch .NET Aspire dashboard for Squad observability. Core file: `packages/squad-cli/src/cli/commands/aspire.ts` (175 lines).
 - **2026-02-22 (PR #307):** OTel Phase 4 consolidation — aspire command + file watcher + event payloads merged.
