@@ -3865,3 +3865,52 @@ Future changes to playlist parsing, grouping, or launch resolution will fail fas
 
 - Keaton (Lead) — verify category naming/structure fits team documentation philosophy
 - Verbal (Prompt Engineer) — confirm skip diagnostic names are user-friendly
+
+---
+
+# 2026-03-09: Mood playlist stage-progress messaging
+
+**By:** Fenster (Core Dev)  
+**Requested by:** Jeremy Sinclair
+
+## What
+
+Add explicit, user-visible progress messaging in mood-playlist-builder/index.ts during dynamic generation so the CLI visibly advances through the configured stage pipeline:
+1. interpret mood
+2. curate songs
+3. apply mood logic
+
+The runtime now prints stage start/completion indicators, a pipeline completion indicator, and deterministic fallback status when the dynamic path is unavailable or needs normalization fallback.
+
+## Why
+
+Users were seeing a perceived idle wait while the Squad pipeline executed. The sample now communicates that the team is actively working and where it is in the flow.
+
+## Impact
+
+- No contract changes to playlist content, persistence, or launch behavior.
+- Existing 8-song cap, archive append flow, and previous playlist open/launch paths are preserved.
+- UX is clearer during generation without introducing new dependencies or changing orchestrator semantics.
+
+---
+
+# 2026-03-09: Progress message regression coverage
+
+- **Date:** 2026-03-09
+- **Owner:** Hockney (Tester)
+- **Context:** mood-playlist-builder needed regression protection for in-flight Squad stage visibility and fallback communication.
+
+## Decision
+
+Add deterministic source-level regression tests in 	ests/progress-messaging.test.ts that assert:
+1. All three Squad pipeline stages remain visibly logged while running (interpret-mood, curate-songs, pply-mood-logic).
+2. Stage-completion and pipeline-completion lines remain in order.
+3. Fallback transition and warning propagation remain clearly communicated.
+
+## Rationale
+
+The progress behavior depends on interactive runtime + SDK session calls, which are expensive and non-deterministic for unit tests. Source-level assertions provide stable regression coverage for user-facing copy and sequencing without introducing flaky SDK/network dependencies.
+
+## Follow-up
+
+If progress messaging is refactored, update these assertions in the same PR to preserve explicit user-visible stage and fallback communication guarantees.

@@ -898,3 +898,13 @@ All labeled squad:hockney for routing. Each issue includes: what's missing, why 
 - Covered edge behavior for empty historical inputs and malformed playlist rows so parsing is resilient and non-throwing.
 - Added historical launch assembly test to verify dedupe, cap at 8, and deterministic skip reasons when recovered links include duplicates/overflow.
 - Validation after updates: `npm run typecheck` (pass) and `npm test` (26/26 pass) in `mood-playlist-builder`.
+
+### Mood playlist progress messaging regressions (2026-03-09)
+**Status:** Complete — added deterministic regression coverage in `mood-playlist-builder/tests/progress-messaging.test.ts`; tests + typecheck pass.
+- Added source-level regression assertions for visible in-flight Squad stage updates (`interpret-mood`, `curate-songs`, `apply-mood-logic`) so status messaging cannot silently regress to final-result-only output.
+- Added fallback-path regression assertions to keep deterministic communication for failure transition (`Dynamic pipeline unavailable...`) and user-facing warning propagation (`Dynamic generation unavailable (...) Using deterministic fallback.`).
+- Kept test style aligned with existing Node `test` + `assert/strict` patterns and deterministic text/index checks (no network/session dependencies).
+
+
+
+

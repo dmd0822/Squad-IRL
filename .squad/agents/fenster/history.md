@@ -1027,3 +1027,10 @@ pm start works.
 - Added deterministic session grouping in mood-playlist-builder/mood-logic.ts via groupSavedPlaylistSessions() using contiguous rows that share the same Mood value, surfaced as CLI labels with row range and link counts.
 - Preserved existing launch behavior contracts: 8-song cap, ID dedupe, search-resolution + skip diagnostics.
 - Added regression coverage for mood-session grouping and updated README usage docs.
+
+### 📌 Team update (2026-03-09): mood-playlist-builder now shows stage-by-stage Squad progress while generating playlists — decided by Fenster
+- Added explicit runtime progress messaging for the three configured pipeline stages: interpret mood, curate songs, and apply mood logic.
+- Users now see start/completion status for each stage while waiting on dynamic generation, plus clear pipeline-complete and deterministic-fallback signals.
+- Preserved all existing behavior contracts: 8-song cap, archive/playlist append flows, and previous-playlist open/launch paths.
+- Updated sample README to document the new wait-time progress indicators and fallback visibility.
+- Validation: `npm test && npm run typecheck` passed in `mood-playlist-builder`.
