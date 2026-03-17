@@ -1,16 +1,17 @@
 # Content Creation Workflow — Squad Edition
 
-A Squad sample that takes a **blog topic** and produces a polished, SEO-optimized article through a four-agent content pipeline: research → outline → write → edit.
+A Squad sample that takes a **blog topic** and produces a polished, SEO-optimized article with platform-specific social media snippets through a five-agent content pipeline: research → outline → write → edit → social snippets.
 
 ## How It Works
 
 1. You provide a topic — type it interactively or load from a file
-2. Four AI agents collaborate in sequence:
+2. Five AI agents collaborate in sequence:
    - **Researcher** — gathers facts, statistics, expert perspectives, and fresh angles
    - **Outliner** — designs the structural blueprint: sections, narrative arc, word counts
    - **Writer** — drafts the complete article with consistent voice and engagement
    - **Editor** — polishes grammar, tone, and flow, then optimizes for SEO
-3. You get a publish-ready blog post with title, meta description, and optimized structure
+   - **Social Snippets** — generates platform-optimized social media posts (Twitter/X, LinkedIn, short-form)
+3. You get a publish-ready blog post with title, meta description, optimized structure, and a complete social media kit
 
 What would normally take 4+ hours is delivered in under 30 minutes.
 
@@ -54,15 +55,15 @@ Topic files can include detailed briefs with target audience, tone, angles to co
 
 ## What You Get
 
-The squad produces a complete article including:
+The squad produces a complete article with social media kit including:
 - **Optimized title** — keyword-aware, click-worthy
 - **Meta description** — 150-160 characters for search engines
 - **Full article** — with proper H2/H3 hierarchy, code examples, and engagement hooks
 - **SEO notes** — primary keywords, readability score, internal linking suggestions
+- **Social media kit** — Twitter/X single tweet, Twitter/X thread, LinkedIn post, and short-form snippet
 
 ## Extending This Sample
 
-- 📱 **Social snippets** — add an agent that generates Twitter/LinkedIn posts from the article
 - 📅 **Content calendar** — batch-produce posts on a schedule
 - ✅ **Fact-checker** — add an agent that verifies claims before publishing
 - 🌐 **CMS integration** — connect to WordPress, Ghost, or Medium APIs to publish directly
@@ -71,10 +72,11 @@ The squad produces a complete article including:
 ## Architecture
 
 ```
-Topic Input → Researcher → Outliner → Writer → Editor → Published Article
-                 ↓             ↓          ↓         ↓
-              Facts &      Structure   Full      Polished +
-              angles       blueprint   draft     SEO-ready
+Topic Input → Researcher → Outliner → Writer → Editor → Social Snippets → Published Article + Social Kit
+                 ↓             ↓          ↓         ↓           ↓
+              Facts &      Structure   Full      Polished +   Tweets,
+              angles       blueprint   draft     SEO-ready    LinkedIn,
+                                                              snippets
 ```
 
 The squad uses `@bradygaster/squad-sdk` to coordinate agents through GitHub Copilot. Each agent has a detailed charter defining its expertise, output format, and boundaries — ensuring clean collaboration without overlap.

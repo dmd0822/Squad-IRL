@@ -1,7 +1,7 @@
 // ─── Content Creation Workflow — Squad Edition ───────────────────────────────
 // Takes a blog topic (typed or loaded from a file) and produces a polished,
-// SEO-optimized article through a four-agent pipeline: Researcher, Outliner,
-// Writer, and Editor.
+// SEO-optimized article with platform-specific social media snippets through a
+// five-agent pipeline: Researcher, Outliner, Writer, Editor, and Social Snippets.
 
 import { createInterface } from 'node:readline/promises';
 import { stdin, stdout } from 'node:process';
@@ -54,7 +54,7 @@ function banner(): void {
   console.log(`${C.cyan}${C.bold}  ✍️  Content Creation Workflow — Squad Edition${C.reset}`);
   console.log(`${C.dim}  ─────────────────────────────────────────────${C.reset}`);
   console.log(`${C.dim}  Give us a topic, get a polished blog post.${C.reset}`);
-  console.log(`${C.dim}  Four specialists: Researcher · Outliner · Writer · Editor${C.reset}`);
+  console.log(`${C.dim}  Five specialists: Researcher · Outliner · Writer · Editor · Social Snippets${C.reset}`);
   console.log();
 }
 
@@ -148,18 +148,20 @@ The user wants a blog post on the following topic:
 ## Instructions
 
 You are a content creation assistant powered by a squad of specialists.
-Coordinate all four specialists to produce a complete, polished blog post:
+Coordinate all five specialists to produce a complete, polished blog post with social media snippets:
 
 1. **Researcher** goes first — gather facts, statistics, examples, and fresh angles on the topic
 2. **Outliner** designs the structure — sections, narrative arc, word count targets, content elements
 3. **Writer** drafts the complete article following the outline, maintaining voice and engagement
 4. **Editor** polishes grammar, tone, and flow, then optimizes for SEO with keywords, meta description, and readability
+5. **Social Snippets** generates platform-specific social media posts from the finished article: a single tweet, a Twitter/X thread, a LinkedIn post, and a generic short-form snippet
 
 Produce the FULL content pipeline in one response. The final output should be a publish-ready blog post with:
 - Optimized title
 - Meta description
 - Complete article with proper heading hierarchy
 - SEO notes (primary keywords, readability score)
+- Social media kit: Twitter/X single tweet, Twitter/X thread, LinkedIn post, and short-form snippet
 
 Be thorough, creative, and produce genuinely useful content. Quality over speed.`;
 }
@@ -367,7 +369,7 @@ async function main(): Promise<void> {
   // 3. Send the topic to the squad for content creation
   try {
     console.log();
-    console.log(`${C.dim}  Sending topic to the squad — research → outline → write → edit...${C.reset}`);
+    console.log(`${C.dim}  Sending topic to the squad — research → outline → write → edit → social snippets...${C.reset}`);
     await sendAndStream(client, session, `Create a complete, polished blog post on this topic: ${topic}`);
   } catch (err: any) {
     console.error(`${C.red}  Error: ${err?.message ?? err}${C.reset}`);
@@ -375,10 +377,9 @@ async function main(): Promise<void> {
 
   // Cleanup
   console.log();
-  console.log(`${C.green}  ✅ Blog post created!${C.reset}`);
+  console.log(`${C.green}  ✅ Blog post + social media kit created!${C.reset}`);
   console.log();
   console.log(`${C.cyan}  💡 This sample is just the beginning. You could extend it to:${C.reset}`);
-  console.log(`${C.dim}     • Generate social media snippets from the blog post${C.reset}`);
   console.log(`${C.dim}     • Create a content calendar that produces posts on a schedule${C.reset}`);
   console.log(`${C.dim}     • Add a Fact-Checker agent that verifies claims before publishing${C.reset}`);
   console.log(`${C.dim}     • Connect to your CMS API to publish directly to WordPress/Ghost/Medium${C.reset}`);

@@ -1047,3 +1047,12 @@ pm start works.
 - Updated runtime orchestration in `mood-playlist-builder/index.ts` to execute each independent batch with `Promise.all`, while keeping stage progress logs and completion messaging deterministic and coherent.
 - Preserved deterministic fallback behavior and final output contracts by continuing to normalize/validate via `resolvePlaylistFromModel()` after merged stage outputs.
 - Validation: `npm test && npm run typecheck` passed in `mood-playlist-builder` (35 tests passing).
+
+### Content-creation sample: Social Snippets agent added (5th pipeline stage)
+- Extended content-creation sample from 4-agent to 5-agent pipeline: Researcher → Outliner → Writer → Editor → Social Snippets
+- Pattern for adding a new agent to a sample: define agent with defineAgent(), add to 	eam.members, add direct routing rule + update full-pipeline rule, add to ceremony participants, add to defineSquad() agents array
+- Social Snippets agent charter covers: Twitter/X single tweet + thread, LinkedIn post, generic short-form snippet — each platform gets purpose-built content with character-limit awareness
+- Key files: content-creation/squad.config.ts (agent definitions + routing), content-creation/index.ts (runtime + system prompt), content-creation/README.md (docs)
+- Convention: routing rules use 	ier: 'direct' for single-agent patterns, 	ier: 'full' with priority: 10 for the all-agents pipeline rule
+- Convention: ceremony genda is a slash-separated checklist, one entry per agent responsibility
+- Convention: uildSystemPrompt() in index.ts dynamically reads agent charters from squad config — adding an agent to squad.config.ts auto-includes it in the system prompt

@@ -1,7 +1,8 @@
 /**
  * Content Creation Squad
  *
- * Four specialists that turn a blog topic into a polished, SEO-ready article.
+ * Five specialists that turn a blog topic into a polished, SEO-ready article
+ * with platform-optimized social media snippets.
  * Users provide a topic (or load one from a file), and the squad researches,
  * outlines, writes, and edits the post collaboratively.
  *
@@ -21,7 +22,7 @@ import {
 } from '@bradygaster/squad-sdk';
 
 // ============================================================================
-// AGENTS: Four content-creation specialists
+// AGENTS: Five content-creation specialists
 // ============================================================================
 
 const researcher = defineAgent({
@@ -225,6 +226,66 @@ You are an Editor & SEO Specialist — the final quality gate between draft and 
   tools: []
 });
 
+const socialSnippets = defineAgent({
+  name: 'socialSnippets',
+  role: 'Social Media Specialist',
+  description: 'Generates platform-optimized social media posts from the finished article: Twitter/X threads, LinkedIn posts, and short-form snippets.',
+  charter: `
+You are a Social Media Specialist — the amplification layer that turns a polished article into high-engagement social content across platforms.
+
+**Your Expertise:**
+- Platform-native formatting: crafting content that feels native to each platform, not cross-posted
+- Twitter/X mastery: single tweets (280 chars), thread architecture (hook → value → CTA), quote-tweet bait
+- LinkedIn long-form: professional tone, insight-forward hooks, paragraph breaks for mobile readability (1,300 char sweet spot, 3,000 char max)
+- Short-form snippets: universal blurbs for newsletters, Slack shares, email previews, and RSS summaries
+- Hook writing for social: the first line determines whether anyone reads the rest — make it count
+- Hashtag strategy: 2-3 relevant hashtags per post (not spam walls), platform-specific tag culture
+- CTA optimization: what action should the reader take? (click, reply, share, bookmark, follow)
+- Engagement psychology: curiosity gaps, contrarian takes, "I" → "you" reframing, data-led hooks
+- Thread architecture: each tweet in a thread must stand alone AND advance the narrative
+- Emoji calibration: platform-appropriate usage — LinkedIn is sparing, Twitter/X is conversational
+
+**When generating social snippets, produce:**
+1. **Twitter/X — Single Tweet**: One punchy tweet (≤280 characters) that captures the article's core insight. Include 1-2 hashtags. This is the "if they only see one thing" post.
+2. **Twitter/X — Thread** (4-7 tweets):
+   - Tweet 1: Hook — bold claim, surprising stat, or provocative question that stops the scroll
+   - Tweets 2-5: Key insights from the article, each standing alone as a valuable nugget
+   - Tweet 6: Summary or "TL;DR" tweet that recaps the thread
+   - Final tweet: CTA — link to the article, ask for engagement ("What's your experience with X?")
+   - Each tweet ≤280 characters, numbered (1/N format)
+3. **LinkedIn Post**: Professional, insight-forward post (800-1,300 characters). Structure:
+   - Opening hook (first 2 lines visible before "see more" — make them irresistible)
+   - 2-3 key takeaways with line breaks between them
+   - Personal/professional angle ("Here's what this means for teams building X...")
+   - CTA: link to full article + engagement prompt
+   - 2-3 hashtags at the end
+4. **Generic Short-Form Snippet**: A 2-3 sentence summary (under 300 characters) suitable for newsletters, Slack shares, email subject + preview, and RSS descriptions. Platform-neutral, punchy, curiosity-driving.
+
+**Formatting Rules:**
+- Twitter/X: No markdown. Plain text only. Line breaks for emphasis. Hashtags at end or woven naturally.
+- LinkedIn: No markdown headers. Use line breaks + emoji bullets sparingly. Bold text via unicode if needed.
+- Generic: Plain text. No formatting. Just crisp, compelling copy.
+
+**Your Style:**
+- Platform-native — each snippet should feel like it was written FOR that platform
+- Hook-obsessed — the first line of every post is the most important line you write
+- Concise but complete — social posts are short, but they still need a beginning, middle, and end
+- Engagement-aware — write posts that invite replies, not just clicks
+- Brand-consistent — maintain the article's voice and authority in compressed form
+
+**Don't:**
+- Write the article (that's the Writer's job)
+- Edit the article (that's the Editor's job)
+- Research new facts (that's the Researcher's job — use what's in the article)
+- Cross-post identical content across platforms — each platform gets purpose-built content
+- Use clickbait without substance — the hook must deliver on its promise
+- Hashtag-spam — 2-3 targeted hashtags, never a wall of 10+
+- Ignore character limits — a tweet over 280 chars is a broken tweet
+- Add content not in the original article — you're amplifying, not inventing
+`,
+  tools: []
+});
+
 // ============================================================================
 // TEAM: Bring the specialists together
 // ============================================================================
@@ -233,28 +294,31 @@ const team = defineTeam({
   name: 'Content Creation Squad',
   description: 'A team of specialists that turns a blog topic into a polished, SEO-optimized article through collaborative research, outlining, writing, and editing.',
   projectContext: `
-This squad helps people create high-quality blog posts by coordinating four specialists:
+This squad helps people create high-quality blog posts with ready-to-publish social media content by coordinating five specialists:
 
 **Researcher** gathers background information, key facts, statistics, expert perspectives, and fresh angles on the topic.
 **Outliner** creates the structural blueprint — sections, narrative arc, word count targets, and content element placement.
 **Writer** drafts the full article section by section, maintaining voice consistency and reader engagement throughout.
 **Editor** polishes grammar, tone, and flow, then optimizes for SEO: keywords, meta descriptions, readability, and search structure.
+**Social Snippets** generates platform-optimized social media posts — Twitter/X tweets and threads, LinkedIn posts, and short-form snippets for newsletters and shares.
 
-When someone provides a blog topic, all four agents collaborate in sequence:
+When someone provides a blog topic, all five agents collaborate in sequence:
 1. Researcher delivers the factual foundation
 2. Outliner designs the structural blueprint
 3. Writer drafts the complete article
 4. Editor polishes and SEO-optimizes the final version
+5. Social Snippets generates platform-specific social media posts from the finished article
 
-The result is a publish-ready blog post with title, meta description, and optimized structure — what would normally take 4+ hours, delivered in under 30 minutes.
+The result is a publish-ready blog post with title, meta description, optimized structure, and a complete social media kit — what would normally take 4+ hours, delivered in under 30 minutes.
 
-For specific follow-ups ("make the intro punchier", "add more code examples"), the relevant specialist responds.
+For specific follow-ups ("make the intro punchier", "add more code examples", "rewrite the LinkedIn post"), the relevant specialist responds.
 `,
   members: [
     '@researcher',
     '@outliner',
     '@writer',
-    '@editor'
+    '@editor',
+    '@socialSnippets'
   ]
 });
 
@@ -289,8 +353,14 @@ const routing = defineRouting({
       description: 'Editorial polish and SEO optimization'
     },
     {
+      pattern: 'social|snippet|snippets|tweet|thread|linkedin|twitter|x post|social media|promote|amplify',
+      agents: ['@socialSnippets'],
+      tier: 'direct',
+      description: 'Social media snippet generation'
+    },
+    {
       pattern: 'create|produce|generate|full|complete|publish|blog|topic|everything',
-      agents: ['@researcher', '@outliner', '@writer', '@editor'],
+      agents: ['@researcher', '@outliner', '@writer', '@editor', '@socialSnippets'],
       tier: 'full',
       priority: 10,
       description: 'Full content creation pipeline with all specialists'
@@ -314,8 +384,8 @@ const ceremonies = [
   defineCeremony({
     name: 'content-review-sync',
     trigger: 'on-demand',
-    participants: ['@researcher', '@outliner', '@writer', '@editor'],
-    agenda: 'Research completeness: any gaps in facts or missing perspectives? / Outline coherence: does the structure serve the reader journey? / Draft quality: voice consistency, engagement, technical accuracy? / Final polish: grammar clean, SEO optimized, ready to publish?'
+    participants: ['@researcher', '@outliner', '@writer', '@editor', '@socialSnippets'],
+    agenda: 'Research completeness: any gaps in facts or missing perspectives? / Outline coherence: does the structure serve the reader journey? / Draft quality: voice consistency, engagement, technical accuracy? / Final polish: grammar clean, SEO optimized, ready to publish? / Social snippets: platform-native, hooks strong, CTAs clear, character limits respected?'
   })
 ];
 
@@ -326,7 +396,7 @@ const ceremonies = [
 export default defineSquad({
   version: '0.8.0',
   team,
-  agents: [researcher, outliner, writer, editor],
+  agents: [researcher, outliner, writer, editor, socialSnippets],
   routing,
   defaults,
   ceremonies
