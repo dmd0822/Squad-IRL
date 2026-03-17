@@ -3920,3 +3920,87 @@ If progress messaging is refactored, update these assertions in the same PR to p
 **What:** Keep moodPipeline in mood-playlist-builder/squad.config.ts as the orchestration source of truth and add explicit dependsOn metadata per stage. Introduce dependency-aware execution batching in mood-playlist-builder/squad-orchestration.ts (uildMoodPipelineExecutionBatches). Execute each independent batch concurrently in mood-playlist-builder/index.ts with Promise.all, while preserving stage progress and completion messaging.  
 **Why:** Dynamic playlist generation was perceived as slow (~40 seconds) because all mood pipeline stages were executed strictly in sequence, even where stages could run independently. Parallelizing independent stages (interpret-mood and curate-songs) reduces generation time to ~25-30 seconds while preserving deterministic fallback and output contracts.  
 **Impact:** interpret-mood and curate-songs now run in parallel; pply-mood-logic still runs after both complete. Role enforcement remains config-driven; no hardcoded bypass of squad.config.ts responsibilities. Existing persistence, playlist launch, and fallback normalization behaviors remain unchanged.
+
+---
+
+# 2026-03-10: Content-creation sample expanded to 5-agent pipeline
+
+# Decision: Content-creation sample expanded to 5-agent pipeline
+
+**By:** Fenster (Core Dev)
+**Date:** 2026-03-10
+**Scope:** content-creation sample only
+
+## What
+
+Added a 5th agent — **Social Snippets** (Social Media Specialist) — to the content-creation sample pipeline. The agent runs after the Editor and generates platform-optimized social media posts from the finished article.
+
+## Pipeline (updated)
+
+Research → Outline → Write → Edit → **Social Snippets**
+
+## Output additions
+
+- Twitter/X single tweet (≤280 chars)
+- Twitter/X thread (4-7 tweets, hook → insights → CTA)
+- LinkedIn post (800-1,300 chars, professional tone)
+- Generic short-form snippet (<300 chars, for newsletters/shares)
+
+## Why
+
+Social amplification is the natural next step after article creation. Building it into the pipeline eliminates a manual step and ensures social content is derived from the actual article (not hallucinated separately).
+
+## Impact
+
+- `content-creation/squad.config.ts` — new agent + routing + ceremony update
+- `content-creation/index.ts` — banner, system prompt, hints updated
+- `content-creation/README.md` — docs updated, "social snippets" removed from extension ideas (now built in)
+- No breaking changes — existing prompts work identically, new agent is additive
+
+
+---
+
+# 2026-03-17: Add Fact-Checker agent to content-creation sample
+
+# Decision: Add Fact-Checker agent to content-creation sample
+
+**Decided by:** Fenster  
+**Date:** 2026-03-17  
+**Status:** Implemented
+
+## Context
+
+The content-creation sample had a five-agent pipeline (Research → Outline → Write → Edit → Social Snippets) with Fact-Checker listed as a future extension idea. Adding it as a built-in sixth agent creates a quality gate between editing and social amplification.
+
+## Decision
+
+- Added `factChecker` agent (role: "Verification Specialist") to the content-creation sample between Editor and Social Snippets
+- Pipeline is now: Research → Outline → Write → Edit → **Fact-Check** → Social Snippets
+- The agent resolves `[VERIFY]` tags left by the Writer, produces a confidence-rated verification report (✅ Verified / ⚠️ Uncertain / ❌ Incorrect), and outputs a corrected article
+- Removed Fact-Checker from the "Extending This Sample" section since it's now built-in
+
+## Rationale
+
+Fact-checking before social amplification prevents incorrect claims from being promoted across platforms. The Writer already flags uncertain claims with `[VERIFY]` tags — the Fact-Checker resolves these systematically.
+
+## Files Changed
+
+- `content-creation/squad.config.ts` — new agent definition, team config, routing, ceremony, squad export
+- `content-creation/index.ts` — banner, system prompt, progress messages, completion tips
+- `content-creation/README.md` — pipeline docs, architecture diagram, What You Get, Extending section
+
+
+---
+
+# 2026-03-10: Scope Node warning suppression to Squad subprocess startup in mood-playlist-builder
+
+# 2026-03-10: Scope Node warning suppression to Squad subprocess startup in mood-playlist-builder
+
+**Context:** `mood-playlist-builder` displayed Node experimental SQLite warnings from the Copilot CLI subprocess during Squad startup, which obscured visible stage progress lines.
+
+**Decision:** For dynamic playlist generation startup, set both `NODE_NO_WARNINGS=1` and `NODE_OPTIONS=--no-warnings` immediately before connecting `SquadClient`, then restore prior env values in `finally` after disconnect.
+
+**Why:** Environment inheritance is the reliable way to suppress warnings emitted by child Node processes spawned by SDK/CLI internals. Scoped restore keeps suppression targeted to the Squad subprocess window instead of muting warnings for the remainder of the host process lifecycle.
+
+**Impact:** Startup warning noise is hidden while preserving all existing progress/status console output and fallback messaging.
+

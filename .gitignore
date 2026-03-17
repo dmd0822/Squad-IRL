@@ -32,3 +32,7 @@ bug-triage/triage-recommendations.md
 bug-triage/triage-report.csv
 # package-lock.json for each sample (users run npm install locally)
 */package-lock.json
+
+
+technical-blog-post.md
+content-creation/content-topics/technical-blog-post.md
