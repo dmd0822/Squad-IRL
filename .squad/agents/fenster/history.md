@@ -1056,3 +1056,12 @@ pm start works.
 - Convention: routing rules use 	ier: 'direct' for single-agent patterns, 	ier: 'full' with priority: 10 for the all-agents pipeline rule
 - Convention: ceremony genda is a slash-separated checklist, one entry per agent responsibility
 - Convention: uildSystemPrompt() in index.ts dynamically reads agent charters from squad config — adding an agent to squad.config.ts auto-includes it in the system prompt
+
+### Content-creation sample: Fact-Checker agent added (6th pipeline stage)
+- Extended content-creation sample from 5-agent to 6-agent pipeline: Researcher → Outliner → Writer → Editor → Fact-Checker → Social Snippets
+- Fact-Checker sits between Editor and Social Snippets as the quality gate before amplification
+- Charter covers: claim verification, statistical accuracy, source reliability, technical accuracy, logical consistency, bias detection, [VERIFY] tag resolution, confidence-rated report (✅/⚠️/❌)
+- Routing pattern: 'fact-check|verify|accuracy|claims|statistics|sources|check facts|validation|confidence'
+- Same pattern as previous agent additions: defineAgent() → team.members → routing rule → ceremony participants → defineSquad() agents array
+- index.ts updates: banner, buildSystemPrompt pipeline steps, progress message, completion message, removed Fact-Checker from extension tips (now built-in)
+- README updates: architecture diagram, pipeline description, What You Get section (added verification report), removed Fact-Checker from Extending section

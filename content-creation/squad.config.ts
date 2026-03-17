@@ -1,10 +1,10 @@
 /**
  * Content Creation Squad
  *
- * Five specialists that turn a blog topic into a polished, SEO-ready article
+ * Six specialists that turn a blog topic into a polished, SEO-ready article
  * with platform-optimized social media snippets.
  * Users provide a topic (or load one from a file), and the squad researches,
- * outlines, writes, and edits the post collaboratively.
+ * outlines, writes, edits, fact-checks, and promotes the post collaboratively.
  *
  * Usage: Talk to this squad through GitHub Copilot. Try:
  *   "Write a blog post about building multi-agent AI systems"
@@ -22,7 +22,7 @@ import {
 } from '@bradygaster/squad-sdk';
 
 // ============================================================================
-// AGENTS: Five content-creation specialists
+// AGENTS: Six content-creation specialists
 // ============================================================================
 
 const researcher = defineAgent({
@@ -226,6 +226,73 @@ You are an Editor & SEO Specialist — the final quality gate between draft and 
   tools: []
 });
 
+const factChecker = defineAgent({
+  name: 'factChecker',
+  role: 'Verification Specialist',
+  description: 'Verifies claims, statistics, and technical statements in the article. Resolves [VERIFY] tags, checks source reliability, and produces a confidence-rated verification report.',
+  charter: `
+You are a Verification Specialist — the quality gate that catches errors before the article gets published and amplified on social media.
+
+**Your Expertise:**
+- Claim verification: checking whether factual assertions in the article are accurate, current, and properly contextualized
+- Statistical accuracy: validating numbers, percentages, benchmarks, and data points — are they sourced, plausible, and correctly interpreted?
+- Source reliability: assessing whether cited sources are authoritative, current, and correctly represented
+- Technical accuracy: verifying that code examples, API descriptions, architectural claims, and technical explanations are correct
+- Logical consistency: catching contradictions, non sequiturs, circular reasoning, and unsupported causal claims within the article
+- Bias detection: identifying one-sided framing, cherry-picked data, false equivalences, and unstated assumptions
+- Temporal accuracy: flagging outdated information, deprecated tools, sunset APIs, and stale benchmarks
+- [VERIFY] tag resolution: the Writer flags uncertain claims with [VERIFY] — you investigate and resolve each one with a verdict
+
+**When fact-checking, produce:**
+1. **Verification Report**: A structured review of every checkable claim in the article:
+   - ✅ **Verified** — claim is accurate and well-supported (include brief evidence)
+   - ⚠️ **Uncertain** — claim is plausible but unconfirmed, or needs additional context (explain why, suggest hedging language)
+   - ❌ **Incorrect** — claim is wrong or misleading (provide the correct information and a suggested rewrite)
+2. **[VERIFY] Tag Resolution**: For every [VERIFY] tag left by the Writer, provide:
+   - The original flagged claim
+   - Your finding (verified, corrected, or recommended removal)
+   - Replacement text if the claim needs correction
+3. **Statistical Audit**: Check every number in the article:
+   - Is the statistic sourced or sourceable?
+   - Is it current (within the last 2 years unless historical)?
+   - Is it presented in proper context (not misleading cherry-picks)?
+4. **Technical Accuracy Review**: For code examples and technical claims:
+   - Do code snippets use correct syntax and current APIs?
+   - Are architectural descriptions accurate?
+   - Do performance claims have supporting evidence?
+5. **Logical Consistency Check**: Scan the full article for:
+   - Internal contradictions (section A says X, section B implies not-X)
+   - Unsupported causal claims ("X causes Y" without evidence)
+   - Overgeneralizations or absolute statements that should be hedged
+6. **Bias Assessment**: Flag any:
+   - One-sided framing that ignores legitimate counterpoints
+   - Cherry-picked examples that misrepresent the landscape
+   - Unstated conflicts of interest or promotional language disguised as analysis
+7. **Confidence Summary**: A final overall confidence rating for the article:
+   - 🟢 **High confidence** — all major claims verified, minor issues only
+   - 🟡 **Medium confidence** — some claims need hedging or additional context
+   - 🔴 **Low confidence** — significant factual issues that must be resolved before publishing
+8. **Corrected Version**: The complete article with all factual corrections applied — verified and ready for social media promotion
+
+**Your Style:**
+- Evidence-based — every verdict cites reasoning, not just gut feeling
+- Proportional — flag real issues, don't nitpick trivially correct simplifications
+- Constructive — provide corrected text, not just "this is wrong"
+- Transparent — show your reasoning so the team can evaluate your verdicts
+- Thorough but efficient — check everything checkable, skip pure opinion
+
+**Don't:**
+- Research new content (that's the Researcher's job)
+- Restructure the article (that's the Outliner's job)
+- Rewrite for style or tone (that's the Editor's job)
+- Write social media posts (that's the Social Snippets specialist's job)
+- Block publication over subjective disagreements — your domain is factual accuracy, not editorial preference
+- Fabricate sources to "verify" claims — if you can't verify it, say so honestly
+- Ignore [VERIFY] tags — every single one must be resolved with a clear verdict
+`,
+  tools: []
+});
+
 const socialSnippets = defineAgent({
   name: 'socialSnippets',
   role: 'Social Media Specialist',
@@ -292,32 +359,35 @@ You are a Social Media Specialist — the amplification layer that turns a polis
 
 const team = defineTeam({
   name: 'Content Creation Squad',
-  description: 'A team of specialists that turns a blog topic into a polished, SEO-optimized article through collaborative research, outlining, writing, and editing.',
+  description: 'A team of specialists that turns a blog topic into a polished, fact-checked, SEO-optimized article through collaborative research, outlining, writing, editing, and verification.',
   projectContext: `
-This squad helps people create high-quality blog posts with ready-to-publish social media content by coordinating five specialists:
+This squad helps people create high-quality blog posts with ready-to-publish social media content by coordinating six specialists:
 
 **Researcher** gathers background information, key facts, statistics, expert perspectives, and fresh angles on the topic.
 **Outliner** creates the structural blueprint — sections, narrative arc, word count targets, and content element placement.
 **Writer** drafts the full article section by section, maintaining voice consistency and reader engagement throughout.
 **Editor** polishes grammar, tone, and flow, then optimizes for SEO: keywords, meta descriptions, readability, and search structure.
+**Fact-Checker** verifies claims, statistics, and technical statements, resolves [VERIFY] tags, and produces a confidence-rated verification report.
 **Social Snippets** generates platform-optimized social media posts — Twitter/X tweets and threads, LinkedIn posts, and short-form snippets for newsletters and shares.
 
-When someone provides a blog topic, all five agents collaborate in sequence:
+When someone provides a blog topic, all six agents collaborate in sequence:
 1. Researcher delivers the factual foundation
 2. Outliner designs the structural blueprint
 3. Writer drafts the complete article
 4. Editor polishes and SEO-optimizes the final version
-5. Social Snippets generates platform-specific social media posts from the finished article
+5. Fact-Checker verifies all claims, resolves [VERIFY] tags, and certifies accuracy
+6. Social Snippets generates platform-specific social media posts from the verified article
 
-The result is a publish-ready blog post with title, meta description, optimized structure, and a complete social media kit — what would normally take 4+ hours, delivered in under 30 minutes.
+The result is a publish-ready, fact-checked blog post with title, meta description, optimized structure, and a complete social media kit — what would normally take 4+ hours, delivered in under 30 minutes.
 
-For specific follow-ups ("make the intro punchier", "add more code examples", "rewrite the LinkedIn post"), the relevant specialist responds.
+For specific follow-ups ("make the intro punchier", "add more code examples", "verify that statistic", "rewrite the LinkedIn post"), the relevant specialist responds.
 `,
   members: [
     '@researcher',
     '@outliner',
     '@writer',
     '@editor',
+    '@factChecker',
     '@socialSnippets'
   ]
 });
@@ -353,6 +423,12 @@ const routing = defineRouting({
       description: 'Editorial polish and SEO optimization'
     },
     {
+      pattern: 'fact-check|verify|accuracy|claims|statistics|sources|check facts|validation|confidence',
+      agents: ['@factChecker'],
+      tier: 'direct',
+      description: 'Claim verification and fact-checking'
+    },
+    {
       pattern: 'social|snippet|snippets|tweet|thread|linkedin|twitter|x post|social media|promote|amplify',
       agents: ['@socialSnippets'],
       tier: 'direct',
@@ -360,7 +436,7 @@ const routing = defineRouting({
     },
     {
       pattern: 'create|produce|generate|full|complete|publish|blog|topic|everything',
-      agents: ['@researcher', '@outliner', '@writer', '@editor', '@socialSnippets'],
+      agents: ['@researcher', '@outliner', '@writer', '@editor', '@factChecker', '@socialSnippets'],
       tier: 'full',
       priority: 10,
       description: 'Full content creation pipeline with all specialists'
@@ -384,8 +460,8 @@ const ceremonies = [
   defineCeremony({
     name: 'content-review-sync',
     trigger: 'on-demand',
-    participants: ['@researcher', '@outliner', '@writer', '@editor', '@socialSnippets'],
-    agenda: 'Research completeness: any gaps in facts or missing perspectives? / Outline coherence: does the structure serve the reader journey? / Draft quality: voice consistency, engagement, technical accuracy? / Final polish: grammar clean, SEO optimized, ready to publish? / Social snippets: platform-native, hooks strong, CTAs clear, character limits respected?'
+    participants: ['@researcher', '@outliner', '@writer', '@editor', '@factChecker', '@socialSnippets'],
+    agenda: 'Research completeness: any gaps in facts or missing perspectives? / Outline coherence: does the structure serve the reader journey? / Draft quality: voice consistency, engagement, technical accuracy? / Final polish: grammar clean, SEO optimized, ready to publish? / Fact-check: all claims verified, [VERIFY] tags resolved, confidence level acceptable? / Social snippets: platform-native, hooks strong, CTAs clear, character limits respected?'
   })
 ];
 
@@ -396,7 +472,7 @@ const ceremonies = [
 export default defineSquad({
   version: '0.8.0',
   team,
-  agents: [researcher, outliner, writer, editor, socialSnippets],
+  agents: [researcher, outliner, writer, editor, factChecker, socialSnippets],
   routing,
   defaults,
   ceremonies
