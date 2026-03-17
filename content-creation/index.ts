@@ -1,7 +1,7 @@
 // ─── Content Creation Workflow — Squad Edition ───────────────────────────────
 // Takes a blog topic (typed or loaded from a file) and produces a polished,
-// SEO-optimized article with platform-specific social media snippets through a
-// six-agent pipeline: Researcher, Outliner, Writer, Editor, Fact-Checker, and Social Snippets.
+// SEO-optimized article with platform-specific social media snippets and visual content recommendations through a
+// seven-agent pipeline: Researcher, Outliner, Writer, Editor, Fact-Checker, Social Snippets, and Image Suggestions.
 
 import { createInterface } from 'node:readline/promises';
 import { stdin, stdout } from 'node:process';
@@ -54,7 +54,7 @@ function banner(): void {
   console.log(`${C.cyan}${C.bold}  ✍️  Content Creation Workflow — Squad Edition${C.reset}`);
   console.log(`${C.dim}  ─────────────────────────────────────────────${C.reset}`);
   console.log(`${C.dim}  Give us a topic, get a polished blog post.${C.reset}`);
-  console.log(`${C.dim}  Six specialists: Researcher · Outliner · Writer · Editor · Fact-Checker · Social Snippets${C.reset}`);
+  console.log(`${C.dim}  Seven specialists: Researcher · Outliner · Writer · Editor · Fact-Checker · Social Snippets · Image Suggestions${C.reset}`);
   console.log();
 }
 
@@ -148,7 +148,7 @@ The user wants a blog post on the following topic:
 ## Instructions
 
 You are a content creation assistant powered by a squad of specialists.
-Coordinate all six specialists to produce a complete, polished blog post with social media snippets:
+Coordinate all seven specialists to produce a complete, polished blog post with social media snippets and visual content recommendations:
 
 1. **Researcher** goes first — gather facts, statistics, examples, and fresh angles on the topic
 2. **Outliner** designs the structure — sections, narrative arc, word count targets, content elements
@@ -156,6 +156,7 @@ Coordinate all six specialists to produce a complete, polished blog post with so
 4. **Editor** polishes grammar, tone, and flow, then optimizes for SEO with keywords, meta description, and readability
 5. **Fact-Checker** verifies all claims, statistics, and technical statements, resolves any [VERIFY] tags, and produces a confidence-rated verification report
 6. **Social Snippets** generates platform-specific social media posts from the verified article: a single tweet, a Twitter/X thread, a LinkedIn post, and a generic short-form snippet
+7. **Image Suggestions** recommends hero images, diagrams, illustrations, data visualizations, and visual elements with detailed specifications and accessibility-ready alt text
 
 Produce the FULL content pipeline in one response. The final output should be a publish-ready, fact-checked blog post with:
 - Optimized title
@@ -164,6 +165,7 @@ Produce the FULL content pipeline in one response. The final output should be a 
 - Verification report with confidence levels (✅ Verified, ⚠️ Uncertain, ❌ Incorrect)
 - SEO notes (primary keywords, readability score)
 - Social media kit: Twitter/X single tweet, Twitter/X thread, LinkedIn post, and short-form snippet
+- Visual content guide: hero image concept, in-article diagrams, data visualizations, social thumbnails, and alt text for all visuals
 
 Be thorough, creative, and produce genuinely useful content. Quality over speed.`;
 }
@@ -371,7 +373,7 @@ async function main(): Promise<void> {
   // 3. Send the topic to the squad for content creation
   try {
     console.log();
-    console.log(`${C.dim}  Sending topic to the squad — research → outline → write → edit → fact-check → social snippets...${C.reset}`);
+    console.log(`${C.dim}  Sending topic to the squad — research → outline → write → edit → fact-check → social snippets → image suggestions...${C.reset}`);
     await sendAndStream(client, session, `Create a complete, polished blog post on this topic: ${topic}`);
   } catch (err: any) {
     console.error(`${C.red}  Error: ${err?.message ?? err}${C.reset}`);
@@ -379,7 +381,7 @@ async function main(): Promise<void> {
 
   // Cleanup
   console.log();
-  console.log(`${C.green}  ✅ Fact-checked blog post + social media kit created!${C.reset}`);
+  console.log(`${C.green}  ✅ Fact-checked blog post + social media kit + visual content guide created!${C.reset}`);
   console.log();
   console.log(`${C.cyan}  💡 This sample is just the beginning. You could extend it to:${C.reset}`);
   console.log(`${C.dim}     • Create a content calendar that produces posts on a schedule${C.reset}`);

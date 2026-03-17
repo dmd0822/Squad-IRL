@@ -1,18 +1,19 @@
 # Content Creation Workflow — Squad Edition
 
-A Squad sample that takes a **blog topic** and produces a polished, SEO-optimized article with platform-specific social media snippets through a six-agent content pipeline: research → outline → write → edit → fact-check → social snippets.
+A Squad sample that takes a **blog topic** and produces a polished, SEO-optimized article with platform-specific social media snippets and visual content recommendations through a seven-agent content pipeline: research → outline → write → edit → fact-check → social snippets → image suggestions.
 
 ## How It Works
 
 1. You provide a topic — type it interactively or load from a file
-2. Six AI agents collaborate in sequence:
+2. Seven AI agents collaborate in sequence:
    - **Researcher** — gathers facts, statistics, expert perspectives, and fresh angles
    - **Outliner** — designs the structural blueprint: sections, narrative arc, word counts
    - **Writer** — drafts the complete article with consistent voice and engagement
    - **Editor** — polishes grammar, tone, and flow, then optimizes for SEO
    - **Fact-Checker** — verifies claims, statistics, and technical statements; resolves [VERIFY] tags; produces a confidence-rated verification report
    - **Social Snippets** — generates platform-optimized social media posts (Twitter/X, LinkedIn, short-form)
-3. You get a publish-ready, fact-checked blog post with title, meta description, optimized structure, and a complete social media kit
+   - **Image Suggestions** — recommends hero images, diagrams, illustrations, data visualizations, and visual elements with detailed specifications and accessibility-ready alt text
+3. You get a publish-ready, fact-checked blog post with title, meta description, optimized structure, a complete social media kit, and a comprehensive visual content guide
 
 What would normally take 4+ hours is delivered in under 30 minutes.
 
@@ -56,28 +57,28 @@ Topic files can include detailed briefs with target audience, tone, angles to co
 
 ## What You Get
 
-The squad produces a complete, fact-checked article with social media kit including:
+The squad produces a complete, fact-checked article with social media kit and visual content guide including:
 - **Optimized title** — keyword-aware, click-worthy
 - **Meta description** — 150-160 characters for search engines
 - **Full article** — with proper H2/H3 hierarchy, code examples, and engagement hooks
 - **Verification report** — confidence-rated fact-check (✅ Verified, ⚠️ Uncertain, ❌ Incorrect)
 - **SEO notes** — primary keywords, readability score, internal linking suggestions
 - **Social media kit** — Twitter/X single tweet, Twitter/X thread, LinkedIn post, and short-form snippet
+- **Visual content guide** — hero image concept, in-article diagrams, data visualizations, social thumbnails, and alt text for all visuals
 
 ## Extending This Sample
 
 - 📅 **Content calendar** — batch-produce posts on a schedule
 - 🌐 **CMS integration** — connect to WordPress, Ghost, or Medium APIs to publish directly
-- 🎨 **Image suggestions** — add an agent that recommends hero images and diagrams
 
 ## Architecture
 
 ```
-Topic Input → Researcher → Outliner → Writer → Editor → Fact-Checker → Social Snippets → Published Article + Social Kit
-                 ↓             ↓          ↓         ↓          ↓              ↓
-              Facts &      Structure   Full      Polished +  Verified &    Tweets,
-              angles       blueprint   draft     SEO-ready   confidence    LinkedIn,
-                                                             report        snippets
+Topic Input → Researcher → Outliner → Writer → Editor → Fact-Checker → Social Snippets → Image Suggestions → Published Article + Social Kit + Visual Guide
+                 ↓             ↓          ↓         ↓          ↓              ↓                 ↓
+              Facts &      Structure   Full      Polished +  Verified &    Tweets,          Hero image,
+              angles       blueprint   draft     SEO-ready   confidence    LinkedIn,        diagrams,
+                                                             report        snippets         alt text
 ```
 
 The squad uses `@bradygaster/squad-sdk` to coordinate agents through GitHub Copilot. Each agent has a detailed charter defining its expertise, output format, and boundaries — ensuring clean collaboration without overlap.

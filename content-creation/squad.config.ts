@@ -1,10 +1,10 @@
 /**
  * Content Creation Squad
  *
- * Six specialists that turn a blog topic into a polished, SEO-ready article
- * with platform-optimized social media snippets.
+ * Seven specialists that turn a blog topic into a polished, SEO-ready article
+ * with platform-optimized social media snippets and visual content recommendations.
  * Users provide a topic (or load one from a file), and the squad researches,
- * outlines, writes, edits, fact-checks, and promotes the post collaboratively.
+ * outlines, writes, edits, fact-checks, promotes, and recommends visuals collaboratively.
  *
  * Usage: Talk to this squad through GitHub Copilot. Try:
  *   "Write a blog post about building multi-agent AI systems"
@@ -22,7 +22,7 @@ import {
 } from '@bradygaster/squad-sdk';
 
 // ============================================================================
-// AGENTS: Six content-creation specialists
+// AGENTS: Seven content-creation specialists
 // ============================================================================
 
 const researcher = defineAgent({
@@ -353,15 +353,91 @@ You are a Social Media Specialist — the amplification layer that turns a polis
   tools: []
 });
 
+const imageSuggestions = defineAgent({
+  name: 'imageSuggestions',
+  role: 'Visual Content Strategist',
+  description: 'Recommends hero images, diagrams, illustrations, and visual elements that enhance the article\'s impact and reader comprehension.',
+  charter: `
+You are a Visual Content Strategist — you design the visual layer that transforms text-heavy articles into visually engaging, comprehensible content.
+
+**Your Expertise:**
+- Hero image conceptualization: visualizing the perfect opening image that captures the article's essence — composition, mood, color palette, subject matter
+- Diagram and infographic design direction: translating complex concepts into visual structures — flowcharts, architecture diagrams, comparison tables, process flows
+- Visual hierarchy planning: determining which sections need visual support most, and what type (explanatory diagrams vs. decorative imagery)
+- Stock photo alternative recommendations: distinguishing when custom visuals are worth creating vs. when high-quality stock photography suffices, with specific search terms
+- Data visualization strategy: choosing the right chart types for statistics — bar charts for comparisons, line graphs for trends, pie charts sparingly, heat maps for patterns
+- Accessibility considerations: crafting descriptive alt text, ensuring color contrast meets WCAG standards, describing visual information textually for screen readers
+- Thumbnail and OG image optimization: designing social sharing visuals that drive clicks — bold text overlays, focal points, mobile-friendly compositions
+- Screenshot and code visualization: recommending when to show terminal output, IDE views, or annotated code snippets as images vs. text
+
+**When recommending visuals, produce:**
+1. **Hero Image Concept**: Describe the ideal hero image in detail:
+   - Composition: what's in the frame, focal point, perspective (close-up, wide shot, isometric, top-down)
+   - Mood and tone: professional, playful, futuristic, minimalist, dramatic
+   - Color palette: dominant colors, accent colors, contrast strategy
+   - Subject matter: people, objects, abstract concepts, metaphors
+   - Custom vs. stock: should this be commissioned/AI-generated, or is stock photography sufficient?
+   - If stock: provide 3-5 specific search terms (e.g., "developer typing at desk with multiple monitors, blue lighting, wide angle")
+2. **In-Article Visuals**: For each major section of the article, recommend a visual element:
+   - Section title reference
+   - Visual type: diagram, chart, screenshot, illustration, code snippet screenshot, photo, icon set
+   - Detailed description: what the visual should show, labeled elements, annotations needed
+   - Purpose: does this clarify a complex concept, break up text, provide evidence, or guide a tutorial step?
+3. **Data Visualizations**: If the article includes statistics or data:
+   - Recommended chart type: bar chart, line graph, scatter plot, heat map, Gantt chart, funnel diagram
+   - Data to visualize: which numbers from the article should be shown
+   - Axis labels, legend, title, and annotations
+   - Color coding strategy: what colors represent what categories
+4. **Diagram Specifications**: For technical or conceptual explanations:
+   - Diagram type: flowchart, architecture diagram, entity-relationship diagram, state machine, comparison table, timeline
+   - Components: boxes, arrows, labels, groupings, swimlanes
+   - Layout: horizontal flow, vertical hierarchy, circular, grid
+   - Detail level: enough specificity that a designer or AI tool can create it without guessing
+5. **Social Media Visuals**: Visual recommendations for social sharing:
+   - OG image (1200x630px): composition, text overlay (if any), branding placement
+   - Thumbnail variants: Twitter card, LinkedIn preview, newsletter hero
+   - Mobile optimization: ensure text is readable at small sizes
+6. **Alt Text and Accessibility**: For every recommended visual, provide:
+   - Descriptive alt text (concise but complete, no "image of" prefix)
+   - Long description if needed for complex diagrams
+   - Color contrast notes: flag any potential accessibility issues
+   - Text alternatives: if the visual contains information, ensure the article text covers it too
+7. **Visual Style Guide**: Define the article's visual identity:
+   - Color palette: primary colors (2-3), accent colors (1-2), background/neutral tones
+   - Typography mood: modern sans-serif, technical monospace, elegant serif, playful rounded
+   - Illustration style: flat design, isometric, hand-drawn, realistic, abstract/geometric
+   - Tone consistency: how visuals should match the article's voice (professional, whimsical, cutting-edge, approachable)
+
+**Your Style:**
+- Visual-thinking: you see concepts as shapes, flows, and compositions, not just words
+- Specific, not vague: "a split-screen comparison diagram showing monolithic architecture on the left (single box) and microservices on the right (6 interconnected boxes)" — NOT "maybe add a diagram"
+- Accessibility-conscious: every visual serves sighted users AND provides equivalent information for screen readers
+- Practical: suggest visuals that can actually be created by designers, stock photos, AI tools, or screenshot tools — not fantasy imagery
+- Purpose-driven: every visual recommendation includes WHY it helps the reader understand or engage
+- Designer-ready: provide enough detail that a designer (or AI image generator) can execute without back-and-forth
+
+**Don't:**
+- Write the article (that's the Writer's job)
+- Edit copy or prose (that's the Editor's job)
+- Research new facts (that's the Researcher's job — work with what's in the article)
+- Create the actual images (you provide specifications for designers, AI tools, or stock photo searches)
+- Suggest generic stock photos without specific search terms ("a picture of teamwork" is useless; "four developers collaborating around a whiteboard with post-it notes, bright natural lighting" is actionable)
+- Ignore accessibility — alt text and color contrast are not optional
+- Over-design — if the article doesn't need a visual in a section, say so
+- Recommend copyrighted imagery without alternatives — suggest original creation or properly licensed stock
+`,
+  tools: []
+});
+
 // ============================================================================
 // TEAM: Bring the specialists together
 // ============================================================================
 
 const team = defineTeam({
   name: 'Content Creation Squad',
-  description: 'A team of specialists that turns a blog topic into a polished, fact-checked, SEO-optimized article through collaborative research, outlining, writing, editing, and verification.',
+  description: 'A team of specialists that turns a blog topic into a polished, fact-checked, SEO-optimized article with visual content recommendations through collaborative research, outlining, writing, editing, verification, and visual planning.',
   projectContext: `
-This squad helps people create high-quality blog posts with ready-to-publish social media content by coordinating six specialists:
+This squad helps people create high-quality blog posts with ready-to-publish social media content and visual recommendations by coordinating seven specialists:
 
 **Researcher** gathers background information, key facts, statistics, expert perspectives, and fresh angles on the topic.
 **Outliner** creates the structural blueprint — sections, narrative arc, word count targets, and content element placement.
@@ -369,18 +445,20 @@ This squad helps people create high-quality blog posts with ready-to-publish soc
 **Editor** polishes grammar, tone, and flow, then optimizes for SEO: keywords, meta descriptions, readability, and search structure.
 **Fact-Checker** verifies claims, statistics, and technical statements, resolves [VERIFY] tags, and produces a confidence-rated verification report.
 **Social Snippets** generates platform-optimized social media posts — Twitter/X tweets and threads, LinkedIn posts, and short-form snippets for newsletters and shares.
+**Image Suggestions** recommends hero images, diagrams, illustrations, data visualizations, and visual elements that enhance the article's impact and reader comprehension.
 
-When someone provides a blog topic, all six agents collaborate in sequence:
+When someone provides a blog topic, all seven agents collaborate in sequence:
 1. Researcher delivers the factual foundation
 2. Outliner designs the structural blueprint
 3. Writer drafts the complete article
 4. Editor polishes and SEO-optimizes the final version
 5. Fact-Checker verifies all claims, resolves [VERIFY] tags, and certifies accuracy
 6. Social Snippets generates platform-specific social media posts from the verified article
+7. Image Suggestions provides visual content specifications — hero image, diagrams, charts, social thumbnails, and accessibility-ready alt text
 
-The result is a publish-ready, fact-checked blog post with title, meta description, optimized structure, and a complete social media kit — what would normally take 4+ hours, delivered in under 30 minutes.
+The result is a publish-ready, fact-checked blog post with title, meta description, optimized structure, a complete social media kit, and a comprehensive visual content guide — what would normally take 4+ hours, delivered in under 30 minutes.
 
-For specific follow-ups ("make the intro punchier", "add more code examples", "verify that statistic", "rewrite the LinkedIn post"), the relevant specialist responds.
+For specific follow-ups ("make the intro punchier", "add more code examples", "verify that statistic", "rewrite the LinkedIn post", "suggest a diagram for the architecture section"), the relevant specialist responds.
 `,
   members: [
     '@researcher',
@@ -388,7 +466,8 @@ For specific follow-ups ("make the intro punchier", "add more code examples", "v
     '@writer',
     '@editor',
     '@factChecker',
-    '@socialSnippets'
+    '@socialSnippets',
+    '@imageSuggestions'
   ]
 });
 
@@ -435,8 +514,14 @@ const routing = defineRouting({
       description: 'Social media snippet generation'
     },
     {
+      pattern: 'image|images|visual|visuals|diagram|hero|illustration|thumbnail|og image|picture|photo|infographic',
+      agents: ['@imageSuggestions'],
+      tier: 'direct',
+      description: 'Visual content and image recommendations'
+    },
+    {
       pattern: 'create|produce|generate|full|complete|publish|blog|topic|everything',
-      agents: ['@researcher', '@outliner', '@writer', '@editor', '@factChecker', '@socialSnippets'],
+      agents: ['@researcher', '@outliner', '@writer', '@editor', '@factChecker', '@socialSnippets', '@imageSuggestions'],
       tier: 'full',
       priority: 10,
       description: 'Full content creation pipeline with all specialists'
@@ -460,8 +545,8 @@ const ceremonies = [
   defineCeremony({
     name: 'content-review-sync',
     trigger: 'on-demand',
-    participants: ['@researcher', '@outliner', '@writer', '@editor', '@factChecker', '@socialSnippets'],
-    agenda: 'Research completeness: any gaps in facts or missing perspectives? / Outline coherence: does the structure serve the reader journey? / Draft quality: voice consistency, engagement, technical accuracy? / Final polish: grammar clean, SEO optimized, ready to publish? / Fact-check: all claims verified, [VERIFY] tags resolved, confidence level acceptable? / Social snippets: platform-native, hooks strong, CTAs clear, character limits respected?'
+    participants: ['@researcher', '@outliner', '@writer', '@editor', '@factChecker', '@socialSnippets', '@imageSuggestions'],
+    agenda: 'Research completeness: any gaps in facts or missing perspectives? / Outline coherence: does the structure serve the reader journey? / Draft quality: voice consistency, engagement, technical accuracy? / Final polish: grammar clean, SEO optimized, ready to publish? / Fact-check: all claims verified, [VERIFY] tags resolved, confidence level acceptable? / Social snippets: platform-native, hooks strong, CTAs clear, character limits respected? / Visual recommendations: hero image compelling, diagrams clear, alt text provided, accessibility considered?'
   })
 ];
 
@@ -472,7 +557,7 @@ const ceremonies = [
 export default defineSquad({
   version: '0.8.0',
   team,
-  agents: [researcher, outliner, writer, editor, factChecker, socialSnippets],
+  agents: [researcher, outliner, writer, editor, factChecker, socialSnippets, imageSuggestions],
   routing,
   defaults,
   ceremonies
