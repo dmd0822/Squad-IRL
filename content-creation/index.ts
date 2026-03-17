@@ -5,7 +5,7 @@
 
 import { createInterface } from 'node:readline/promises';
 import { stdin, stdout } from 'node:process';
-import { readFile } from 'node:fs/promises';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { SquadClient } from '@bradygaster/squad-sdk/client';
@@ -104,6 +104,31 @@ async function loadTopicFromFile(filePath: string): Promise<string> {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// Output folder helpers
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function formatDatePrefix(): string {
+  const now = new Date();
+  const yy = String(now.getFullYear()).slice(-2);
+  const mm = String(now.getMonth() + 1).padStart(2, '0');
+  const dd = String(now.getDate()).padStart(2, '0');
+  return `${yy}-${mm}-${dd}`;
+}
+
+function topicToSlug(topic: string): string {
+  // Take first few words, title case, join with underscores
+  const words = topic
+    .replace(/[^a-zA-Z0-9\s]/g, '')  // remove special chars
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 5)  // first 5 words max
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+  
+  const slug = words.join('_');
+  return slug.slice(0, 50);  // cap at 50 chars
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // Build system prompt from squad config
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -178,17 +203,19 @@ async function sendAndStream(
   client: SquadClient,
   session: SquadSession,
   prompt: string,
-): Promise<void> {
+): Promise<string> {
   console.log();
   console.log(`${C.dim}  ─────────────────────────────────────────────${C.reset}`);
 
   let receivedContent = false;
+  let capturedContent = '';
 
   const deltaHandler: SquadSessionEventHandler = (event: SquadSessionEvent) => {
     const content = (event as any).content ?? (event as any).data?.content ?? '';
     if (content) {
       if (!receivedContent) process.stdout.write(`${C.white}`);
       receivedContent = true;
+      capturedContent += content;
       process.stdout.write(content);
     }
   };
@@ -205,6 +232,7 @@ async function sendAndStream(
       } else if (result) {
         const text = extractContent(result);
         if (text) {
+          capturedContent = text;
           console.log(`${C.white}${text}${C.reset}`);
         } else {
           console.log(`${C.yellow}  (Received a response but couldn't parse it.)${C.reset}`);
@@ -238,6 +266,8 @@ async function sendAndStream(
     if (receivedContent) process.stdout.write(`${C.reset}\n`);
     throw err;
   }
+
+  return capturedContent;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -371,12 +401,44 @@ async function main(): Promise<void> {
   }
 
   // 3. Send the topic to the squad for content creation
+  let articleContent = '';
   try {
     console.log();
     console.log(`${C.dim}  Sending topic to the squad — research → outline → write → edit → fact-check → social snippets → image suggestions...${C.reset}`);
-    await sendAndStream(client, session, `Create a complete, polished blog post on this topic: ${topic}`);
+    articleContent = await sendAndStream(client, session, `Create a complete, polished blog post on this topic: ${topic}`);
   } catch (err: any) {
     console.error(`${C.red}  Error: ${err?.message ?? err}${C.reset}`);
+  }
+
+  // 4. Save output to dated subfolder
+  if (articleContent.trim()) {
+    try {
+      const outputDirName = `${formatDatePrefix()}_${topicToSlug(topic)}`;
+      const outputDir = resolve('output', outputDirName);
+      await mkdir(outputDir, { recursive: true });
+
+      // Save the article
+      await writeFile(resolve(outputDir, 'article.md'), articleContent, 'utf-8');
+
+      // Save metadata
+      const summary = costTracker.getSummary();
+      const metadata = [
+        `Topic: ${topic}`,
+        `Date: ${new Date().toISOString()}`,
+        `Pipeline: research → outline → write → edit → fact-check → social snippets → image suggestions`,
+        '',
+        '## Cost Summary',
+        costTracker.formatSummary(),
+      ].join('\n');
+      await writeFile(resolve(outputDir, 'metadata.txt'), metadata, 'utf-8');
+
+      console.log();
+      console.log(`${C.green}  📁 Output saved to: ${C.bold}output\\${outputDirName}\\${C.reset}`);
+      console.log(`${C.dim}     ├── article.md (full article + social kit + visual guide)${C.reset}`);
+      console.log(`${C.dim}     └── metadata.txt (topic, cost summary)${C.reset}`);
+    } catch (saveErr: any) {
+      console.error(`${C.yellow}  ⚠️  Could not save output: ${saveErr?.message ?? saveErr}${C.reset}`);
+    }
   }
 
   // Cleanup

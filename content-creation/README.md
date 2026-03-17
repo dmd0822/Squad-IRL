@@ -66,6 +66,22 @@ The squad produces a complete, fact-checked article with social media kit and vi
 - **Social media kit** — Twitter/X single tweet, Twitter/X thread, LinkedIn post, and short-form snippet
 - **Visual content guide** — hero image concept, in-article diagrams, data visualizations, social thumbnails, and alt text for all visuals
 
+## Output
+
+Each run automatically saves output to a **dated subfolder** under `output/` with the format:
+```
+output/YY-MM-DD_Topic_Slug/
+  ├── article.md      # Full article + social kit + visual guide
+  └── metadata.txt    # Topic, timestamp, cost summary
+```
+
+Example: if you write about "The Rise of AI Governance" on Jan 8, 2026, the output lands in:
+```
+output/26-01-08_The_Rise_Of_AI/
+```
+
+The `output/` directory is git-ignored so your generated content stays local.
+
 ## Extending This Sample
 
 - 📅 **Content calendar** — batch-produce posts on a schedule
